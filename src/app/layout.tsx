@@ -31,7 +31,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Nexo Studio" }],
   icons: {
-    icon: "/logo-nexo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/logo-nexo-symbol.png", sizes: "64x64", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Nexo Studio — Arquitectura + Diseño",

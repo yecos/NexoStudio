@@ -196,10 +196,10 @@ function Navbar() {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <a href="#inicio" className="flex items-center group">
-            <div className="relative w-28 sm:w-36 h-10 sm:h-12 overflow-hidden">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 overflow-hidden">
               <Image
-                src="/logo-nexo.png"
-                alt="Nexo Studio Logo"
+                src="/logo-nexo-symbol.png"
+                alt="Nexo Studio"
                 fill
                 className="object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
@@ -883,10 +883,10 @@ function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="#inicio" className="flex items-center group mb-4">
-              <div className="relative w-28 h-10 overflow-hidden">
+              <div className="relative w-10 h-10 overflow-hidden">
                 <Image
-                  src="/logo-nexo.png"
-                  alt="Nexo Studio Logo"
+                  src="/logo-nexo-symbol.png"
+                  alt="Nexo Studio"
                   fill
                   className="object-contain"
                 />
