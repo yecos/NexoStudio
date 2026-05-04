@@ -413,7 +413,7 @@ const TEAM = [
     role: "Arquitecto | Diseño Gráfico",
     photo: "/team/mateo_0.png",
     bio: "Arquitecto y diseñador gráfico con amplia experiencia en diseño 3D digital y representación arquitectónica. Dominio en programas de modelado, renderizado y postproducción. Responsable, honesto y comprometido con la excelencia visual y técnica en cada proyecto.",
-    skills: ["Diseño 3D", "Visualización", "Renderizado", "Branding"],
+    skills: ["Diseño 3D", "Gestión de Proyectos", "Optimización de Procesos", "Desarrollo Creativo"],
   },
 ];
 
