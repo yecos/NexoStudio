@@ -404,90 +404,91 @@ function Hero() {
 }
 
 /* ── ABOUT ── */
+const TEAM = [
+  {
+    name: "Catalina Molina Álvarez",
+    role: "Arquitecta | Gestión de Proyectos",
+    photo: "/team/catalina_0.png",
+    bio: "Arquitecta con 8 años de experiencia en desarrollo integral de proyectos arquitectónicos e inmobiliarios. Especialista en Gestión Inmobiliaria de la Universidad Nacional, con capacidad para articular equipos interdisciplinarios y apoyar la toma de decisiones técnicas, normativas y operativas. Manejo de metodología BIM (Revit).",
+    skills: ["Gestión de Proyectos", "Coordinación Técnica", "BIM / Revit", "Control de Obra"],
+  },
+  {
+    name: "Juan Mateo Yepes Correa",
+    role: "Arquitecto | Diseño Gráfico",
+    photo: "/team/mateo_0.png",
+    bio: "Arquitecto y diseñador gráfico con amplia experiencia en diseño 3D digital y representación arquitectónica. Dominio en programas de modelado, renderizado y postproducción. Responsable, honesto y comprometido con la excelencia visual y técnica en cada proyecto.",
+    skills: ["Diseño 3D", "Visualización", "Renderizado", "Branding"],
+  },
+];
+
 function About() {
   return (
     <section id="nosotros" className="py-20 sm:py-28 lg:py-36 bg-dark-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Text */}
-          <div>
-            <FadeInWhenVisible>
-              <span className="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-warm mb-4">
-                ¿Quiénes Somos?
-              </span>
-            </FadeInWhenVisible>
-            <FadeInWhenVisible delay={0.1}>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                Donde la visión{" "}
-                <span className="text-warm">cobra forma</span>
-              </h2>
-            </FadeInWhenVisible>
-            <FadeInWhenVisible delay={0.2}>
-              <p className="mt-6 text-base sm:text-lg text-white/60 leading-relaxed">
-                Nexo Studio es una empresa de arquitectura y construcción ubicada
-                en Medellín. Nos especializamos en ofrecer soluciones innovadoras
-                para obras nuevas y remodelaciones, con un enfoque en la calidad y
-                el diseño en cada proyecto que emprendemos.
-              </p>
-            </FadeInWhenVisible>
-            <FadeInWhenVisible delay={0.3}>
-              <p className="mt-4 text-base sm:text-lg text-white/60 leading-relaxed">
-                Nuestro equipo combina creatividad y experiencia técnica para
-                transformar ideas en espacios extraordinarios que reflejan la
-                personalidad y necesidades de cada cliente.
-              </p>
-            </FadeInWhenVisible>
-            <FadeInWhenVisible delay={0.4}>
-              <div className="mt-8 flex flex-wrap gap-8">
-                {[
-                  { num: "50+", label: "Proyectos" },
-                  { num: "10+", label: "Años" },
-                  { num: "100%", label: "Compromiso" },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <div className="text-2xl sm:text-3xl font-bold text-warm">
-                      {stat.num}
-                    </div>
-                    <div className="text-sm text-white/40 mt-1">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </FadeInWhenVisible>
-          </div>
+        {/* Section header */}
+        <FadeInWhenVisible className="text-center mb-14 sm:mb-20">
+          <span className="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-warm mb-4">
+            ¿Quiénes Somos?
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+            El equipo detrás de{" "}
+            <span className="text-warm">Nexo Studio</span>
+          </h2>
+          <p className="mt-4 text-white/50 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+            Nexo Studio es una empresa de arquitectura y construcción ubicada en
+            Medellín. Nos especializamos en ofrecer soluciones innovadoras para
+            obras nuevas y remodelaciones, con un enfoque en la calidad y el
+            diseño en cada proyecto que emprendemos.
+          </p>
+        </FadeInWhenVisible>
 
-          {/* Image */}
-          <FadeInWhenVisible direction="right" delay={0.2}>
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-br from-warm/20 via-transparent to-green-accent/20 rounded-2xl blur-sm group-hover:blur-md transition-all duration-700" />
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
+        {/* Team cards */}
+        <StaggerContainer className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          {TEAM.map((member) => (
+            <motion.div
+              key={member.name}
+              variants={staggerItem}
+              className="group relative bg-dark-800/50 border border-white/5 rounded-2xl overflow-hidden hover:border-warm/15 transition-all duration-500"
+            >
+              {/* Photo */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden">
                 <Image
-                  src="/interior-design.jpg"
-                  alt="Diseño de interiores Nexo Studio"
+                  src={member.photo}
+                  alt={member.name}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   quality={90}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent" />
               </div>
-              {/* Floating badge */}
-              <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-dark-800/90 backdrop-blur-sm border border-white/10 rounded-xl px-4 sm:px-5 py-3 sm:py-4 shadow-2xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-warm/20 flex items-center justify-center">
-                    <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-warm" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold text-sm sm:text-base">
-                      Arquitectura
-                    </div>
-                    <div className="text-white/40 text-xs">+ Construcción</div>
-                  </div>
+
+              {/* Info overlay at bottom of photo */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+                <h3 className="text-lg sm:text-xl font-bold text-white">
+                  {member.name}
+                </h3>
+                <p className="text-warm text-sm font-medium mt-0.5">
+                  {member.role}
+                </p>
+                <p className="text-white/50 text-sm leading-relaxed mt-3 line-clamp-4">
+                  {member.bio}
+                </p>
+
+                {/* Skills */}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {member.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2.5 py-1 rounded-full bg-warm/10 border border-warm/20 text-warm text-xs font-medium"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </div>
-          </FadeInWhenVisible>
-        </div>
+            </motion.div>
+          ))}
+        </StaggerContainer>
       </div>
     </section>
   );
