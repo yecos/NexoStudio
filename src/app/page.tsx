@@ -195,8 +195,8 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <a href="#inicio" className="flex items-center gap-2.5 group">
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 overflow-hidden">
+          <a href="#inicio" className="flex items-center group">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 overflow-hidden">
               <Image
                 src="/logo-nexo.png"
                 alt="Nexo Studio Logo"
@@ -204,14 +204,6 @@ function Navbar() {
                 className="object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-base sm:text-lg font-bold tracking-wider text-white leading-none">
-                NEXO
-              </span>
-              <span className="text-[10px] sm:text-xs tracking-[0.25em] text-warm font-medium leading-none mt-0.5">
-                STUDIO
-              </span>
             </div>
           </a>
 
@@ -890,22 +882,14 @@ function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <a href="#inicio" className="flex items-center gap-2.5 group mb-4">
-              <div className="relative w-8 h-8 overflow-hidden">
+            <a href="#inicio" className="flex items-center group mb-4">
+              <div className="relative w-10 h-10 overflow-hidden">
                 <Image
                   src="/logo-nexo.png"
                   alt="Nexo Studio Logo"
                   fill
                   className="object-contain"
                 />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-base font-bold tracking-wider text-white leading-none">
-                  NEXO
-                </span>
-                <span className="text-[10px] tracking-[0.25em] text-warm font-medium leading-none mt-0.5">
-                  STUDIO
-                </span>
               </div>
             </a>
             <p className="text-sm text-white/40 leading-relaxed">
