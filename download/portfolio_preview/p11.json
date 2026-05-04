@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The portfolio page showcases an **interior design/architectural visualization project** (residential interior, likely a living space) created using tools like Revit, SketchUp, D5, and Photoshop.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777859663,
+  "id": "2026050409541851807fd4eef94787",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "2026050409541851807fd4eef94787",
+  "usage": {
+    "completion_tokens": 42,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2609,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2651
+  }
+}

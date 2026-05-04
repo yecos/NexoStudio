@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The project shown is a **modern residential architecture project** (likely a luxury home or villa) featuring sleek, glass - and - wood - dominated structures integrated into a lush, hilly landscape, with elements like a pool and outdoor lounge spaces.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777859633,
+  "id": "202605040953503a66c247ce0540e6",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "202605040953503a66c247ce0540e6",
+  "usage": {
+    "completion_tokens": 50,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2609,
+    "prompt_tokens_details": {
+      "cached_tokens": 9
+    },
+    "total_tokens": 2659
+  }
+}

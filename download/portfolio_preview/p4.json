@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Project: Architectural visualization (residential, exterior + interior). Software: SketchUp, Twinmotion, Unreal, Photoshop.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777859629,
+  "id": "202605040953457fff4286e65d4690",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "202605040953457fff4286e65d4690",
+  "usage": {
+    "completion_tokens": 28,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2613,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2641
+  }
+}

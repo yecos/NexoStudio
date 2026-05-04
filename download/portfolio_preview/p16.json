@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The portfolio page shows a **modern residential architecture project** (a house) with integrated landscape design, emphasizing contemporary, nature - inspired aesthetics.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777859677,
+  "id": "202605040954330b5650e0e5134031",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "202605040954330b5650e0e5134031",
+  "usage": {
+    "completion_tokens": 29,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2609,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2638
+  }
+}

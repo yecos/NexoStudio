@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The portfolio page shows a **luxury residential architecture project** (likely a high - end home or villa) with interior and exterior design, featuring spaces like a kitchen/bar area, poolside lounge, and architectural details (arched windows, decorative grilles).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777859668,
+  "id": "202605040954248a4cf955eaf64fa8",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "202605040954248a4cf955eaf64fa8",
+  "usage": {
+    "completion_tokens": 53,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2609,
+    "prompt_tokens_details": {
+      "cached_tokens": 22
+    },
+    "total_tokens": 2662
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The portfolio page shows a **residential architecture project** (a luxury home/villa) with interior design (kitchen) and exterior/landscape elements (pool, courtyard, building facade).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777859643,
+  "id": "202605040954006d1e65458d744c5f",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "202605040954006d1e65458d744c5f",
+  "usage": {
+    "completion_tokens": 39,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2609,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2648
+  }
+}
