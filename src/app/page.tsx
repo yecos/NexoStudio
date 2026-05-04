@@ -48,24 +48,28 @@ const SERVICES = [
     title: "Diseño Arquitectónico",
     description:
       "Diseño arquitectónico para proyectos de obra nueva y remodelaciones, adaptados a las necesidades de cada cliente.",
+    image: "/portfolio/page_5.jpg",
   },
   {
     icon: ClipboardList,
     title: "Gerencia de Proyectos",
     description:
       "Coordinación y supervisión integral de cada fase del proyecto, asegurando cumplimiento en tiempos, costos y calidad.",
+    image: "/portfolio/page_8.jpg",
   },
   {
     icon: TrendingUp,
     title: "Factibilidad Inmobiliaria",
     description:
       "Asesoramiento y gestión en la promoción de proyectos inmobiliarios para maximizar su valor y visibilidad en el mercado.",
+    image: "/villa-luxury.jpg",
   },
   {
     icon: Paintbrush,
     title: "Diseño de Interiores",
     description:
       "Creación de espacios interiores funcionales y estéticamente atractivos, que reflejan la personalidad de nuestros clientes.",
+    image: "/restaurant-design.jpg",
   },
 ];
 
@@ -85,13 +89,13 @@ const PORTFOLIO_ITEMS = [
 ];
 
 const TOOLS = [
-  { name: "SketchUp", color: "#005F9E" },
-  { name: "Revit", color: "#186BDB" },
-  { name: "Twinmotion", color: "#FF6B35" },
-  { name: "Unreal Engine", color: "#0E84B5" },
-  { name: "D5 Render", color: "#4CAF50" },
-  { name: "Photoshop", color: "#31A8FF" },
-  { name: "IA", color: "#C8956C" },
+  { name: "SketchUp", desc: "Modelado 3D", color: "#005F9E", initial: "S" },
+  { name: "Revit", desc: "BIM / Documentación", color: "#186BDB", initial: "R" },
+  { name: "Twinmotion", desc: "Renderizado en tiempo real", color: "#FF6B35", initial: "T" },
+  { name: "Unreal Engine", desc: "Visualización inmersiva", color: "#0E84B5", initial: "U" },
+  { name: "D5 Render", desc: "Renderizado fotorrealista", color: "#4CAF50", initial: "D" },
+  { name: "Photoshop", desc: "Postproducción", color: "#31A8FF", initial: "P" },
+  { name: "IA", desc: "Diseño generativo", color: "#C8956C", initial: "IA" },
 ];
 
 /* ──────────────────── ANIMATION HELPERS ─────────────────────── */
@@ -191,13 +195,13 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <a href="#inicio" className="flex items-center gap-3 group">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 overflow-hidden rounded-md">
+          <a href="#inicio" className="flex items-center gap-2.5 group">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 overflow-hidden">
               <Image
                 src="/logo-nexo.png"
                 alt="Nexo Studio Logo"
                 fill
-                className="object-contain group-hover:scale-110 transition-transform duration-300"
+                className="object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
               />
             </div>
@@ -300,8 +304,8 @@ function Hero() {
           priority
           quality={90}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-dark-900" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-dark-900" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
       </div>
 
       {/* Decorative elements */}
@@ -327,7 +331,7 @@ function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.5 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
         >
           Arquitectura
           <span className="text-warm"> + </span>
@@ -338,7 +342,7 @@ function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed"
+          className="mt-6 sm:mt-8 text-lg sm:text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
         >
           Soluciones innovadoras para obras nuevas y remodelaciones en Medellín
         </motion.p>
@@ -459,18 +463,18 @@ function About() {
                   className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   quality={90}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/50 to-dark-900/10" />
               </div>
 
               {/* Info overlay at bottom of photo */}
               <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
-                <h3 className="text-lg sm:text-xl font-bold text-white">
+                <h3 className="text-xl sm:text-2xl font-bold text-white">
                   {member.name}
                 </h3>
-                <p className="text-warm text-sm font-medium mt-0.5">
+                <p className="text-warm text-sm font-semibold mt-1">
                   {member.role}
                 </p>
-                <p className="text-white/50 text-sm leading-relaxed mt-3 line-clamp-4">
+                <p className="text-white/70 text-sm leading-relaxed mt-3 line-clamp-4">
                   {member.bio}
                 </p>
 
@@ -479,7 +483,7 @@ function About() {
                   {member.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2.5 py-1 rounded-full bg-warm/10 border border-warm/20 text-warm text-xs font-medium"
+                      className="px-3 py-1 rounded-full bg-warm/15 border border-warm/25 text-warm text-xs font-medium"
                     >
                       {skill}
                     </span>
@@ -517,21 +521,33 @@ function Services() {
             <motion.div
               key={service.title}
               variants={staggerItem}
-              className="group relative bg-dark-900/50 border border-white/5 rounded-2xl p-6 sm:p-8 hover:border-warm/20 transition-all duration-500 hover:shadow-lg hover:shadow-warm/5"
+              className="group relative overflow-hidden bg-dark-900/50 border border-white/5 rounded-2xl hover:border-warm/20 transition-all duration-500 hover:shadow-lg hover:shadow-warm/5"
             >
-              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-warm/0 to-transparent group-hover:via-warm/40 transition-all duration-700" />
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-warm/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-warm/20 group-hover:scale-110 transition-all duration-300">
-                <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-warm" />
+              {/* Background image */}
+              <div className="absolute inset-0">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  className="object-cover opacity-0 group-hover:opacity-20 transition-opacity duration-700"
+                  quality={75}
+                />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 group-hover:text-warm transition-colors duration-300">
-                {service.title}
-              </h3>
-              <p className="text-sm sm:text-base text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300">
-                {service.description}
-              </p>
-              <div className="mt-5 flex items-center gap-2 text-warm/0 group-hover:text-warm transition-all duration-300">
-                <span className="text-sm font-medium">Conocer más</span>
-                <ArrowRight className="w-4 h-4" />
+              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-warm/0 to-transparent group-hover:via-warm/40 transition-all duration-700" />
+              <div className="relative z-10 p-6 sm:p-8">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-warm/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-warm/20 group-hover:scale-110 transition-all duration-300">
+                  <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-warm" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 group-hover:text-warm transition-colors duration-300">
+                  {service.title}
+                </h3>
+                <p className="text-sm sm:text-base text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300">
+                  {service.description}
+                </p>
+                <div className="mt-5 flex items-center gap-2 text-warm/0 group-hover:text-warm transition-all duration-300">
+                  <span className="text-sm font-medium">Conocer más</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
               </div>
             </motion.div>
           ))}
@@ -654,16 +670,19 @@ function Tools() {
             <motion.div
               key={tool.name}
               variants={staggerItem}
-              className="group flex flex-col items-center gap-3 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-dark-900/50 border border-white/5 hover:border-warm/20 transition-all duration-300 cursor-default"
+              className="group flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-dark-900/50 border border-white/5 hover:border-warm/20 transition-all duration-300 cursor-default"
             >
               <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg sm:text-xl group-hover:scale-110 transition-transform duration-300"
+                className="w-11 h-11 sm:w-13 sm:h-13 rounded-lg flex items-center justify-center text-white font-bold text-base sm:text-lg group-hover:scale-110 transition-transform duration-300"
                 style={{ backgroundColor: `${tool.color}20` }}
               >
-                <span style={{ color: tool.color }}>{tool.name[0]}</span>
+                <span style={{ color: tool.color }}>{tool.initial}</span>
               </div>
               <span className="text-xs sm:text-sm text-white/60 group-hover:text-white/90 font-medium text-center transition-colors duration-300">
                 {tool.name}
+              </span>
+              <span className="text-[10px] sm:text-xs text-white/30 text-center leading-tight">
+                {tool.desc}
               </span>
             </motion.div>
           ))}
@@ -871,8 +890,8 @@ function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <a href="#inicio" className="flex items-center gap-3 group mb-4">
-              <div className="relative w-9 h-9 overflow-hidden rounded-md">
+            <a href="#inicio" className="flex items-center gap-2.5 group mb-4">
+              <div className="relative w-8 h-8 overflow-hidden">
                 <Image
                   src="/logo-nexo.png"
                   alt="Nexo Studio Logo"
