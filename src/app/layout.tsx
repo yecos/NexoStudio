@@ -45,6 +45,36 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Nexo Studio",
+  description:
+    "Estudio de arquitectura, remodelaciones, diseño de interiores, visualización 3D y gerencia de proyectos en Medellín.",
+  email: "nexostudio.arquitectura@gmail.com",
+  telephone: "+57 314 681 1444",
+  areaServed: ["Medellín", "Área Metropolitana", "Antioquia", "Colombia"],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Medellín",
+    addressCountry: "CO",
+  },
+  knowsAbout: [
+    "Arquitectura",
+    "Remodelaciones",
+    "Diseño de interiores",
+    "Visualización 3D",
+    "Gerencia de proyectos",
+    "Factibilidad inmobiliaria",
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    telephone: "+57 314 681 1444",
+    availableLanguage: ["es"],
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,6 +85,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {children}
         <Toaster />
       </body>
