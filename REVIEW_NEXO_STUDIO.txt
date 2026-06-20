@@ -1,0 +1,115 @@
+# Review Nexo Studio Website
+
+Fecha: 2026-06-19
+
+## Veredicto rápido
+
+La landing tiene una base visual elegante y premium: buen uso de fondo oscuro, acento cobre, fotografía/render arquitectónico y un portafolio atractivo. El mayor problema no es estético sino comercial: tarda en explicar claramente qué vende Nexo Studio, a quién le sirve y cómo iniciar contacto.
+
+## Lo que funciona
+
+- Dirección visual premium coherente con arquitectura/diseño.
+- Hero con buena presencia visual y CTA visible.
+- Paleta negro + cobre adecuada para marca arquitectónica.
+- Portafolio fuerte visualmente; las imágenes generan aspiración.
+- Equipo humano visible: ayuda a confianza.
+- WhatsApp flotante correcto para conversión.
+- Build y lint pasan correctamente.
+
+## Hallazgos prioritarios
+
+### 1. Mucho espacio vertical
+
+Las secciones usan paddings grandes (`py-20 sm:py-28 lg:py-36`). En capturas, a veces solo se ve el título y las tarjetas aparecen demasiado abajo.
+
+**Acción sugerida:** reducir paddings verticales 30-45%, especialmente en Servicios, Portafolio, Tools y Contacto.
+
+### 2. Hero muy genérico comercialmente
+
+“Arquitectura + Diseño” funciona como statement visual, pero el subtítulo “Soluciones innovadoras…” es amplio y poco diferencial.
+
+**Propuesta de copy:**
+
+> Diseñamos, remodelamos y gestionamos espacios residenciales y comerciales en Medellín.
+
+CTA recomendado:
+
+- Principal: `Ver proyectos`
+- Secundario: `Cotizar por WhatsApp`
+
+### 3. Servicios necesitan beneficio más concreto
+
+Los servicios están correctos, pero suenan institucionales. Conviene hablarle al cliente con claridad: qué obtiene y para qué sirve.
+
+Ejemplo:
+
+- Diseño arquitectónico → “Convertimos tu idea en planos, renders y una propuesta lista para ejecutar.”
+- Remodelaciones → “Transformamos espacios existentes con control de presupuesto, diseño y obra.”
+- Gerencia de proyectos → “Coordinamos tiempos, proveedores y calidad para que la obra avance sin improvisar.”
+
+### 4. Portafolio necesita más credibilidad
+
+Las imágenes son atractivas, pero faltan datos de proyecto. Sin contexto pueden parecer genéricas o stock.
+
+**Añadir por proyecto:**
+
+- Nombre del proyecto
+- Ubicación
+- Tipo: residencial/comercial/interiorismo
+- Alcance: diseño, remodelación, render, ejecución
+- Año o estado: conceptual / en obra / ejecutado
+
+### 5. Formulario de contacto no envía realmente
+
+Actualmente `handleSubmit` solo muestra “Mensaje enviado” en frontend y limpia el formulario. Eso puede dar falsa expectativa.
+
+**Acciones posibles:**
+
+- Opción rápida: cambiar botón/formulario a WhatsApp con mensaje prellenado.
+- Opción seria: conectar endpoint `/api/contact` con email/CRM.
+
+### 6. TypeScript está ocultando errores
+
+`next.config.ts` tiene:
+
+typescript: {
+  ignoreBuildErrors: true,
+}
+
+`npm run build` pasa, pero `npx tsc --noEmit` encuentra errores. Algunos vienen de carpetas `examples/` y `skills/` incluidas por `tsconfig`; otros son de `framer-motion` en `page.tsx` por el tipo de `ease`.
+
+**Acción sugerida:**
+
+- Limitar `tsconfig.include` a `src`, `next-env.d.ts` y `.next/types`.
+- Tipar `staggerItem` como `Variants` o usar un easing aceptado.
+- Luego quitar `ignoreBuildErrors`.
+
+### 7. Dependencias y seguridad
+
+`npm audit --audit-level=high --omit=dev` reporta vulnerabilidades altas, incluyendo `next`, `lodash`, `js-cookie`, `prisma`, `picomatch`.
+
+**Acción sugerida:** correr `npm audit fix`, revisar breaking changes aparte, y actualizar Next cuando exista versión segura compatible.
+
+### 8. Ruido de repo
+
+El repo incluye carpetas y archivos que no parecen parte de la web final: `skills/`, `examples/`, varios `page*_img*.bin`, PDFs/capturas de trabajo, etc. Puede dificultar mantenimiento y CI.
+
+**Acción sugerida:** separar assets fuente/work-in-progress de la app productiva, o moverlos a `docs/`/`archive/` si deben conservarse.
+
+## Orden recomendado de mejoras
+
+1. Ajustar ritmo visual: reducir paddings y hacer que cards aparezcan antes.
+2. Reescribir hero y CTAs hacia conversión.
+3. Reforzar servicios con beneficios claros.
+4. Convertir portafolio en casos/proyectos con contexto.
+5. Hacer contacto real: WhatsApp prellenado o backend de email.
+6. Arreglar TypeScript y quitar `ignoreBuildErrors`.
+7. Auditar dependencias y limpiar repo.
+
+## Checks realizados
+
+- `npm ci`: OK.
+- `npm run lint`: OK.
+- `npm run build`: OK.
+- `npx tsc --noEmit`: falla por errores de TS en carpetas extra y `framer-motion`.
+- `npm audit --audit-level=high --omit=dev`: reporta vulnerabilidades altas.

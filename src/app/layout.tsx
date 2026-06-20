@@ -14,17 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nexo Studio — Arquitectura + Diseño | Medellín, Colombia",
+  title: "Nexo Studio — Arquitectura, Remodelaciones e Interiores | Medellín",
   description:
-    "Nexo Studio es una empresa de arquitectura y construcción ubicada en Medellín. Nos especializamos en ofrecer soluciones innovadoras para obras nuevas y remodelaciones, con un enfoque en la calidad y el diseño en cada proyecto que emprendemos.",
+    "Nexo Studio diseña, remodela y gestiona espacios residenciales y comerciales en Medellín: arquitectura, interiores, visualización 3D y gerencia de proyectos.",
   keywords: [
-    "arquitectura",
-    "diseño",
-    "Medellín",
-    "Colombia",
-    "construcción",
-    "remodelación",
+    "arquitectura Medellín",
+    "remodelaciones Medellín",
     "diseño de interiores",
+    "diseño arquitectónico",
+    "visualización 3D",
+    "renders arquitectónicos",
     "gerencia de proyectos",
     "factibilidad inmobiliaria",
     "Nexo Studio",
@@ -38,9 +37,9 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Nexo Studio — Arquitectura + Diseño",
+    title: "Nexo Studio — Arquitectura, Remodelaciones e Interiores",
     description:
-      "Soluciones innovadoras para obras nuevas y remodelaciones en Medellín",
+      "Diseño arquitectónico, remodelaciones, interiores, visualización 3D y gerencia de proyectos en Medellín.",
     type: "website",
     locale: "es_CO",
   },
