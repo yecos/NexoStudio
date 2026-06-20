@@ -48,6 +48,7 @@ const NAV_LINKS = [
   { label: "Inicio", href: "#inicio" },
   { label: "Servicios", href: "#servicios" },
   { label: "Portafolio", href: "#portafolio" },
+  { label: "Casos", href: "#casos" },
   { label: "Nosotros", href: "#nosotros" },
   { label: "Contacto", href: "#contacto" },
 ];
@@ -58,48 +59,48 @@ const SERVICES = [
     title: "Diseño arquitectónico",
     description:
       "Convertimos tu idea en una propuesta clara: concepto, distribución, planos, renders y criterios listos para ejecutar.",
-    image: "/portfolio/page_5.jpg",
+    image: "/images/projects/page_5.jpg",
   },
   {
     icon: Hammer,
     title: "Remodelaciones",
     description:
       "Transformamos espacios existentes con una mirada funcional, estética y realista frente a presupuesto, obra y tiempos.",
-    image: "/portfolio/page_4.jpg",
+    image: "/images/projects/page_4.jpg",
   },
   {
     icon: Paintbrush,
     title: "Diseño de interiores",
     description:
       "Diseñamos atmósferas cálidas, funcionales y coherentes con tu estilo: materialidad, mobiliario, iluminación y detalle.",
-    image: "/restaurant-design.jpg",
+    image: "/images/services/restaurant-design.jpg",
   },
   {
     icon: ClipboardList,
     title: "Gerencia de proyectos",
     description:
       "Coordinamos etapas, proveedores, costos y calidad para que la obra avance con orden y menos improvisación.",
-    image: "/portfolio/page_8.jpg",
+    image: "/images/projects/page_8.jpg",
   },
   {
     icon: TrendingUp,
     title: "Factibilidad inmobiliaria",
     description:
       "Evaluamos potencial, alcance y estrategia para proyectos con visión comercial, normativa y de valorización.",
-    image: "/villa-luxury.jpg",
+    image: "/images/services/villa-luxury.jpg",
   },
   {
     icon: Ruler,
     title: "Visualización 3D",
     description:
       "Creamos renders, modelos y recorridos que ayudan a tomar decisiones antes de construir o invertir.",
-    image: "/interior-design.jpg",
+    image: "/images/services/interior-design.jpg",
   },
 ];
 
 const PORTFOLIO_ITEMS = [
   {
-    src: "/portfolio/page_1.jpg",
+    src: "/images/projects/page_1.jpg",
     category: "Residencial",
     title: "Vivienda biofílica",
     location: "Antioquia",
@@ -107,7 +108,7 @@ const PORTFOLIO_ITEMS = [
     status: "Proyecto conceptual",
   },
   {
-    src: "/portfolio/page_2.jpg",
+    src: "/images/projects/page_2.jpg",
     category: "Residencial",
     title: "Fachada residencial",
     location: "Medellín",
@@ -115,7 +116,7 @@ const PORTFOLIO_ITEMS = [
     status: "Anteproyecto",
   },
   {
-    src: "/portfolio/page_3.jpg",
+    src: "/images/projects/page_3.jpg",
     category: "Comercial",
     title: "Restaurante",
     location: "Medellín",
@@ -123,7 +124,7 @@ const PORTFOLIO_ITEMS = [
     status: "Diseño conceptual",
   },
   {
-    src: "/portfolio/page_4.jpg",
+    src: "/images/projects/page_4.jpg",
     category: "Remodelación",
     title: "Transformación residencial",
     location: "Área metropolitana",
@@ -131,7 +132,7 @@ const PORTFOLIO_ITEMS = [
     status: "Diseño + obra",
   },
   {
-    src: "/portfolio/page_5.jpg",
+    src: "/images/projects/page_5.jpg",
     category: "Obra nueva",
     title: "Casa contemporánea",
     location: "Antioquia",
@@ -139,7 +140,7 @@ const PORTFOLIO_ITEMS = [
     status: "Anteproyecto",
   },
   {
-    src: "/portfolio/page_6.jpg",
+    src: "/images/projects/page_6.jpg",
     category: "Residencial",
     title: "Multifamiliar",
     location: "Medellín",
@@ -147,7 +148,7 @@ const PORTFOLIO_ITEMS = [
     status: "Proyecto inmobiliario",
   },
   {
-    src: "/portfolio/page_7.jpg",
+    src: "/images/projects/page_7.jpg",
     category: "Residencial",
     title: "Villa campestre",
     location: "Oriente antioqueño",
@@ -155,7 +156,7 @@ const PORTFOLIO_ITEMS = [
     status: "Proyecto conceptual",
   },
   {
-    src: "/portfolio/page_8.jpg",
+    src: "/images/projects/page_8.jpg",
     category: "Residencial",
     title: "Vivienda premium",
     location: "Colombia",
@@ -163,7 +164,7 @@ const PORTFOLIO_ITEMS = [
     status: "Diseño integral",
   },
   {
-    src: "/portfolio/page_9.jpg",
+    src: "/images/projects/page_9.jpg",
     category: "Comercial",
     title: "Hospitalidad",
     location: "Colombia",
@@ -171,7 +172,7 @@ const PORTFOLIO_ITEMS = [
     status: "Visualización",
   },
   {
-    src: "/portfolio/page_10.jpg",
+    src: "/images/projects/page_10.jpg",
     category: "Comercial",
     title: "Interior comercial",
     location: "Medellín",
@@ -179,7 +180,7 @@ const PORTFOLIO_ITEMS = [
     status: "Propuesta visual",
   },
   {
-    src: "/portfolio/page_11.jpg",
+    src: "/images/projects/page_11.jpg",
     category: "Interiorismo",
     title: "Apartamento residencial",
     location: "Medellín",
@@ -187,7 +188,7 @@ const PORTFOLIO_ITEMS = [
     status: "Diseño interior",
   },
   {
-    src: "/portfolio/page_12.jpg",
+    src: "/images/projects/page_12.jpg",
     category: "Interiorismo",
     title: "Detalle y atmósfera",
     location: "Colombia",
@@ -196,11 +197,50 @@ const PORTFOLIO_ITEMS = [
   },
 ];
 
+const CASE_STUDIES = [
+  {
+    title: "Remodelación residencial con decisiones visuales",
+    category: "Remodelación integral",
+    image: "/images/projects/page_4.jpg",
+    challenge:
+      "Actualizar un espacio existente sin perder control sobre presupuesto, acabados y tiempos de ejecución.",
+    response:
+      "Definimos alcance, propuesta de distribución, materialidad y visualizaciones 3D antes de pasar a obra.",
+    result:
+      "Un proyecto más claro para cotizar, coordinar proveedores y reducir cambios improvisados durante la ejecución.",
+    facts: ["Diseño + obra", "Área metropolitana", "Materialidad definida"],
+  },
+  {
+    title: "Vivienda contemporánea desde concepto a anteproyecto",
+    category: "Diseño arquitectónico",
+    image: "/images/projects/page_5.jpg",
+    challenge:
+      "Transformar una idea inicial en una propuesta arquitectónica entendible para tomar decisiones de inversión.",
+    response:
+      "Trabajamos concepto, distribución, imagen exterior, criterios técnicos y renders para evaluar la propuesta completa.",
+    result:
+      "Una base sólida para avanzar a presupuesto, ajustes técnicos y coordinación del desarrollo del proyecto.",
+    facts: ["Obra nueva", "Antioquia", "Renders de apoyo"],
+  },
+  {
+    title: "Interior comercial con atmósfera reconocible",
+    category: "Interiorismo comercial",
+    image: "/images/projects/page_3.jpg",
+    challenge:
+      "Crear un espacio comercial con identidad, buen recorrido y una experiencia coherente para el usuario.",
+    response:
+      "Diseñamos atmósfera, mobiliario, iluminación y puntos focales con apoyo de visualización para validar el concepto.",
+    result:
+      "Una propuesta comercial más fácil de presentar, ajustar y ejecutar con intención desde el primer plano.",
+    facts: ["Comercial", "Medellín", "Concepto espacial"],
+  },
+];
+
 const TEAM = [
   {
     name: "Catalina Molina Álvarez",
     role: "Arquitecta | Gestión de Proyectos",
-    photo: "/team/catalina_0.png",
+    photo: "/images/team/catalina_0.png",
     intro:
       "Gestión técnica, coordinación interdisciplinaria y control de proyecto.",
     bio: "Arquitecta con 8 años de experiencia en desarrollo integral de proyectos arquitectónicos e inmobiliarios. Especialista en Gestión Inmobiliaria de la Universidad Nacional, con capacidad para articular equipos interdisciplinarios y apoyar decisiones técnicas, normativas y operativas.",
@@ -209,7 +249,7 @@ const TEAM = [
   {
     name: "Juan Mateo Yepes Correa",
     role: "Arquitecto | Diseño Gráfico",
-    photo: "/team/mateo_0.png",
+    photo: "/images/team/mateo_0.png",
     intro:
       "Diseño 3D, representación arquitectónica y dirección visual de proyectos.",
     bio: "Arquitecto y diseñador gráfico con amplia experiencia en diseño 3D digital, modelado, renderizado y postproducción. Enfocado en claridad visual, desarrollo creativo y excelencia técnica.",
@@ -249,6 +289,54 @@ const TRUST_POINTS = [
     label: "decisiones visibles",
     description: "renders y modelos para evaluar materiales, atmósfera y alcance antes de ejecutar",
   },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: "¿Cuánto cuesta iniciar un proyecto de arquitectura o remodelación?",
+    answer:
+      "Depende del alcance, el área, el estado actual del espacio y el nivel de detalle requerido. Por eso empezamos entendiendo ubicación, metros aproximados, presupuesto objetivo y etapa del proyecto.",
+  },
+  {
+    question: "¿Trabajan proyectos fuera de Medellín?",
+    answer:
+      "Sí. Atendemos Medellín, Área Metropolitana, Oriente antioqueño y otros lugares de Colombia cuando el alcance permite coordinar diseño, visualización o acompañamiento técnico.",
+  },
+  {
+    question: "¿Puedo contratar sólo renders o visualización 3D?",
+    answer:
+      "Sí. La visualización 3D puede contratarse como servicio independiente para validar diseños, vender una idea, presentar una propuesta o tomar decisiones antes de construir.",
+  },
+  {
+    question: "¿También acompañan la ejecución de obra?",
+    answer:
+      "Sí. Según el proyecto, podemos apoyar coordinación técnica, proveedores, presupuesto, control de decisiones y seguimiento para que el diseño llegue mejor a obra.",
+  },
+];
+
+const PROJECT_TYPES = [
+  "Diseño arquitectónico",
+  "Remodelación",
+  "Diseño de interiores",
+  "Visualización 3D / renders",
+  "Gerencia de proyecto",
+  "Factibilidad inmobiliaria",
+];
+
+const BUDGET_RANGES = [
+  "Aún no tengo presupuesto",
+  "Menos de $20M COP",
+  "$20M - $60M COP",
+  "$60M - $150M COP",
+  "Más de $150M COP",
+];
+
+const TIMELINES = [
+  "Estoy explorando opciones",
+  "Quiero iniciar este mes",
+  "1 a 3 meses",
+  "3 a 6 meses",
+  "Ya está en obra",
 ];
 
 /* ──────────────────── ANIMATION HELPERS ─────────────────────── */
@@ -383,7 +471,7 @@ function Navbar() {
           <a href="#inicio" className="flex items-center group" aria-label="Nexo Studio inicio">
             <div className="relative w-32 sm:w-40 h-10 sm:h-12 overflow-hidden">
               <Image
-                src="/logo-nexo.png"
+                src="/images/brand/logo-nexo.png"
                 alt="Nexo Studio"
                 fill
                 className="object-contain group-hover:scale-105 transition-transform duration-300"
@@ -462,7 +550,7 @@ function Hero() {
     <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/hero-arch.jpg"
+          src="/images/hero/hero-arch.jpg"
           alt="Arquitectura biofílica Nexo Studio"
           fill
           className="object-cover object-center"
@@ -727,6 +815,76 @@ function Portfolio() {
   );
 }
 
+/* ── CASE STUDIES ── */
+function CaseStudies() {
+  return (
+    <section id="casos" className="py-14 sm:py-20 lg:py-24 bg-dark-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          eyebrow="Casos de estudio"
+          title="Más que imágenes:"
+          highlight="decisiones claras"
+          description="Tres lecturas rápidas de cómo abordamos retos distintos: remodelación, obra nueva e interiorismo comercial."
+        />
+
+        <StaggerContainer className="grid lg:grid-cols-3 gap-4 sm:gap-5">
+          {CASE_STUDIES.map((item) => (
+            <motion.article
+              key={item.title}
+              variants={staggerItem}
+              className="group rounded-lg border border-white/8 bg-dark-900/62 overflow-hidden hover:border-warm/24 transition-all duration-300"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src={item.image}
+                  alt={`${item.title} - ${item.category} Nexo Studio`}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  quality={86}
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/82 via-dark-900/18 to-transparent" />
+                <span className="absolute left-4 top-4 rounded-full bg-warm/92 px-3 py-1 text-xs font-semibold text-dark-900">
+                  {item.category}
+                </span>
+              </div>
+
+              <div className="p-5 sm:p-6">
+                <h3 className="text-xl font-semibold text-white leading-tight">
+                  {item.title}
+                </h3>
+
+                <div className="mt-5 space-y-4">
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-warm/80">Reto</div>
+                    <p className="mt-1.5 text-sm text-white/58 leading-relaxed">{item.challenge}</p>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-warm/80">Respuesta</div>
+                    <p className="mt-1.5 text-sm text-white/58 leading-relaxed">{item.response}</p>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-warm/80">Resultado</div>
+                    <p className="mt-1.5 text-sm text-white/58 leading-relaxed">{item.result}</p>
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {item.facts.map((fact) => (
+                    <span key={fact} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/58">
+                      {fact}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+  );
+}
+
 /* ── ABOUT ── */
 function About() {
   return (
@@ -819,9 +977,53 @@ function Tools() {
   );
 }
 
+/* ── FAQ ── */
+function FAQ() {
+  return (
+    <section className="py-14 sm:py-20 bg-dark-900">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          eyebrow="Preguntas frecuentes"
+          title="Lo que conviene"
+          highlight="aclarar primero"
+          description="Respuestas rápidas para entender cómo iniciar un proyecto con Nexo Studio."
+        />
+
+        <StaggerContainer className="space-y-3">
+          {FAQ_ITEMS.map((item) => (
+            <motion.details
+              key={item.question}
+              variants={staggerItem}
+              className="group rounded-lg border border-white/8 bg-dark-800/58 p-5 open:border-warm/24 open:bg-warm/[0.04] transition-all duration-300"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base sm:text-lg font-semibold text-white">
+                {item.question}
+                <ChevronUp className="w-5 h-5 shrink-0 rotate-180 text-warm transition-transform group-open:rotate-0" />
+              </summary>
+              <p className="mt-3 text-sm sm:text-base text-white/58 leading-relaxed">
+                {item.answer}
+              </p>
+            </motion.details>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+  );
+}
+
 /* ── CONTACT ── */
 function Contact() {
-  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
+  const [formState, setFormState] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    projectType: PROJECT_TYPES[0],
+    location: "",
+    area: "",
+    budget: BUDGET_RANGES[0],
+    timeline: TIMELINES[0],
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -829,15 +1031,34 @@ function Contact() {
     const message = [
       "Hola Nexo Studio, quiero cotizar un proyecto.",
       `Nombre: ${formState.name}`,
+      `Teléfono: ${formState.phone}`,
       `Email: ${formState.email}`,
-      `Mensaje: ${formState.message}`,
+      `Tipo de proyecto: ${formState.projectType}`,
+      `Ubicación: ${formState.location}`,
+      `Área aproximada: ${formState.area}`,
+      `Presupuesto: ${formState.budget}`,
+      `Tiempo para iniciar: ${formState.timeline}`,
+      `Contexto: ${formState.message}`,
     ].join("\n");
 
     setSubmitted(true);
     window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
     setTimeout(() => setSubmitted(false), 3000);
-    setFormState({ name: "", email: "", message: "" });
+    setFormState({
+      name: "",
+      phone: "",
+      email: "",
+      projectType: PROJECT_TYPES[0],
+      location: "",
+      area: "",
+      budget: BUDGET_RANGES[0],
+      timeline: TIMELINES[0],
+      message: "",
+    });
   };
+
+  const selectClassName =
+    "w-full bg-dark-700/55 border border-white/12 text-white focus:border-warm/55 h-11 rounded-xl px-3 text-sm outline-none transition-colors";
 
   return (
     <section id="contacto" className="py-14 sm:py-20 lg:py-24 bg-dark-800">
@@ -852,7 +1073,7 @@ function Contact() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           <FadeInWhenVisible direction="left" className="relative min-h-[420px]">
             <div className="relative h-full min-h-[420px] rounded-2xl overflow-hidden">
-              <Image src="/villa-luxury.jpg" alt="Proyecto residencial Nexo Studio" fill className="object-cover" quality={90} sizes="(min-width: 1024px) 50vw, 100vw" />
+              <Image src="/images/services/villa-luxury.jpg" alt="Proyecto residencial Nexo Studio" fill className="object-cover" quality={90} sizes="(min-width: 1024px) 50vw, 100vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-900/78 via-dark-900/15 to-transparent" />
             </div>
             <div className="absolute bottom-5 left-5 right-5 bg-dark-900/84 backdrop-blur-md rounded-xl border border-white/10 p-5 sm:p-6">
@@ -890,9 +1111,9 @@ function Contact() {
 
           <FadeInWhenVisible direction="right" delay={0.15}>
             <div className="h-full bg-dark-900/55 border border-white/6 rounded-2xl p-6 sm:p-8 lg:p-9">
-              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Cotiza por WhatsApp</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Pre-cotiza por WhatsApp</h3>
               <p className="text-white/48 text-sm mb-6 sm:mb-7">
-                Este formulario abre WhatsApp con tu mensaje listo para enviar. Así evitamos formularios perdidos y respondemos más rápido.
+                Este formulario arma un mensaje completo para entender alcance, ubicación, etapa y presupuesto antes de conversar.
               </p>
 
               {submitted ? (
@@ -905,17 +1126,59 @@ function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-white/65 mb-1.5">Nombre</label>
-                    <Input id="name" type="text" placeholder="Tu nombre" value={formState.name} onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-white/65 mb-1.5">Nombre</label>
+                      <Input id="name" type="text" placeholder="Tu nombre" value={formState.name} onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-white/65 mb-1.5">Teléfono</label>
+                      <Input id="phone" type="tel" placeholder="Tu WhatsApp" value={formState.phone} onChange={(e) => setFormState((s) => ({ ...s, phone: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-white/65 mb-1.5">Email</label>
-                    <Input id="email" type="email" placeholder="tu@email.com" value={formState.email} onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                    <Input id="email" type="email" placeholder="tu@email.com" value={formState.email} onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))} className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="projectType" className="block text-sm font-medium text-white/65 mb-1.5">Tipo de proyecto</label>
+                      <select id="projectType" value={formState.projectType} onChange={(e) => setFormState((s) => ({ ...s, projectType: e.target.value }))} className={selectClassName}>
+                        {PROJECT_TYPES.map((type) => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="location" className="block text-sm font-medium text-white/65 mb-1.5">Ubicación</label>
+                      <Input id="location" type="text" placeholder="Ciudad o sector" value={formState.location} onChange={(e) => setFormState((s) => ({ ...s, location: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <div>
+                      <label htmlFor="area" className="block text-sm font-medium text-white/65 mb-1.5">Área aprox.</label>
+                      <Input id="area" type="text" placeholder="Ej: 80 m²" value={formState.area} onChange={(e) => setFormState((s) => ({ ...s, area: e.target.value }))} className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                    </div>
+                    <div>
+                      <label htmlFor="budget" className="block text-sm font-medium text-white/65 mb-1.5">Presupuesto</label>
+                      <select id="budget" value={formState.budget} onChange={(e) => setFormState((s) => ({ ...s, budget: e.target.value }))} className={selectClassName}>
+                        {BUDGET_RANGES.map((range) => (
+                          <option key={range} value={range}>{range}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="timeline" className="block text-sm font-medium text-white/65 mb-1.5">Etapa</label>
+                      <select id="timeline" value={formState.timeline} onChange={(e) => setFormState((s) => ({ ...s, timeline: e.target.value }))} className={selectClassName}>
+                        {TIMELINES.map((timeline) => (
+                          <option key={timeline} value={timeline}>{timeline}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-white/65 mb-1.5">Mensaje</label>
-                    <Textarea id="message" placeholder="Cuéntanos qué tipo de proyecto tienes, ubicación aproximada y alcance..." rows={5} value={formState.message} onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 rounded-xl resize-none" />
+                    <label htmlFor="message" className="block text-sm font-medium text-white/65 mb-1.5">Contexto</label>
+                    <Textarea id="message" placeholder="Cuéntanos qué quieres transformar, diseñar o visualizar..." rows={4} value={formState.message} onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 rounded-xl resize-none" />
                   </div>
                   <Button type="submit" size="lg" className="w-full bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-xl h-12 text-base transition-all duration-300 shadow-lg shadow-warm/20 hover:shadow-warm/30">
                     Abrir WhatsApp
@@ -940,7 +1203,7 @@ function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="#inicio" className="flex items-center group mb-4">
               <div className="relative w-32 h-10 overflow-hidden">
-                <Image src="/logo-nexo.png" alt="Nexo Studio" fill className="object-contain" sizes="128px" />
+                <Image src="/images/brand/logo-nexo.png" alt="Nexo Studio" fill className="object-contain" sizes="128px" />
               </div>
             </a>
             <p className="text-sm text-white/45 leading-relaxed">
@@ -1077,8 +1340,10 @@ export default function Home() {
       <TrustBar />
       <Services />
       <Portfolio />
+      <CaseStudies />
       <About />
       <Tools />
+      <FAQ />
       <Contact />
       <Footer />
       <WhatsAppFAB />
