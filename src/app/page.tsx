@@ -16,6 +16,10 @@ import {
   MessageCircle,
   ArrowRight,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  X,
   ExternalLink,
   Send,
   CheckCircle2,
@@ -32,6 +36,7 @@ import {
 } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { projects as PROJECTS } from "@/lib/projects-data";
 
 /* ──────────────────────────── DATA ──────────────────────────── */
 
@@ -98,104 +103,6 @@ const SERVICES = [
   },
 ];
 
-const PORTFOLIO_ITEMS = [
-  {
-    src: "/images/projects/page_1.jpg",
-    category: "Residencial",
-    title: "Vivienda biofílica",
-    location: "Antioquia",
-    scope: "Diseño + visualización",
-    status: "Proyecto conceptual",
-  },
-  {
-    src: "/images/projects/page_2.jpg",
-    category: "Residencial",
-    title: "Fachada residencial",
-    location: "Medellín",
-    scope: "Diseño arquitectónico",
-    status: "Anteproyecto",
-  },
-  {
-    src: "/images/projects/page_3.jpg",
-    category: "Comercial",
-    title: "Restaurante",
-    location: "Medellín",
-    scope: "Interiorismo comercial",
-    status: "Diseño conceptual",
-  },
-  {
-    src: "/images/projects/page_4.jpg",
-    category: "Remodelación",
-    title: "Transformación residencial",
-    location: "Área metropolitana",
-    scope: "Remodelación integral",
-    status: "Diseño + obra",
-  },
-  {
-    src: "/images/projects/page_5.jpg",
-    category: "Obra nueva",
-    title: "Casa contemporánea",
-    location: "Antioquia",
-    scope: "Arquitectura",
-    status: "Anteproyecto",
-  },
-  {
-    src: "/images/projects/page_6.jpg",
-    category: "Residencial",
-    title: "Multifamiliar",
-    location: "Medellín",
-    scope: "Factibilidad + diseño",
-    status: "Proyecto inmobiliario",
-  },
-  {
-    src: "/images/projects/page_7.jpg",
-    category: "Residencial",
-    title: "Villa campestre",
-    location: "Oriente antioqueño",
-    scope: "Diseño + renders",
-    status: "Proyecto conceptual",
-  },
-  {
-    src: "/images/projects/page_8.jpg",
-    category: "Residencial",
-    title: "Vivienda premium",
-    location: "Colombia",
-    scope: "Arquitectura + interiores",
-    status: "Diseño integral",
-  },
-  {
-    src: "/images/projects/page_9.jpg",
-    category: "Comercial",
-    title: "Hospitalidad",
-    location: "Colombia",
-    scope: "Concepto espacial",
-    status: "Visualización",
-  },
-  {
-    src: "/images/projects/page_10.jpg",
-    category: "Comercial",
-    title: "Interior comercial",
-    location: "Medellín",
-    scope: "Diseño interior",
-    status: "Propuesta visual",
-  },
-  {
-    src: "/images/projects/page_11.jpg",
-    category: "Interiorismo",
-    title: "Apartamento residencial",
-    location: "Medellín",
-    scope: "Interiores + mobiliario",
-    status: "Diseño interior",
-  },
-  {
-    src: "/images/projects/page_12.jpg",
-    category: "Interiorismo",
-    title: "Detalle y atmósfera",
-    location: "Colombia",
-    scope: "Materialidad + render",
-    status: "Visualización",
-  },
-];
 
 const CASE_STUDIES = [
   {
@@ -726,6 +633,20 @@ function Services() {
 function Portfolio() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [currentView, setCurrentView] = useState(0);
+
+  const closeLightbox = () => {
+    setSelectedProject(null);
+    setCurrentView(0);
+  };
+
+  const nextView = (total: number) => {
+    setCurrentView((v) => (v + 1) % total);
+  };
+
+  const prevView = (total: number) => {
+    setCurrentView((v) => (v - 1 + total) % total);
+  };
 
   return (
     <section id="portafolio" className="py-14 sm:py-20 lg:py-24 bg-dark-900">
@@ -734,33 +655,34 @@ function Portfolio() {
           eyebrow="Portafolio"
           title="Proyectos que"
           highlight="cuentan una historia"
-          description="Una selección de proyectos y visualizaciones de arquitectura, interiores, remodelación y espacios comerciales."
+          description="Una selección de proyectos de arquitectura, interiores y visualización 3D en Antioquia. Toca cualquier proyecto para ver la galería completa."
         />
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {PORTFOLIO_ITEMS.map((item, idx) => (
+          {PROJECTS.map((project, idx) => (
             <motion.article
-              key={`${item.title}-${item.src}`}
+              key={project.id}
               variants={staggerItem}
               className={`group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer bg-dark-800 focus:outline-none focus:ring-2 focus:ring-warm focus:ring-offset-2 focus:ring-offset-dark-900 ${
-                idx === 0 || idx === 7 ? "sm:row-span-2 aspect-[3/4] sm:aspect-auto" : "aspect-[4/3]"
+                idx === 0 || idx === 5 ? "sm:row-span-2 aspect-[3/4] sm:aspect-auto" : "aspect-[4/3]"
               }`}
               role="button"
               tabIndex={0}
-              aria-label={`${item.title} — ${item.category}. Presiona Enter para ver detalles`}
-              onClick={() => setSelectedProject(idx)}
+              aria-label={`${project.name} — ${project.category}. Presiona Enter para ver la galería`}
+              onClick={() => { setSelectedProject(idx); setCurrentView(0); }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   setSelectedProject(idx);
+                  setCurrentView(0);
                 }
               }}
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
               <Image
-                src={item.src}
-                alt={`${item.title} — ${item.scope} por Nexo Studio`}
+                src={project.views[0].src}
+                alt={`${project.name} — ${project.scope} por Nexo Studio`}
                 fill
                 className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                 quality={85}
@@ -770,11 +692,17 @@ function Portfolio() {
 
               <div className="absolute top-3 sm:top-4 left-3 sm:left-4 flex flex-wrap items-center gap-2 right-3">
                 <span className="px-2.5 sm:px-3 py-1 rounded-full bg-warm/92 text-dark-900 text-[10px] sm:text-xs font-semibold">
-                  {item.category}
+                  {project.category}
                 </span>
                 <span className="px-2.5 sm:px-3 py-1 rounded-full bg-white/12 backdrop-blur-sm text-white text-[10px] sm:text-xs font-medium border border-white/12">
-                  {item.status}
+                  {project.year}
                 </span>
+              </div>
+
+              {/* View count badge */}
+              <div className="absolute top-3 sm:top-4 right-3 sm:right-4 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-[10px] sm:text-xs">
+                <Sparkles className="w-3 h-3 text-warm" />
+                {project.views.length} vistas
               </div>
 
               <AnimatePresence>
@@ -801,12 +729,12 @@ function Portfolio() {
 
               <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
                 <h3 className="text-white font-semibold text-lg sm:text-xl leading-tight">
-                  {item.title}
+                  {project.name}
                 </h3>
                 <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs sm:text-sm text-white/70">
-                  <span>{item.location}</span>
+                  <span>{project.location}</span>
                   <span className="text-warm/70">•</span>
-                  <span>{item.scope}</span>
+                  <span>{project.status}</span>
                 </div>
               </div>
             </motion.article>
@@ -823,72 +751,139 @@ function Portfolio() {
         </FadeInWhenVisible>
       </div>
 
-      {/* Lightbox modal */}
+      {/* Lightbox modal with gallery */}
       <AnimatePresence>
-        {selectedProject !== null && PORTFOLIO_ITEMS[selectedProject] && (
+        {selectedProject !== null && PROJECTS[selectedProject] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
-            onClick={() => setSelectedProject(null)}
-            onKeyDown={(e) => { if (e.key === "Escape") setSelectedProject(null); }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+            onClick={closeLightbox}
             role="dialog"
             aria-modal="true"
-            aria-label={`${PORTFOLIO_ITEMS[selectedProject].title} — detalles`}
+            aria-label={`${PROJECTS[selectedProject].name} — galería`}
           >
             <motion.div
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="relative w-full max-w-3xl bg-dark-800 rounded-2xl overflow-hidden border border-white/10"
+              className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-dark-800 rounded-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                onClick={() => setSelectedProject(null)}
+                onClick={closeLightbox}
                 aria-label="Cerrar"
-                className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 transition-colors"
+                className="absolute top-3 right-3 z-20 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 transition-colors"
               >
-                <ChevronUp className="w-5 h-5 rotate-180" />
+                <X className="w-5 h-5" />
               </button>
-              <div className="relative aspect-[16/10]">
+
+              {/* Main gallery image */}
+              <div className="relative aspect-[16/10] bg-dark-900">
                 <Image
-                  src={PORTFOLIO_ITEMS[selectedProject].src}
-                  alt={`${PORTFOLIO_ITEMS[selectedProject].title} — ${PORTFOLIO_ITEMS[selectedProject].scope}`}
+                  src={PROJECTS[selectedProject].views[currentView].src}
+                  alt={PROJECTS[selectedProject].views[currentView].alt}
                   fill
                   className="object-cover"
                   quality={90}
-                  sizes="(min-width: 768px) 768px, 100vw"
+                  sizes="(min-width: 1024px) 1024px, 100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-800 via-transparent to-transparent" />
+
+                {/* Gallery navigation */}
+                {PROJECTS[selectedProject].views.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => prevView(PROJECTS[selectedProject].views.length)}
+                      aria-label="Imagen anterior"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 transition-colors"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => nextView(PROJECTS[selectedProject].views.length)}
+                      aria-label="Imagen siguiente"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 transition-colors"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs">
+                      {currentView + 1} / {PROJECTS[selectedProject].views.length}
+                    </div>
+                  </>
+                )}
               </div>
+
+              {/* Thumbnails */}
+              {PROJECTS[selectedProject].views.length > 1 && (
+                <div className="flex gap-2 p-3 overflow-x-auto bg-dark-900">
+                  {PROJECTS[selectedProject].views.map((view, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentView(i)}
+                      className={`relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-colors ${
+                        i === currentView ? "border-warm" : "border-transparent hover:border-white/30"
+                      }`}
+                      aria-label={`Ver imagen ${i + 1}`}
+                    >
+                      <Image
+                        src={view.src}
+                        alt={view.alt}
+                        fill
+                        className="object-cover"
+                        quality={60}
+                        sizes="80px"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Project info */}
               <div className="p-6 sm:p-8">
                 <div className="flex flex-wrap gap-2 mb-3">
                   <span className="px-3 py-1 rounded-full bg-warm text-dark-900 text-xs font-semibold">
-                    {PORTFOLIO_ITEMS[selectedProject].category}
+                    {PROJECTS[selectedProject].category}
                   </span>
                   <span className="px-3 py-1 rounded-full bg-white/12 text-white text-xs font-medium border border-white/12">
-                    {PORTFOLIO_ITEMS[selectedProject].status}
+                    {PROJECTS[selectedProject].status}
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-white/8 text-white/80 text-xs font-medium border border-white/10 flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {PROJECTS[selectedProject].year}
                   </span>
                 </div>
                 <h3 className="text-white font-semibold text-2xl sm:text-3xl leading-tight mb-3">
-                  {PORTFOLIO_ITEMS[selectedProject].title}
+                  {PROJECTS[selectedProject].name}
                 </h3>
-                <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/70 mb-5">
-                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-warm" />{PORTFOLIO_ITEMS[selectedProject].location}</span>
-                  <span className="flex items-center gap-1.5"><Ruler className="w-4 h-4 text-warm" />{PORTFOLIO_ITEMS[selectedProject].scope}</span>
+                <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/70 mb-4">
+                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-warm" />{PROJECTS[selectedProject].location}</span>
+                  <span className="flex items-center gap-1.5"><Ruler className="w-4 h-4 text-warm" />{PROJECTS[selectedProject].scope}</span>
                 </div>
-                <a
-                  href={whatsappLink(`Hola Nexo Studio, vi "${PORTFOLIO_ITEMS[selectedProject].title}" en el portafolio y quiero algo similar.`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-6 py-3 text-sm transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Quiero algo así
-                </a>
+                <p className="text-sm text-white/70 leading-relaxed mb-5">
+                  {PROJECTS[selectedProject].description}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={whatsappLink(`Hola Nexo Studio, vi "${PROJECTS[selectedProject].name}" en el portafolio y quiero algo similar.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-6 py-3 text-sm transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Quiero algo así
+                  </a>
+                  <a
+                    href={`/proyectos/${PROJECTS[selectedProject].slug}`}
+                    className="inline-flex items-center gap-2 border border-white/20 hover:border-warm text-white hover:text-warm font-semibold rounded-full px-6 py-3 text-sm transition-colors"
+                  >
+                    Ver proyecto completo
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>
