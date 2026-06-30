@@ -8,8 +8,11 @@ export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug);
+type Params = Promise<{ slug: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
   if (!project) {
     return { title: "Proyecto no encontrado — Nexo Studio" };
   }
@@ -26,8 +29,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
 
 const WHATSAPP_MAIN = "573146811444";
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug);
+export default async function ProjectPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
   if (!project) notFound();
 
   const whatsappLink = `https://wa.me/${WHATSAPP_MAIN}?text=${encodeURIComponent(
