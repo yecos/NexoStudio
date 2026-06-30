@@ -240,7 +240,7 @@ const TEAM = [
   {
     name: "Catalina Molina Álvarez",
     role: "Arquitecta | Gestión de Proyectos",
-    photo: "/images/team/catalina_0.png",
+    photo: "/images/team/catalina_0.jpg",
     intro:
       "Gestión técnica, coordinación interdisciplinaria y control de proyecto.",
     bio: "Arquitecta con 8 años de experiencia en desarrollo integral de proyectos arquitectónicos e inmobiliarios. Especialista en Gestión Inmobiliaria de la Universidad Nacional, con capacidad para articular equipos interdisciplinarios y apoyar decisiones técnicas, normativas y operativas.",
@@ -249,7 +249,7 @@ const TEAM = [
   {
     name: "Juan Mateo Yepes Correa",
     role: "Arquitecto | Diseño Gráfico",
-    photo: "/images/team/mateo_0.png",
+    photo: "/images/team/mateo_0.jpg",
     intro:
       "Diseño 3D, representación arquitectónica y dirección visual de proyectos.",
     bio: "Arquitecto y diseñador gráfico con amplia experiencia en diseño 3D digital, modelado, renderizado y postproducción. Enfocado en claridad visual, desarrollo creativo y excelencia técnica.",
@@ -433,7 +433,7 @@ function SectionHeader({
         {title} {highlight && <span className="text-warm">{highlight}</span>}
       </h2>
       {description && (
-        <p className="mt-4 text-white/58 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+        <p className="mt-4 text-white/70 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
           {description}
         </p>
       )}
@@ -631,7 +631,7 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.15, duration: 0.7 }}
-          className="mt-5 text-sm text-white/45"
+          className="mt-5 text-sm text-white/60"
         >
           De la idea a la visualización, y de la visualización a la obra.
         </motion.p>
@@ -658,7 +658,7 @@ function TrustBar() {
                     <div className="text-sm font-semibold text-warm mt-1">{point.label}</div>
                   </div>
                 </div>
-                <p className="text-sm text-white/58 leading-relaxed">{point.description}</p>
+                <p className="text-sm text-white/70 leading-relaxed">{point.description}</p>
               </div>
             ))}
           </div>
@@ -706,7 +706,7 @@ function Services() {
                 <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-warm transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-sm sm:text-base text-white/62 leading-relaxed">
+                <p className="text-sm sm:text-base text-white/70 leading-relaxed">
                   {service.description}
                 </p>
                 <div className="mt-auto pt-6 flex items-center gap-2 text-warm">
@@ -725,6 +725,7 @@ function Services() {
 /* ── PORTFOLIO ── */
 function Portfolio() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   return (
     <section id="portafolio" className="py-14 sm:py-20 lg:py-24 bg-dark-900">
@@ -741,9 +742,19 @@ function Portfolio() {
             <motion.article
               key={`${item.title}-${item.src}`}
               variants={staggerItem}
-              className={`group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer bg-dark-800 ${
+              className={`group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer bg-dark-800 focus:outline-none focus:ring-2 focus:ring-warm focus:ring-offset-2 focus:ring-offset-dark-900 ${
                 idx === 0 || idx === 7 ? "sm:row-span-2 aspect-[3/4] sm:aspect-auto" : "aspect-[4/3]"
               }`}
+              role="button"
+              tabIndex={0}
+              aria-label={`${item.title} — ${item.category}. Presiona Enter para ver detalles`}
+              onClick={() => setSelectedProject(idx)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedProject(idx);
+                }
+              }}
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
@@ -792,7 +803,7 @@ function Portfolio() {
                 <h3 className="text-white font-semibold text-lg sm:text-xl leading-tight">
                   {item.title}
                 </h3>
-                <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs sm:text-sm text-white/62">
+                <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs sm:text-sm text-white/70">
                   <span>{item.location}</span>
                   <span className="text-warm/70">•</span>
                   <span>{item.scope}</span>
@@ -811,6 +822,78 @@ function Portfolio() {
           </a>
         </FadeInWhenVisible>
       </div>
+
+      {/* Lightbox modal */}
+      <AnimatePresence>
+        {selectedProject !== null && PORTFOLIO_ITEMS[selectedProject] && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+            onClick={() => setSelectedProject(null)}
+            onKeyDown={(e) => { if (e.key === "Escape") setSelectedProject(null); }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${PORTFOLIO_ITEMS[selectedProject].title} — detalles`}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative w-full max-w-3xl bg-dark-800 rounded-2xl overflow-hidden border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedProject(null)}
+                aria-label="Cerrar"
+                className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 transition-colors"
+              >
+                <ChevronUp className="w-5 h-5 rotate-180" />
+              </button>
+              <div className="relative aspect-[16/10]">
+                <Image
+                  src={PORTFOLIO_ITEMS[selectedProject].src}
+                  alt={`${PORTFOLIO_ITEMS[selectedProject].title} — ${PORTFOLIO_ITEMS[selectedProject].scope}`}
+                  fill
+                  className="object-cover"
+                  quality={90}
+                  sizes="(min-width: 768px) 768px, 100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-800 via-transparent to-transparent" />
+              </div>
+              <div className="p-6 sm:p-8">
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full bg-warm text-dark-900 text-xs font-semibold">
+                    {PORTFOLIO_ITEMS[selectedProject].category}
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-white/12 text-white text-xs font-medium border border-white/12">
+                    {PORTFOLIO_ITEMS[selectedProject].status}
+                  </span>
+                </div>
+                <h3 className="text-white font-semibold text-2xl sm:text-3xl leading-tight mb-3">
+                  {PORTFOLIO_ITEMS[selectedProject].title}
+                </h3>
+                <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/70 mb-5">
+                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-warm" />{PORTFOLIO_ITEMS[selectedProject].location}</span>
+                  <span className="flex items-center gap-1.5"><Ruler className="w-4 h-4 text-warm" />{PORTFOLIO_ITEMS[selectedProject].scope}</span>
+                </div>
+                <a
+                  href={whatsappLink(`Hola Nexo Studio, vi "${PORTFOLIO_ITEMS[selectedProject].title}" en el portafolio y quiero algo similar.`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-6 py-3 text-sm transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Quiero algo así
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -857,21 +940,21 @@ function CaseStudies() {
                 <div className="mt-5 space-y-4">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-warm/80">Reto</div>
-                    <p className="mt-1.5 text-sm text-white/58 leading-relaxed">{item.challenge}</p>
+                    <p className="mt-1.5 text-sm text-white/70 leading-relaxed">{item.challenge}</p>
                   </div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-warm/80">Respuesta</div>
-                    <p className="mt-1.5 text-sm text-white/58 leading-relaxed">{item.response}</p>
+                    <p className="mt-1.5 text-sm text-white/70 leading-relaxed">{item.response}</p>
                   </div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-warm/80">Resultado</div>
-                    <p className="mt-1.5 text-sm text-white/58 leading-relaxed">{item.result}</p>
+                    <p className="mt-1.5 text-sm text-white/70 leading-relaxed">{item.result}</p>
                   </div>
                 </div>
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {item.facts.map((fact) => (
-                    <span key={fact} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/58">
+                    <span key={fact} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
                       {fact}
                     </span>
                   ))}
@@ -900,7 +983,7 @@ function About() {
         <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-12 items-start">
           <FadeInWhenVisible direction="right" className="bg-dark-900/55 border border-white/6 rounded-2xl p-6 sm:p-8">
             <h3 className="text-2xl font-semibold text-white mb-4">Arquitectura con claridad visual y control técnico.</h3>
-            <p className="text-white/62 leading-relaxed">
+            <p className="text-white/70 leading-relaxed">
               Nexo Studio es una empresa de arquitectura y construcción ubicada en Medellín. Trabajamos en obras nuevas, remodelaciones, interiores y visualización 3D con una metodología práctica: entender, diseñar, visualizar y coordinar.
             </p>
             <div className="mt-7 space-y-4">
@@ -1000,7 +1083,7 @@ function FAQ() {
                 {item.question}
                 <ChevronUp className="w-5 h-5 shrink-0 rotate-180 text-warm transition-transform group-open:rotate-0" />
               </summary>
-              <p className="mt-3 text-sm sm:text-base text-white/58 leading-relaxed">
+              <p className="mt-3 text-sm sm:text-base text-white/70 leading-relaxed">
                 {item.answer}
               </p>
             </motion.details>
@@ -1025,6 +1108,7 @@ function Contact() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [popupBlocked, setPopupBlocked] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1042,23 +1126,34 @@ function Contact() {
     ].join("\n");
 
     setSubmitted(true);
-    window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormState({
-      name: "",
-      phone: "",
-      email: "",
-      projectType: PROJECT_TYPES[0],
-      location: "",
-      area: "",
-      budget: BUDGET_RANGES[0],
-      timeline: TIMELINES[0],
-      message: "",
-    });
+
+    // Try to open WhatsApp — don't clear form if popup is blocked
+    const popup = window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
+    
+    if (popup) {
+      // Popup opened successfully — clear form
+      setTimeout(() => setSubmitted(false), 3000);
+      setFormState({
+        name: "",
+        phone: "",
+        email: "",
+        projectType: PROJECT_TYPES[0],
+        location: "",
+        area: "",
+        budget: BUDGET_RANGES[0],
+        timeline: TIMELINES[0],
+        message: "",
+      });
+    } else {
+      // Popup blocked — keep form data, show fallback link
+      setSubmitted(false);
+      setPopupBlocked(true);
+    }
   };
 
   const selectClassName =
     "w-full bg-dark-700/55 border border-white/12 text-white focus:border-warm/55 h-11 rounded-xl px-3 text-sm outline-none transition-colors";
+  const selectStyle = { colorScheme: "dark" as const };
 
   return (
     <section id="contacto" className="py-14 sm:py-20 lg:py-24 bg-dark-800">
@@ -1083,7 +1178,7 @@ function Contact() {
                     <MessageCircle className="w-5 h-5 text-green-400" />
                   </div>
                   <div>
-                    <div className="text-xs text-white/42">WhatsApp</div>
+                    <div className="text-xs text-white/60">WhatsApp</div>
                     <div className="text-sm font-medium">314 681 1444 / 300 254 4368</div>
                   </div>
                 </a>
@@ -1092,7 +1187,7 @@ function Contact() {
                     <Mail className="w-5 h-5 text-warm" />
                   </div>
                   <div>
-                    <div className="text-xs text-white/42">Email</div>
+                    <div className="text-xs text-white/60">Email</div>
                     <div className="text-sm font-medium break-all">nexostudio.arquitectura@gmail.com</div>
                   </div>
                 </a>
@@ -1101,7 +1196,7 @@ function Contact() {
                     <MapPin className="w-5 h-5 text-warm/75" />
                   </div>
                   <div>
-                    <div className="text-xs text-white/42">Ubicación</div>
+                    <div className="text-xs text-white/60">Ubicación</div>
                     <div className="text-sm font-medium">Medellín, Colombia</div>
                   </div>
                 </div>
@@ -1112,7 +1207,7 @@ function Contact() {
           <FadeInWhenVisible direction="right" delay={0.15}>
             <div className="h-full bg-dark-900/55 border border-white/6 rounded-2xl p-6 sm:p-8 lg:p-9">
               <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Pre-cotiza por WhatsApp</h3>
-              <p className="text-white/48 text-sm mb-6 sm:mb-7">
+              <p className="text-white/60 text-sm mb-6 sm:mb-7">
                 Este formulario arma un mensaje completo para entender alcance, ubicación, etapa y presupuesto antes de conversar.
               </p>
 
@@ -1129,21 +1224,21 @@ function Contact() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-white/65 mb-1.5">Nombre</label>
-                      <Input id="name" type="text" placeholder="Tu nombre" value={formState.name} onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                      <Input id="name" type="text" placeholder="Tu nombre" value={formState.name} onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/50 focus:border-warm/55 h-11 rounded-xl" />
                     </div>
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-white/65 mb-1.5">Teléfono</label>
-                      <Input id="phone" type="tel" placeholder="Tu WhatsApp" value={formState.phone} onChange={(e) => setFormState((s) => ({ ...s, phone: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                      <Input id="phone" type="tel" placeholder="Tu WhatsApp" value={formState.phone} onChange={(e) => setFormState((s) => ({ ...s, phone: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/50 focus:border-warm/55 h-11 rounded-xl" />
                     </div>
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-white/65 mb-1.5">Email</label>
-                    <Input id="email" type="email" placeholder="tu@email.com" value={formState.email} onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))} className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                    <Input id="email" type="email" placeholder="tu@email.com" value={formState.email} onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))} className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/50 focus:border-warm/55 h-11 rounded-xl" />
                   </div>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="projectType" className="block text-sm font-medium text-white/65 mb-1.5">Tipo de proyecto</label>
-                      <select id="projectType" value={formState.projectType} onChange={(e) => setFormState((s) => ({ ...s, projectType: e.target.value }))} className={selectClassName}>
+                      <select id="projectType" style={selectStyle} value={formState.projectType} onChange={(e) => setFormState((s) => ({ ...s, projectType: e.target.value }))} className={selectClassName}>
                         {PROJECT_TYPES.map((type) => (
                           <option key={type} value={type}>{type}</option>
                         ))}
@@ -1151,17 +1246,17 @@ function Contact() {
                     </div>
                     <div>
                       <label htmlFor="location" className="block text-sm font-medium text-white/65 mb-1.5">Ubicación</label>
-                      <Input id="location" type="text" placeholder="Ciudad o sector" value={formState.location} onChange={(e) => setFormState((s) => ({ ...s, location: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                      <Input id="location" type="text" placeholder="Ciudad o sector" value={formState.location} onChange={(e) => setFormState((s) => ({ ...s, location: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/50 focus:border-warm/55 h-11 rounded-xl" />
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-4">
                     <div>
                       <label htmlFor="area" className="block text-sm font-medium text-white/65 mb-1.5">Área aprox.</label>
-                      <Input id="area" type="text" placeholder="Ej: 80 m²" value={formState.area} onChange={(e) => setFormState((s) => ({ ...s, area: e.target.value }))} className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 h-11 rounded-xl" />
+                      <Input id="area" type="text" placeholder="Ej: 80 m²" value={formState.area} onChange={(e) => setFormState((s) => ({ ...s, area: e.target.value }))} className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/50 focus:border-warm/55 h-11 rounded-xl" />
                     </div>
                     <div>
                       <label htmlFor="budget" className="block text-sm font-medium text-white/65 mb-1.5">Presupuesto</label>
-                      <select id="budget" value={formState.budget} onChange={(e) => setFormState((s) => ({ ...s, budget: e.target.value }))} className={selectClassName}>
+                      <select id="budget" style={selectStyle} value={formState.budget} onChange={(e) => setFormState((s) => ({ ...s, budget: e.target.value }))} className={selectClassName}>
                         {BUDGET_RANGES.map((range) => (
                           <option key={range} value={range}>{range}</option>
                         ))}
@@ -1169,7 +1264,7 @@ function Contact() {
                     </div>
                     <div>
                       <label htmlFor="timeline" className="block text-sm font-medium text-white/65 mb-1.5">Etapa</label>
-                      <select id="timeline" value={formState.timeline} onChange={(e) => setFormState((s) => ({ ...s, timeline: e.target.value }))} className={selectClassName}>
+                      <select id="timeline" style={selectStyle} value={formState.timeline} onChange={(e) => setFormState((s) => ({ ...s, timeline: e.target.value }))} className={selectClassName}>
                         {TIMELINES.map((timeline) => (
                           <option key={timeline} value={timeline}>{timeline}</option>
                         ))}
@@ -1178,12 +1273,39 @@ function Contact() {
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-white/65 mb-1.5">Contexto</label>
-                    <Textarea id="message" placeholder="Cuéntanos qué quieres transformar, diseñar o visualizar..." rows={4} value={formState.message} onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/32 focus:border-warm/55 rounded-xl resize-none" />
+                    <Textarea id="message" placeholder="Cuéntanos qué quieres transformar, diseñar o visualizar..." rows={4} value={formState.message} onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))} required className="bg-dark-700/55 border-white/12 text-white placeholder:text-white/50 focus:border-warm/55 rounded-xl resize-none" />
                   </div>
                   <Button type="submit" size="lg" className="w-full bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-xl h-12 text-base transition-all duration-300 shadow-lg shadow-warm/20 hover:shadow-warm/30">
-                    Abrir WhatsApp
+                    {submitted ? "WhatsApp abierto ✓" : "Abrir WhatsApp"}
                     <Send className="w-4 h-4 ml-2" />
                   </Button>
+
+                  {popupBlocked && (
+                    <div className="mt-3 p-4 rounded-xl bg-warm/12 border border-warm/30 text-sm">
+                      <p className="text-white font-medium mb-2">Tu navegador bloqueó la ventana emergente.</p>
+                      <p className="text-white/70 mb-3">Toca para abrir WhatsApp directamente:</p>
+                      <a
+                        href={whatsappLink([
+                          "Hola Nexo Studio, quiero cotizar un proyecto.",
+                          `Nombre: ${formState.name}`,
+                          `Teléfono: ${formState.phone}`,
+                          `Email: ${formState.email}`,
+                          `Tipo de proyecto: ${formState.projectType}`,
+                          `Ubicación: ${formState.location}`,
+                          `Área aproximada: ${formState.area}`,
+                          `Presupuesto: ${formState.budget}`,
+                          `Tiempo para iniciar: ${formState.timeline}`,
+                          `Contexto: ${formState.message}`,
+                        ].join("\n"))}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-5 py-2.5 text-sm transition-colors"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        Abrir WhatsApp
+                      </a>
+                    </div>
+                  )}
                 </form>
               )}
             </div>
@@ -1206,7 +1328,7 @@ function Footer() {
                 <Image src="/images/brand/logo-nexo.png" alt="Nexo Studio" fill className="object-contain" sizes="128px" />
               </div>
             </a>
-            <p className="text-sm text-white/45 leading-relaxed">
+            <p className="text-sm text-white/60 leading-relaxed">
               Arquitectura + Diseño para espacios residenciales, comerciales y remodelaciones en Medellín.
             </p>
           </div>
@@ -1216,7 +1338,7 @@ function Footer() {
             <ul className="space-y-2.5">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-sm text-white/45 hover:text-warm transition-colors duration-200">{link.label}</a>
+                  <a href={link.href} className="text-sm text-white/60 hover:text-warm transition-colors duration-200">{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -1227,7 +1349,7 @@ function Footer() {
             <ul className="space-y-2.5">
               {SERVICES.slice(0, 5).map((s) => (
                 <li key={s.title}>
-                  <a href="#servicios" className="text-sm text-white/45 hover:text-warm transition-colors duration-200">{s.title}</a>
+                  <a href="#servicios" className="text-sm text-white/60 hover:text-warm transition-colors duration-200">{s.title}</a>
                 </li>
               ))}
             </ul>
@@ -1237,21 +1359,21 @@ function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">Contacto</h4>
             <ul className="space-y-3">
               <li>
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/45 hover:text-warm transition-colors duration-200">
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/60 hover:text-warm transition-colors duration-200">
                   <Phone className="w-3.5 h-3.5 shrink-0" />314 681 1444
                 </a>
               </li>
               <li>
-                <a href={`https://wa.me/${WHATSAPP_SECONDARY}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/45 hover:text-warm transition-colors duration-200">
+                <a href={`https://wa.me/${WHATSAPP_SECONDARY}?text=${encodeURIComponent(DEFAULT_WHATSAPP_MESSAGE)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/60 hover:text-warm transition-colors duration-200">
                   <Phone className="w-3.5 h-3.5 shrink-0" />300 254 4368
                 </a>
               </li>
               <li>
-                <a href="mailto:nexostudio.arquitectura@gmail.com" className="flex items-center gap-2 text-sm text-white/45 hover:text-warm transition-colors duration-200">
+                <a href="mailto:nexostudio.arquitectura@gmail.com" className="flex items-center gap-2 text-sm text-white/60 hover:text-warm transition-colors duration-200">
                   <Mail className="w-3.5 h-3.5 shrink-0" />nexostudio.arquitectura@gmail.com
                 </a>
               </li>
-              <li className="flex items-center gap-2 text-sm text-white/45">
+              <li className="flex items-center gap-2 text-sm text-white/60">
                 <MapPin className="w-3.5 h-3.5 shrink-0" />Medellín, Colombia
               </li>
             </ul>
@@ -1259,7 +1381,7 @@ function Footer() {
         </div>
 
         <div className="mt-10 pt-7 border-t border-white/6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/32">© {new Date().getFullYear()} Nexo Studio. Todos los derechos reservados.</p>
+          <p className="text-xs text-white/50">© {new Date().getFullYear()} Nexo Studio. Todos los derechos reservados.</p>
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="text-xs text-warm/80 hover:text-warm transition-colors">
             Cotizar proyecto por WhatsApp
           </a>
@@ -1320,7 +1442,7 @@ function ScrollToTop() {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed bottom-5 left-5 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-dark-700/84 backdrop-blur-sm border border-white/12 flex items-center justify-center text-white/62 hover:text-warm hover:border-warm/35 transition-all duration-300"
+          className="fixed bottom-5 left-5 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-dark-700/84 backdrop-blur-sm border border-white/12 flex items-center justify-center text-white/70 hover:text-warm hover:border-warm/35 transition-all duration-300"
           aria-label="Volver arriba"
         >
           <ChevronUp className="w-5 h-5" />

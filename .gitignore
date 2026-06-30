@@ -52,3 +52,13 @@ prompt
 server.log
 # Skills directory
 /skills/
+# Workspace artifacts
+/.zscripts/
+/Caddyfile
+/worklog.md
+/REVIEW_*.md
+/REVIEW_*.txt
+
+# OS files
+.DS_Store
+Thumbs.db
