@@ -64,14 +64,14 @@ const SERVICES = [
     title: "Diseño arquitectónico",
     description:
       "Convertimos tu idea en una propuesta clara: concepto, distribución, planos, renders y criterios listos para ejecutar.",
-    image: "/images/projects/page_5.jpg",
+    image: "/images/projects/p04-penol/view-3.jpg",
   },
   {
     icon: Hammer,
     title: "Remodelaciones",
     description:
       "Transformamos espacios existentes con una mirada funcional, estética y realista frente a presupuesto, obra y tiempos.",
-    image: "/images/projects/page_4.jpg",
+    image: "/images/projects/p03-santa-elena/view-2.jpg",
   },
   {
     icon: Paintbrush,
@@ -85,7 +85,7 @@ const SERVICES = [
     title: "Gerencia de proyectos",
     description:
       "Coordinamos etapas, proveedores, costos y calidad para que la obra avance con orden y menos improvisación.",
-    image: "/images/projects/page_8.jpg",
+    image: "/images/projects/p04-penol/view-5.jpg",
   },
   {
     icon: TrendingUp,
@@ -108,7 +108,7 @@ const CASE_STUDIES = [
   {
     title: "Remodelación residencial con decisiones visuales",
     category: "Remodelación integral",
-    image: "/images/projects/page_4.jpg",
+    image: "/images/projects/p03-santa-elena/view-1.jpg",
     challenge:
       "Actualizar un espacio existente sin perder control sobre presupuesto, acabados y tiempos de ejecución.",
     response:
@@ -120,7 +120,7 @@ const CASE_STUDIES = [
   {
     title: "Vivienda contemporánea desde concepto a anteproyecto",
     category: "Diseño arquitectónico",
-    image: "/images/projects/page_5.jpg",
+    image: "/images/projects/p04-penol/view-2.jpg",
     challenge:
       "Transformar una idea inicial en una propuesta arquitectónica entendible para tomar decisiones de inversión.",
     response:
@@ -132,7 +132,7 @@ const CASE_STUDIES = [
   {
     title: "Interior comercial con atmósfera reconocible",
     category: "Interiorismo comercial",
-    image: "/images/projects/page_3.jpg",
+    image: "/images/projects/p06-santa-fe/view-5.jpg",
     challenge:
       "Crear un espacio comercial con identidad, buen recorrido y una experiencia coherente para el usuario.",
     response:
