@@ -68,21 +68,14 @@ export const metadata: Metadata = {
     siteName: "Nexo Studio",
     type: "website",
     locale: "es_CO",
-    images: [
-      {
-        url: "/images/hero/hero-arch.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Nexo Studio arquitectura, remodelaciones e interiores en Medellín",
-      },
-    ],
+    // og:image la genera src/app/opengraph-image.tsx (1200x630 exacto)
   },
   twitter: {
     card: "summary_large_image",
     title: "Nexo Studio — Arquitectura, Remodelaciones e Interiores",
     description:
       "Arquitectura, remodelaciones, interiores, visualización 3D y gerencia de proyectos en Medellín.",
-    images: ["/images/hero/hero-arch.jpg"],
+    // twitter:image la genera src/app/opengraph-image.tsx
   },
 };
 

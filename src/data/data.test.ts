@@ -59,6 +59,14 @@ describe("projects", () => {
     }
   });
 
+  test("updatedAt es una fecha ISO válida (alimenta sitemap.xml)", () => {
+    const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+    for (const p of projects) {
+      expect(p.updatedAt).toMatch(ISO_DATE);
+      expect(new Date(p.updatedAt).toString()).not.toBe("Invalid Date");
+    }
+  });
+
   test("todas las vistas tienen alt descriptivo", () => {
     for (const p of projects) {
       for (const v of p.views) {

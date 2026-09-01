@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       title: `${project.name} — Nexo Studio`,
       description: project.description,
       url: `/proyectos/${project.slug}`,
-      images: [{ url: project.views[0].src, width: 1200, height: 630, alt: project.name }],
+      // og:image la genera ./opengraph-image.tsx con la foto del proyecto
     },
   };
 }

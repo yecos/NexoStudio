@@ -1,6 +1,7 @@
 /**
  * Datos de proyectos del portafolio de Nexo Studio.
  * Cada proyecto se actualiza cuando el cliente proporciona la información.
+ * `updatedAt`: actualizar al cambiar cualquier dato de un proyecto (alimenta sitemap.xml).
  */
 
 export interface ProjectView {
@@ -32,6 +33,8 @@ export interface Project {
   status: ProjectStatus;
   year: number;
   description: string;
+  /** Fecha ISO del último cambio de contenido (sitemap.xml). */
+  updatedAt: string;
   views: ProjectView[];
 }
 
@@ -45,6 +48,7 @@ export const projects: Project[] = [
     scope: "Diseño arquitectónico",
     status: "Proyecto conceptual",
     year: 2022,
+    updatedAt: "2026-09-01",
     description: "Edificio multifamiliar de uso mixto con fachada orgánica, balcones ondulantes, vegetación integrada y acentos de madera. Propuesta conceptual que integra espacios residenciales y comerciales en un solo volumen contemporáneo.",
     views: [
       { src: "/images/projects/p01-rionegro/view-1.jpg", alt: "Vista frontal del edificio con balcones curvos y vegetación" },
@@ -61,6 +65,7 @@ export const projects: Project[] = [
     scope: "Diseño arquitectónico",
     status: "Proyecto conceptual",
     year: 2022,
+    updatedAt: "2026-09-01",
     description: "Torre residencial con balcones curvos de vidrio, paneles verticales de madera y vegetación integrada. La propuesta explora la fluidez de las formas orgánicas en altura, creando un hito contemporáneo en el sector de El Tesoro con fachadas dinámicas que cambian con la luz del día.",
     views: [
       { src: "/images/projects/p02-waves-living/view-1.jpg", alt: "Fachada con textura orgánica marrón y ventanas de marco negro" },
@@ -78,6 +83,7 @@ export const projects: Project[] = [
     scope: "Diseño arquitectónico, diseño de interiores e interventoría en obra",
     status: "En obra",
     year: 2025,
+    updatedAt: "2026-09-01",
     description: "Vivienda unifamiliar de dos plantas con estética mediterránea moderna: fachada de estuco texturizado, ventanas y vanos arqueados, pérgolas de madera y paisajismo abundante. El proyecto integra diseño arquitectónico, interiores y acompañamiento técnico de obra para garantizar coherencia entre concepto y ejecución.",
     views: [
       { src: "/images/projects/p03-santa-elena/view-1.jpg", alt: "Fachada frontal de la vivienda mediterránea con pérgola de madera" },
@@ -95,6 +101,7 @@ export const projects: Project[] = [
     scope: "Diseño arquitectónico",
     status: "Ejecutado",
     year: 2025,
+    updatedAt: "2026-09-01",
     description: "Vivienda de recreación de lujo junto al embalse, con estructura de concreto y vidrio, arcos de agua, terrazas abiertas y áreas sociales integradas al paisaje. La propuesta combina volúmenes contemporáneos con elementos escultóricos como el corte circular con cascada, maximizando las visuales hacia el agua y la vegetación natural del entorno.",
     views: [
       { src: "/images/projects/p04-penol/view-1.jpg", alt: "Interior social con techo circular de madera y muros de vidrio" },
@@ -113,6 +120,7 @@ export const projects: Project[] = [
     scope: "Diseño arquitectónico",
     status: "Proyecto conceptual",
     year: 2025,
+    updatedAt: "2026-09-01",
     description: "Vivienda unifamiliar de inspiración japonesa que integra arquitectura contemporánea y jardín zen. Volumen de concreto y vidrio con techo negro en voladizo, paneles de madera cálida y grandes ventanales que conectan el interior con un paisajismo cuidado: bonsáis, rocas, farol de piedra y estanque con Buda. El interior complementa con dormitorios minimalistas, madera y luz ambiental suave.",
     views: [
       { src: "/images/projects/p05-casa-bonsai/view-1.jpg", alt: "Fachada con techo negro en voladizo y jardín de bonsái" },
@@ -131,6 +139,7 @@ export const projects: Project[] = [
     scope: "Diseño arquitectónico",
     status: "Proyecto conceptual",
     year: 2024,
+    updatedAt: "2026-09-01",
     description: "Residencia de recreación de estilo moderno industrial en tierra caliente, con estructura de concreto expuesto, muros de vidrio y mobiliario de madera cálida. La casa se desarrolla alrededor de una alberca central integrada al paisaje, con zonas sociales abiertas, comedor de mármol, living semi-abierto y dormitorios que conectan visualmente con la vegetación tropical del entorno.",
     views: [
       { src: "/images/projects/p06-santa-fe/view-1.jpg", alt: "Acceso exterior con muros de concreto y plantas" },
