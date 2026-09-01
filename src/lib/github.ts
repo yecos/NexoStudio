@@ -12,10 +12,14 @@ const API_BASE = "https://api.github.com";
 export const DATA_PATH = "src/data/projects.json";
 
 export class GitHubError extends Error {
+  /** Estado HTTP devuelto al cliente del panel. */
   status: number;
-  constructor(message: string, status = 500) {
+  /** Estado HTTP real que respondió GitHub (ej: 404 = archivo nuevo). */
+  upstreamStatus?: number;
+  constructor(message: string, status = 500, upstreamStatus?: number) {
     super(message);
     this.status = status;
+    this.upstreamStatus = upstreamStatus;
   }
 }
 
@@ -61,11 +65,13 @@ async function ghFetch(path: string, init?: RequestInit): Promise<Response> {
       throw new GitHubError(
         "Conflicto al guardar (¿se editó en otro dispositivo?). Recarga e intenta de nuevo.",
         409,
+        res.status,
       );
     }
     throw new GitHubError(
       `GitHub respondió ${res.status}. Verifica el token y sus permisos.`,
       res.status === 401 ? 401 : 502,
+      res.status,
     );
   }
   return res;
@@ -121,8 +127,10 @@ export async function putBase64Image(
     );
     sha = ((await res.json()) as { sha: string }).sha;
   } catch (error) {
-    // 404 → archivo nuevo (sin sha). Cualquier otro error sí se propaga.
-    if (!(error instanceof GitHubError) || error.status !== 404) throw error;
+    // 404 de GitHub → archivo nuevo (sin sha). Otros errores sí se propagan.
+    const isFileMissing =
+      error instanceof GitHubError && error.upstreamStatus === 404;
+    if (!isFileMissing) throw error;
   }
   await ghFetch(`/repos/${repo()}/contents/${path}`, {
     method: "PUT",

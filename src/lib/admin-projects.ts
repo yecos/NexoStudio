@@ -116,21 +116,7 @@ export async function saveProject(
 ): Promise<Project> {
   validateProjectInput(input);
 
-  const { data: remoteProjects, sha } = await getRemoteJson<Project[]>();
-  const current = remoteProjects ?? [];
-
-  // Slug único (excluyendo el propio proyecto en updates)
-  const slugOwner = options.id
-    ? current.find((p) => p.slug === input.slug && p.id !== options.id)
-    : current.find((p) => p.slug === input.slug);
-  if (slugOwner) {
-    throw new GitHubError(
-      `El slug "${input.slug}" ya lo usa el proyecto "${slugOwner.name}". Cambia el nombre o el slug.`,
-      409,
-    );
-  }
-
-  // Subir imágenes nuevas y resolver rutas temporales → definitivas
+  // 1. Subir imágenes nuevas (nombres únicos; idempotente en reintentos)
   const imageDir = `public/images/projects/${input.slug}`;
   const pathByLocalId = new Map<string, string>();
   for (const img of newImages) {
@@ -165,56 +151,112 @@ export async function saveProject(
     return { src: view.src, alt: view.alt.trim() };
   });
 
+  // 2. Commitear projects.json con reintentos (la API de GitHub tiene
+  //    consistencia eventual: el sha puede estar desactualizado un instante)
   const isUpdate = Boolean(options.id);
-  const existing = isUpdate ? current.find((p) => p.id === options.id) : undefined;
-  if (isUpdate && !existing) {
-    throw new GitHubError("El proyecto ya no existe en el repositorio.", 404);
+  const action = isUpdate ? "actualizar" : "crear";
+
+  let lastRemote: Project[] = [];
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    const { data: remoteProjects, sha } = await getRemoteJson<Project[]>();
+    const current = remoteProjects ?? [];
+    lastRemote = current;
+
+    // Slug único (excluyendo el propio proyecto en updates)
+    const slugOwner = options.id
+      ? current.find((p) => p.slug === input.slug && p.id !== options.id)
+      : current.find((p) => p.slug === input.slug);
+    if (slugOwner) {
+      throw new GitHubError(
+        `El slug "${input.slug}" ya lo usa el proyecto "${slugOwner.name}". Cambia el nombre o el slug.`,
+        409,
+      );
+    }
+
+    const existing = isUpdate ? current.find((p) => p.id === options.id) : undefined;
+    if (isUpdate && !existing) {
+      // Puede ser lectura obsoleta (API de GitHub) → reintentar antes de 404
+      if (attempt < 3) {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        continue;
+      }
+      throw new GitHubError("El proyecto ya no existe en el repositorio.", 404);
+    }
+
+    const saved: Project = {
+      id: existing?.id ?? nextId(current),
+      slug: input.slug,
+      name: input.name.trim(),
+      location: input.location.trim(),
+      lat: input.lat,
+      lng: input.lng,
+      category: input.category as ProjectCategory,
+      scope: (input.scope ?? "").trim() || "Diseño arquitectónico",
+      status: input.status as ProjectStatus,
+      year: input.year,
+      description: input.description.trim(),
+      updatedAt: todayISO(),
+      views,
+    };
+
+    // Merge sobre la versión REMOTA (evita pisar ediciones concurrentes)
+    const merged = isUpdate
+      ? current.map((p) => (p.id === saved.id ? saved : p))
+      : [...current, saved];
+
+    try {
+      await putTextFile(
+        DATA_PATH,
+        `${JSON.stringify(merged, null, 2)}\n`,
+        `admin: ${action} proyecto "${saved.name}" [panel]`,
+        sha,
+      );
+      return saved;
+    } catch (error) {
+      const isConflict =
+        error instanceof GitHubError &&
+        (error.upstreamStatus === 409 || error.upstreamStatus === 422);
+      if (!isConflict || attempt === 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 400));
+    }
   }
 
-  const saved: Project = {
-    id: existing?.id ?? nextId(current),
-    slug: input.slug,
-    name: input.name.trim(),
-    location: input.location.trim(),
-    lat: input.lat,
-    lng: input.lng,
-    category: input.category as ProjectCategory,
-    scope: (input.scope ?? "").trim() || "Diseño arquitectónico",
-    status: input.status as ProjectStatus,
-    year: input.year,
-    description: input.description.trim(),
-    updatedAt: todayISO(),
-    views,
-  };
-
-  // Merge sobre la versión REMOTA (evita pisar ediciones concurrentes)
-  const merged = isUpdate
-    ? current.map((p) => (p.id === saved.id ? saved : p))
-    : [...current, saved];
-
-  const action = isUpdate ? "actualizar" : "crear";
-  await putTextFile(
-    DATA_PATH,
-    `${JSON.stringify(merged, null, 2)}\n`,
-    `admin: ${action} proyecto "${saved.name}" [panel]`,
-    sha,
+  // Inalcanzable: el bucle siempre retorna o lanza. Solo para el tipo.
+  throw new GitHubError(
+    `No se pudo guardar (repo en ${lastRemote.length} proyectos). Intenta de nuevo.`,
+    502,
   );
-
-  return saved;
 }
 
 /** Elimina un proyecto del JSON remoto (las imágenes quedan en /public). */
 export async function deleteProject(id: string): Promise<void> {
-  const { data: current, sha } = await getRemoteJson<Project[]>();
-  const target = (current ?? []).find((p) => p.id === id);
-  if (!target) {
-    throw new GitHubError("El proyecto no existe en el repositorio.", 404);
+  // Reintentos por consistencia eventual de la API de GitHub (sha obsoleto).
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    const { data: current, sha } = await getRemoteJson<Project[]>();
+    const target = (current ?? []).find((p) => p.id === id);
+    if (!target) {
+      // Puede ser lectura obsoleta (API de GitHub) → reintentar antes de 404
+      if (attempt < 3) {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        continue;
+      }
+      throw new GitHubError("El proyecto no existe en el repositorio.", 404);
+    }
+    const merged = (current ?? []).filter((p) => p.id !== id);
+    try {
+      await putTextFile(
+        DATA_PATH,
+        `${JSON.stringify(merged, null, 2)}\n`,
+        `admin: eliminar proyecto "${target.name}" [panel]`,
+        sha,
+      );
+      return;
+    } catch (error) {
+      const isConflict =
+        error instanceof GitHubError &&
+        (error.upstreamStatus === 409 || error.upstreamStatus === 422);
+      if (!isConflict || attempt === 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 400));
+    }
   }
-  const merged = (current ?? []).filter((p) => p.id !== id);
-  await putTextFile(
-    DATA_PATH,
-    `${JSON.stringify(merged, null, 2)}\n`,
-    `admin: eliminar proyecto "${target.name}" [panel]`,
-    sha,
-  );
 }
