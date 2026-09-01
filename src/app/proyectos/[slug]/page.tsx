@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { projects, getProjectBySlug } from "@/lib/projects-data";
 import { MessageCircle, MapPin, Ruler, Calendar, ArrowLeft, ArrowRight } from "lucide-react";
+import { projects, getProjectBySlug } from "@/data/projects";
+import { breadcrumbJsonLd } from "@/data/schema";
+import { whatsappLink } from "@/config/site";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -19,42 +21,49 @@ export async function generateMetadata({ params }: { params: Params }) {
   return {
     title: `${project.name} — Nexo Studio | ${project.category}`,
     description: project.description,
+    alternates: {
+      canonical: `/proyectos/${project.slug}`,
+    },
     openGraph: {
       title: `${project.name} — Nexo Studio`,
       description: project.description,
+      url: `/proyectos/${project.slug}`,
       images: [{ url: project.views[0].src, width: 1200, height: 630, alt: project.name }],
     },
   };
 }
-
-const WHATSAPP_MAIN = "573146811444";
 
 export default async function ProjectPage({ params }: { params: Params }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
-  const whatsappLink = `https://wa.me/${WHATSAPP_MAIN}?text=${encodeURIComponent(
-    `Hola Nexo Studio, vi "${project.name}" en el portafolio y quiero algo similar.`
-  )}`;
+  const otherProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a]">
-      {/* Back link */}
+    <main className="min-h-screen bg-dark-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd(project.name, project.slug)),
+        }}
+      />
+
+      {/* Volver */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <Link
           href="/#portafolio"
-          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#c8956c] transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-warm transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Volver al portafolio
         </Link>
       </div>
 
-      {/* Project header */}
+      {/* Encabezado del proyecto */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="flex flex-wrap gap-2 mb-4">
-          <span className="px-3 py-1 rounded-full bg-[#c8956c] text-[#0a0a0a] text-xs font-semibold">
+          <span className="px-3 py-1 rounded-full bg-warm text-dark-900 text-xs font-semibold">
             {project.category}
           </span>
           <span className="px-3 py-1 rounded-full bg-white/12 text-white text-xs font-medium border border-white/12">
@@ -70,11 +79,11 @@ export default async function ProjectPage({ params }: { params: Params }) {
         </h1>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base text-white/70">
           <span className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-[#c8956c]" />
+            <MapPin className="w-4 h-4 text-warm" />
             {project.location}
           </span>
           <span className="flex items-center gap-2">
-            <Ruler className="w-4 h-4 text-[#c8956c]" />
+            <Ruler className="w-4 h-4 text-warm" />
             {project.scope}
           </span>
         </div>
@@ -83,7 +92,7 @@ export default async function ProjectPage({ params }: { params: Params }) {
         </p>
       </section>
 
-      {/* Hero image */}
+      {/* Imagen principal */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
           <Image
@@ -98,7 +107,7 @@ export default async function ProjectPage({ params }: { params: Params }) {
         </div>
       </section>
 
-      {/* Gallery */}
+      {/* Galería */}
       {project.views.length > 1 && (
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <h2 className="text-2xl font-bold text-white mb-6">
@@ -130,7 +139,7 @@ export default async function ProjectPage({ params }: { params: Params }) {
 
       {/* CTA */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="rounded-2xl bg-gradient-to-r from-[#c8956c]/12 to-transparent border border-[#c8956c]/30 p-8 sm:p-10 text-center">
+        <div className="rounded-2xl bg-gradient-to-r from-warm/12 to-transparent border border-warm/30 p-8 sm:p-10 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             ¿Quieres un proyecto como este?
           </h2>
@@ -138,10 +147,10 @@ export default async function ProjectPage({ params }: { params: Params }) {
             Cuéntanos tu idea. Te respondemos por WhatsApp para avanzar rápido.
           </p>
           <a
-            href={whatsappLink}
+            href={whatsappLink(`Hola Nexo Studio, vi "${project.name}" en el portafolio y quiero algo similar.`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#c8956c] hover:bg-[#b07a52] text-[#0a0a0a] font-semibold rounded-full px-8 py-3.5 text-sm transition-colors"
+            className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-8 py-3.5 text-sm transition-colors"
           >
             <MessageCircle className="w-5 h-5" />
             Cotizar por WhatsApp
@@ -149,42 +158,39 @@ export default async function ProjectPage({ params }: { params: Params }) {
         </div>
       </section>
 
-      {/* More projects */}
+      {/* Otros proyectos */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">Otros proyectos</h2>
           <Link
             href="/#portafolio"
-            className="text-sm text-[#c8956c] hover:underline flex items-center gap-1"
+            className="text-sm text-warm hover:underline flex items-center gap-1"
           >
             Ver todos <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {projects
-            .filter((p) => p.slug !== project.slug)
-            .slice(0, 3)
-            .map((p) => (
-              <Link
-                key={p.id}
-                href={`/proyectos/${p.slug}`}
-                className="group relative overflow-hidden rounded-xl aspect-[4/3]"
-              >
-                <Image
-                  src={p.views[0].src}
-                  alt={p.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  quality={75}
-                  sizes="(min-width: 640px) 33vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3">
-                  <p className="text-white text-sm font-semibold leading-tight">{p.name}</p>
-                  <p className="text-white/60 text-xs mt-1">{p.location}</p>
-                </div>
-              </Link>
-            ))}
+          {otherProjects.map((p) => (
+            <Link
+              key={p.id}
+              href={`/proyectos/${p.slug}`}
+              className="group relative overflow-hidden rounded-xl aspect-[4/3]"
+            >
+              <Image
+                src={p.views[0].src}
+                alt={p.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                quality={75}
+                sizes="(min-width: 640px) 33vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-3 left-3 right-3">
+                <p className="text-white text-sm font-semibold leading-tight">{p.name}</p>
+                <p className="text-white/60 text-xs mt-1">{p.location}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </main>

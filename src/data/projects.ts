@@ -1,23 +1,38 @@
-// Datos de proyectos del portafolio de Nexo Studio
-// Cada proyecto se actualiza cuando el cliente proporciona la información
+/**
+ * Datos de proyectos del portafolio de Nexo Studio.
+ * Cada proyecto se actualiza cuando el cliente proporciona la información.
+ */
 
 export interface ProjectView {
   src: string;
   alt: string;
 }
 
+export type ProjectCategory =
+  | "Residencial"
+  | "Comercial"
+  | "Remodelación"
+  | "Obra nueva"
+  | "Interiorismo"
+  | "Residencial / Comercial";
+
+export type ProjectStatus =
+  | "Proyecto conceptual"
+  | "Anteproyecto"
+  | "En obra"
+  | "Ejecutado";
+
 export interface Project {
   id: string;
   slug: string;
   name: string;
   location: string;
-  category: "Residencial" | "Comercial" | "Remodelación" | "Obra nueva" | "Interiorismo" | "Residencial / Comercial";
+  category: ProjectCategory;
   scope: string;
-  status: "Proyecto conceptual" | "Anteproyecto" | "En obra" | "Ejecutado";
+  status: ProjectStatus;
   year: number;
   description: string;
-  views: ProjectView[
-];
+  views: ProjectView[];
 }
 
 export const projects: Project[] = [
