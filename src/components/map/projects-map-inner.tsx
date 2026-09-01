@@ -7,10 +7,10 @@ import "leaflet/dist/leaflet.css";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 
-/** Tiles oscuros de CARTO (gratuitos con atribución). */
-const TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+/** Tiles estándar de OpenStreetMap (gratuitos, sin API key); se oscurecen vía CSS. */
+const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 const ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
 
 /** Pin circular con la foto del proyecto y borde de marca. */
 function photoPin(src: string) {
@@ -63,7 +63,6 @@ export default function ProjectsMapInner({
       <TileLayer
         url={TILE_URL}
         attribution={ATTRIBUTION}
-        subdomains={["a", "b", "c", "d"]}
         maxZoom={19}
       />
       <FitBounds points={points} />

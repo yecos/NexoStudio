@@ -158,7 +158,7 @@ html {
   color: #f5f0eb;
 }
 
-/* ===== Mapa Leaflet (OpenStreetMap + tiles CARTO oscuros) ===== */
+/* ===== Mapa Leaflet (tiles OpenStreetMap oscurecidos vía CSS) ===== */
 
 /* Contiene los z-index internos de Leaflet para que no tapen el navbar */
 .map-shell {
@@ -302,4 +302,9 @@ html {
 
 .leaflet-control-attribution a {
   color: #C8956C !important;
+}
+
+/* Tiles de OpenStreetMap oscurecidos para el tema dark (sin API key) */
+.map-shell .leaflet-tile {
+  filter: invert(1) hue-rotate(185deg) saturate(0.32) brightness(0.95) contrast(0.92);
 }

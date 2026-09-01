@@ -5,9 +5,9 @@ import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-const TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 const ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
 
 /** Pin de marca (punto cobre con anillo). */
 const locationPin = L.divIcon({
@@ -44,7 +44,6 @@ export default function LocationMapInner({
       <TileLayer
         url={TILE_URL}
         attribution={ATTRIBUTION}
-        subdomains={["a", "b", "c", "d"]}
         maxZoom={19}
       />
       <Marker position={position} icon={locationPin} alt={name}>
