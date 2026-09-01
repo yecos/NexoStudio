@@ -78,8 +78,55 @@ Abre http://localhost:3000
 Copia `.env.example` a `.env.local` y ajusta según el entorno:
 
 | Variable | Descripción | Default |
-|----------|-------------|---------|
+|----------|-------------|------------|
 | `NEXT_PUBLIC_SITE_URL` | URL canónica del sitio | `https://www.nexostudioarq.com` |
+| `ADMIN_PASSWORD` | Contraseña del panel `/admin` | — (obligatoria) |
+| `GITHUB_TOKEN` | Token con `Contents: Read and write` para guardar desde el panel | — (obligatoria) |
+| `GITHUB_REPO` | Repo destino | `yecos/NexoStudio` |
+| `GITHUB_BRANCH` | Rama destino | `main` |
+
+## Panel de administración (/admin)
+
+Gestiona los proyectos sin tocar código: **crear, editar y eliminar**, con
+ubicación en mapa interactivo y subida de imágenes.
+
+### Cómo funciona
+
+1. Entras en `/admin` con la contraseña (`ADMIN_PASSWORD`).
+2. Editas el formulario: datos, **ubicación (clic en el mapa)** e imágenes
+   (se redimensionan solas a máx. 1920px JPEG).
+3. Al guardar, el servidor hace **commit en este repo** vía GitHub API
+   (`src/data/projects.json` + imágenes en `public/images/projects/<slug>/`).
+4. Vercel detecta el push y **redespliega automáticamente** (~2 min).
+
+### Configuración en Vercel (una sola vez)
+
+1. Genera un token **fine-grained** en
+   [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens):
+   - *Repository access* → solo `yecos/NexoStudio`
+   - *Permissions* → **Contents: Read and write**
+2. En Vercel → tu proyecto → *Settings* → *Environment Variables*, agrega:
+   - `ADMIN_PASSWORD` = tu contraseña fuerte
+   - `GITHUB_TOKEN` = el token del paso 1
+3. Redespliega para aplicar ( Deployments → Redeploy ).
+
+### Notas
+
+- Sesión: cookie firmada (HMAC) válida 7 días.
+- `robots.txt` bloquea `/admin` y `/api`.
+- Las imágenes eliminadas quedan en el repo sin referenciar (inofensivas);
+  límpialas a mano si quieres ahorrar espacio.
+- Seguridad: usa un token fine-grained con permisos mínimos y cámbialo si
+  sospechas filtración. Nunca commitees `.env.local`.
+
+## Mapa de proyectos
+
+- Home: sección «Zonas donde trabajamos» con todos los proyectos (pines con
+  foto, clic → ficha). Tiles oscuros CARTO + OpenStreetMap (gratuitos, con
+  atribución).
+- Cada proyecto: mini-mapa de ubicación + enlace externo a OpenStreetMap.
+- Coordenadas: campos `lat`/`lng` en `src/data/projects.json` (editables desde
+  el panel con el selector de mapa).
 
 ## Contenido
 
@@ -90,14 +137,15 @@ Copia `.env.example` a `.env.local` y ajusta según el entorno:
 | Casos de estudio | `src/data/landing.ts` → `CASE_STUDIES` |
 | Equipo | `src/data/landing.ts` → `TEAM` |
 | FAQ (sección + JSON-LD) | `src/data/landing.ts` → `FAQ_ITEMS` |
-| Proyectos del portafolio | `src/data/projects.ts` |
+| Proyectos del portafolio | `src/data/projects.json` (o desde `/admin`) |
 | Imágenes | `public/images/` (ver `public/images/README.md`) |
 
 ## SEO
 
 - Metadata completa (OpenGraph, Twitter Cards, canonical) en `layout.tsx` y por página.
+- OG images dinámicas por ruta (`opengraph-image.tsx`, 1200×630 exacto).
 - JSON-LD: `ProfessionalService`, `WebSite` y `FAQPage` en `layout.tsx`; `BreadcrumbList` en cada página de proyecto.
-- `sitemap.xml` incluye las 6 páginas de proyecto; `robots.txt` permite todo.
+- `sitemap.xml` incluye todas las páginas de proyecto con `lastmod` real (campo `updatedAt`); `robots.txt` permite el sitio público y bloquea `/admin` y `/api`.
 - Los tests de datos garantizan que toda imagen referenciada exista.
 
 ## Accesibilidad

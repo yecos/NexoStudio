@@ -31,6 +31,7 @@ export const siteConfig = {
     { label: "Inicio", href: "#inicio" },
     { label: "Servicios", href: "#servicios" },
     { label: "Portafolio", href: "#portafolio" },
+    { label: "Ubicaciones", href: "#ubicaciones" },
     { label: "Casos", href: "#casos" },
     { label: "Nosotros", href: "#nosotros" },
     { label: "Contacto", href: "#contacto" },

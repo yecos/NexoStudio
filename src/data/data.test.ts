@@ -59,6 +59,18 @@ describe("projects", () => {
     }
   });
 
+  test("las coordenadas son válidas para el mapa (Leaflet)", () => {
+    for (const p of projects) {
+      expect(Number.isFinite(p.lat)).toBe(true);
+      expect(Number.isFinite(p.lng)).toBe(true);
+      // Rango Colombia (evita pines en el mar o en otro continente)
+      expect(p.lat).toBeGreaterThan(0);
+      expect(p.lat).toBeLessThan(13);
+      expect(p.lng).toBeGreaterThan(-80);
+      expect(p.lng).toBeLessThan(-66);
+    }
+  });
+
   test("updatedAt es una fecha ISO válida (alimenta sitemap.xml)", () => {
     const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
     for (const p of projects) {
@@ -154,7 +166,7 @@ describe("siteConfig", () => {
   });
 
   test("la navegación apunta a secciones internas", () => {
-    expect(siteConfig.nav.length).toBe(6);
+    expect(siteConfig.nav.length).toBe(7);
     for (const link of siteConfig.nav) {
       expect(link.href.startsWith("#")).toBe(true);
     }

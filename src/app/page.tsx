@@ -6,6 +6,7 @@ import { Hero } from "@/components/sections/hero";
 import { TrustBar } from "@/components/sections/trust-bar";
 import { Services } from "@/components/sections/services";
 import { Portfolio } from "@/components/sections/portfolio";
+import { MapSection } from "@/components/sections/map-section";
 import { CaseStudies } from "@/components/sections/case-studies";
 import { About } from "@/components/sections/about";
 import { Tools } from "@/components/sections/tools";
@@ -25,6 +26,7 @@ export default function Home() {
       <TrustBar />
       <Services />
       <Portfolio />
+      <MapSection />
       <CaseStudies />
       <About />
       <Tools />

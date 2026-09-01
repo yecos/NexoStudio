@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, MapPin, Ruler, Calendar, ArrowLeft, ArrowRight } from "lucide-react";
+import { MessageCircle, MapPin, Ruler, Calendar, ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { projects, getProjectBySlug } from "@/data/projects";
 import { breadcrumbJsonLd } from "@/data/schema";
 import { whatsappLink } from "@/config/site";
+import { ProjectLocationMap } from "@/components/map/project-location-map";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -105,6 +106,27 @@ export default async function ProjectPage({ params }: { params: Params }) {
             priority
           />
         </div>
+      </section>
+
+      {/* Ubicación en mapa */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-white">Ubicación</h2>
+          <a
+            href={`https://www.openstreetmap.org/?mlat=${project.lat}&mlon=${project.lng}#map=15/${project.lat}/${project.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm text-warm hover:text-warm-light transition-colors"
+          >
+            Abrir en OpenStreetMap <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+        <ProjectLocationMap
+          lat={project.lat}
+          lng={project.lng}
+          name={project.name}
+          location={project.location}
+        />
       </section>
 
       {/* Galería */}
