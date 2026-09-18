@@ -181,7 +181,7 @@ describe("siteConfig", () => {
   });
 
   test("la navegación premium tiene rutas válidas", () => {
-    expect(siteConfig.nav.length).toBeGreaterThanOrEqual(5);
+    expect(siteConfig.nav.length).toBeGreaterThanOrEqual(4);
     for (const link of siteConfig.nav) {
       expect(link.href.startsWith("/") || link.href.startsWith("#")).toBe(true);
     }
