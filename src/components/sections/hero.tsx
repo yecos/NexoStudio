@@ -9,7 +9,7 @@ import { track } from "@vercel/analytics";
 
 export function Hero() {
   return (
-    <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="inicio" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src="/images/hero/hero-arch.jpg"
@@ -29,9 +29,9 @@ export function Hero() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center pt-12">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.2 }}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-warm/35 bg-warm/12 mb-7">
+          <div className="inline-flex max-w-full items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-warm/35 bg-warm/12 mb-7">
             <span className="w-2 h-2 rounded-full bg-warm" />
-            <span className="text-xs sm:text-sm font-medium text-warm tracking-wider uppercase">
+            <span className="text-[11px] sm:text-sm font-medium text-warm tracking-[0.12em] sm:tracking-wider uppercase leading-relaxed text-center">
               Arquitectura residencial + Interiorismo · Medellín
             </span>
           </div>
@@ -41,7 +41,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.38 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-white leading-[0.98] drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)]"
+          className="text-[2.75rem] min-[390px]:text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-white leading-[0.98] drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)]"
         >
           Arquitectura que transforma
           <span className="block text-warm">la manera de habitar.</span>
