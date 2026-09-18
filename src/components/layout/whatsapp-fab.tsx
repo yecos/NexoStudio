@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { whatsappLink } from "@/config/site";
 import { useScrolled } from "@/hooks/use-scrolled";
-import { track } from "@vercel/analytics";\nimport { trackMarketingContact } from "@/lib/marketing";
+import { track } from "@vercel/analytics";
+import { trackMarketingContact } from "@/lib/marketing";
 
 /** Botón flotante de WhatsApp visible tras hacer scroll. */
 export function WhatsAppFAB() {

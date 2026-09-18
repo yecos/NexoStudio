@@ -11,7 +11,8 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { SectionHeader } from "@/components/motion/section-header";
 import { PROJECT_TYPES, BUDGET_RANGES, TIMELINES } from "@/data/landing";
 import { whatsappLink, siteConfig } from "@/config/site";
-import { track } from "@vercel/analytics";\nimport { trackMarketingContact, trackMarketingLead } from "@/lib/marketing";
+import { track } from "@vercel/analytics";
+import { trackMarketingContact, trackMarketingLead } from "@/lib/marketing";
 
 interface ContactFormState {
   name: string;
@@ -49,7 +50,8 @@ function buildWhatsAppMessage(form: ContactFormState): string {
     `Inversión estimada: ${form.budget}`,
     `Momento para iniciar: ${form.timeline}`,
     `Contexto: ${form.message}`,
-  ].join("\n");
+  ].join("
+");
 }
 
 export function Contact() {
@@ -351,7 +353,8 @@ export function Contact() {
                         href={whatsappLink(buildWhatsAppMessage(formState))}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => trackMarketingContact("popup_fallback")}\n                        className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-5 py-2.5 text-sm transition-colors"
+                        onClick={() => trackMarketingContact("popup_fallback")}
+                        className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-5 py-2.5 text-sm transition-colors"
                       >
                         <MessageCircle className="w-4 h-4" />
                         Abrir WhatsApp
