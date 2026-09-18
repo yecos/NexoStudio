@@ -81,7 +81,7 @@ export function Hero() {
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
-          <Link href="/#contacto" onClick={() => track("CTA Start Project", { location: "hero" })}>
+          <Link href="/iniciar-proyecto" onClick={() => track("CTA Start Project", { location: "hero" })}>
             <Button variant="outline" size="lg" className="border-white/25 text-white hover:bg-white/12 hover:border-white/45 rounded-full px-8 h-12 text-base transition-all duration-300">
               Iniciar un proyecto
             </Button>
