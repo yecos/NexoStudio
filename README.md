@@ -88,6 +88,35 @@ Copia `.env.example` a `.env.local` y ajusta según el entorno:
 | `LEAD_WEBHOOK_SECRET` | Secreto opcional enviado como `X-Nexo-Webhook-Secret` | — |
 
 
+
+## NEXO CRM propio
+
+El CRM vive en `/admin/leads` y usa Neon Postgres.
+
+Pipeline comercial:
+
+`Nuevo → Calificado → Reunión → Propuesta → Negociación → Ganado → Proyecto`
+
+También existe el estado `Perdido`.
+
+Cada lead guarda contacto, ubicación, tipo de proyecto, área, presupuesto,
+momento de inicio, mensaje, página de origen, UTM, GCLID, prioridad, notas y
+próximo seguimiento.
+
+### Base de datos
+
+Configura una única variable privada en Vercel:
+
+```text
+DATABASE_URL=postgresql://...
+```
+
+La tabla se crea automáticamente en el primer uso. El esquema de referencia
+también está en `sql/001_nexo_crm.sql`.
+
+Sin `DATABASE_URL`, el sitio no falla: WhatsApp sigue funcionando y el panel
+CRM muestra que falta conectar la base.
+
 ## Captura de leads
 
 El formulario público mantiene **WhatsApp como canal principal** y, en paralelo,
