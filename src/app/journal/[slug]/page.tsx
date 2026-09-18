@@ -110,7 +110,7 @@ export default async function JournalArticlePage({ params }: { params: Params })
           <div className="mt-16 border-t border-white/10 pt-10">
             <p className="text-xs uppercase tracking-[0.2em] text-warm mb-4">Siguiente paso</p>
             <h2 className="text-3xl sm:text-4xl font-semibold text-white">¿Estás pensando en un proyecto?</h2>
-            <Link href="/#contacto" className="mt-6 inline-flex items-center gap-2 text-warm font-medium">
+            <Link href="/iniciar-proyecto" className="mt-6 inline-flex items-center gap-2 text-warm font-medium">
               Iniciar una conversación
               <ArrowRight className="w-4 h-4" />
             </Link>
