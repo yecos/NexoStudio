@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 
 export default function InteriorsPage() {
   return (
-    <ServicePage
+    <>
+      <ServicePage
       eyebrow="NEXO Interiors"
       title="Interiorismo pensado"
       highlight="como arquitectura."
@@ -35,6 +36,17 @@ export default function InteriorsPage() {
         { title: "Detalle", text: "Desarrollamos mobiliario, iluminación, acabados y visualización." },
         { title: "Implementación", text: "Coordinamos información y decisiones necesarias para ejecutar." },
       ]}
-    />
+      />
+      <div className="bg-dark-900 pb-16 sm:pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <a
+            href="/diseno-interiores-medellin"
+            className="inline-flex items-center text-sm text-warm hover:text-warm-light transition-colors"
+          >
+            Diseño de interiores en Medellín →
+          </a>
+        </div>
+      </div>
+    </>
   );
 }
