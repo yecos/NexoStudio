@@ -41,6 +41,7 @@ export const siteConfig = {
     { label: "Proyectos", href: "/proyectos" },
     { label: "Servicios", href: "/#servicios" },
     { label: "Nosotros", href: "/nosotros" },
+    { label: "Journal", href: "/journal" },
     { label: "Contacto", href: "/#contacto" },
   ],
 } as const;
