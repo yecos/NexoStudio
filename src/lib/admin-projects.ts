@@ -195,6 +195,13 @@ export async function saveProject(
       status: input.status as ProjectStatus,
       year: input.year,
       description: input.description.trim(),
+      area: input.area?.trim() || undefined,
+      typology: input.typology?.trim() || undefined,
+      services: input.services?.map((item) => item.trim()).filter(Boolean),
+      challenge: input.challenge?.trim() || undefined,
+      concept: input.concept?.trim() || undefined,
+      materials: input.materials?.map((item) => item.trim()).filter(Boolean),
+      featured: Boolean(input.featured),
       updatedAt: todayISO(),
       views,
     };
