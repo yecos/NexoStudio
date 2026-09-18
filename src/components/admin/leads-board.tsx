@@ -11,6 +11,8 @@ import {
   Phone,
   RefreshCw,
   Search,
+  Download,
+  AlertTriangle,
   Users,
   X,
 } from "lucide-react";
@@ -79,12 +81,20 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
     );
   }, [leads, query]);
 
-  const stats = useMemo(() => ({
-    total: leads.length,
-    active: leads.filter((lead) => !["won", "project", "lost"].includes(lead.status)).length,
-    high: leads.filter((lead) => lead.priority === "high").length,
-    won: leads.filter((lead) => ["won", "project"].includes(lead.status)).length,
-  }), [leads]);
+  const stats = useMemo(() => {
+    const now = Date.now();
+    return {
+      total: leads.length,
+      active: leads.filter((lead) => !["won", "project", "lost"].includes(lead.status)).length,
+      high: leads.filter((lead) => lead.priority === "high").length,
+      won: leads.filter((lead) => ["won", "project"].includes(lead.status)).length,
+      overdue: leads.filter((lead) =>
+        lead.nextFollowUpAt &&
+        new Date(lead.nextFollowUpAt).getTime() < now &&
+        !["won", "project", "lost"].includes(lead.status),
+      ).length,
+    };
+  }, [leads]);
 
   async function patchLead(id: string, patch: Record<string, unknown>) {
     const response = await fetch(`/api/admin/leads/${id}`, {
@@ -166,7 +176,7 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
           ["Leads", stats.total],
           ["Activos", stats.active],
           ["Prioridad alta", stats.high],
-          ["Ganados / Proyecto", stats.won],
+          ["Seguimientos vencidos", stats.overdue],
         ].map(([label, value]) => (
           <div key={String(label)} className="rounded-xl border border-white/8 bg-dark-800/55 p-4">
             <p className="text-xs text-white/45">{label}</p>
@@ -180,10 +190,18 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
           <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar nombre, zona, presupuesto, fuente…" className="pl-9" />
         </div>
-        <Button variant="outline" onClick={() => void refresh()} disabled={refreshing} className="border-white/15 text-white/80 hover:bg-white/5">
-          <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
-          Actualizar
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" asChild className="border-white/15 text-white/80 hover:bg-white/5">
+            <a href="/api/admin/leads/export">
+              <Download className="w-4 h-4" />
+              Exportar CSV
+            </a>
+          </Button>
+          <Button variant="outline" onClick={() => void refresh()} disabled={refreshing} className="border-white/15 text-white/80 hover:bg-white/5">
+            <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
+            Actualizar
+          </Button>
+        </div>
       </div>
 
       <div className="overflow-x-auto pb-4">
@@ -217,6 +235,20 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
                         <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-warm" />{lead.location}</p>
                         <p className="flex items-center gap-2"><CircleDollarSign className="w-3.5 h-3.5 text-warm" />{lead.budget || "Sin rango"}</p>
                         <p className="flex items-center gap-2"><CalendarClock className="w-3.5 h-3.5 text-warm" />{localDate(lead.createdAt)}</p>
+                        {lead.nextFollowUpAt && (
+                          <p className={`flex items-center gap-2 ${
+                            new Date(lead.nextFollowUpAt).getTime() < Date.now()
+                              ? "text-amber-300"
+                              : "text-white/55"
+                          }`}>
+                            {new Date(lead.nextFollowUpAt).getTime() < Date.now() ? (
+                              <AlertTriangle className="w-3.5 h-3.5" />
+                            ) : (
+                              <CalendarClock className="w-3.5 h-3.5 text-warm" />
+                            )}
+                            Seguimiento: {localDate(lead.nextFollowUpAt)}
+                          </p>
+                        )}
                       </div>
 
                       <div className="mt-4 flex gap-1.5">
