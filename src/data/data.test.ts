@@ -11,6 +11,7 @@ import {
   PROCESS_STEPS,
 } from "./landing";
 import { siteConfig, whatsappLink, whatsappLinkSecondary } from "@/config/site";
+import { articles, getArticleBySlug } from "./articles";
 
 const VALID_STATUSES: ProjectStatus[] = [
   "Proyecto conceptual",
@@ -139,6 +140,23 @@ describe("landing premium", () => {
     for (const f of FAQ_ITEMS) {
       expect(f.question.length).toBeGreaterThan(10);
       expect(f.answer.length).toBeGreaterThan(30);
+    }
+  });
+});
+
+describe("journal", () => {
+  test("tiene artículos con slugs únicos, imágenes y contenido suficiente", () => {
+    expect(articles.length).toBeGreaterThanOrEqual(3);
+    const slugs = articles.map((article) => article.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+
+    for (const article of articles) {
+      expect(article.title.length).toBeGreaterThan(20);
+      expect(article.excerpt.length).toBeGreaterThan(50);
+      expect(article.sections.length).toBeGreaterThanOrEqual(3);
+      expect(article.publishedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(imageExists(article.image)).toBe(true);
+      expect(getArticleBySlug(article.slug)?.title).toBe(article.title);
     }
   });
 });
