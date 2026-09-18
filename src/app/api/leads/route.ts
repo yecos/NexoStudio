@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { syncLeadToHubSpot, type WebsiteLead } from "@/lib/hubspot";
+import { createLead, isCrmConfigured } from "@/lib/crm";
+import type { NewLeadInput } from "@/data/crm";
 
 export const runtime = "nodejs";
 
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Petición inválida." }, { status: 400 });
   }
 
-  const lead = {
+  const lead: NewLeadInput = {
     name: text(raw.name, 100),
     phone: text(raw.phone, 40),
     email: text(raw.email, 160),
@@ -84,19 +85,24 @@ export async function POST(request: Request) {
     );
   }
 
-  let hubspotSynced = false;
-  try {
-    const hubspot = await syncLeadToHubSpot(lead as WebsiteLead);
-    hubspotSynced = hubspot.synced;
-  } catch {
-    // HubSpot nunca bloquea el canal principal de contacto.
+  let persisted = false;
+  if (isCrmConfigured()) {
+    try {
+      await createLead(lead);
+      persisted = true;
+    } catch (error) {
+      console.error(
+        "CRM lead persistence failed:",
+        error instanceof Error ? error.message : "unknown error",
+      );
+    }
   }
 
   const webhook = process.env.LEAD_WEBHOOK_URL;
   if (!webhook) {
     return NextResponse.json(
-      { accepted: true, forwarded: hubspotSynced, hubspot: hubspotSynced },
-      { status: hubspotSynced ? 201 : 202 },
+      { accepted: true, persisted },
+      { status: persisted ? 201 : 202 },
     );
   }
 
@@ -105,11 +111,9 @@ export async function POST(request: Request) {
       "Content-Type": "application/json",
       "User-Agent": "NexoStudio-Lead-Webhook/1.0",
     };
-
     if (process.env.LEAD_WEBHOOK_SECRET) {
       headers["X-Nexo-Webhook-Secret"] = process.env.LEAD_WEBHOOK_SECRET;
     }
-
     const response = await fetch(webhook, {
       method: "POST",
       headers,
@@ -122,21 +126,14 @@ export async function POST(request: Request) {
       cache: "no-store",
     });
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { accepted: true, forwarded: hubspotSynced, hubspot: hubspotSynced },
-        { status: hubspotSynced ? 201 : 202 },
-      );
-    }
-
     return NextResponse.json(
-      { accepted: true, forwarded: true, hubspot: hubspotSynced },
-      { status: 201 },
+      { accepted: true, persisted, forwarded: response.ok },
+      { status: persisted || response.ok ? 201 : 202 },
     );
   } catch {
     return NextResponse.json(
-      { accepted: true, forwarded: hubspotSynced, hubspot: hubspotSynced },
-      { status: hubspotSynced ? 201 : 202 },
+      { accepted: true, persisted, forwarded: false },
+      { status: persisted ? 201 : 202 },
     );
   }
 }
