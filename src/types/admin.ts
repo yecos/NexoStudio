@@ -27,6 +27,13 @@ export interface ProjectInput {
   status: string;
   year: number;
   description: string;
+  area?: string;
+  typology?: string;
+  services?: string[];
+  challenge?: string;
+  concept?: string;
+  materials?: string[];
+  featured?: boolean;
   views: Array<{ src: string; alt: string }>;
 }
 
