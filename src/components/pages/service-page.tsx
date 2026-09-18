@@ -114,7 +114,7 @@ export function ServicePage({
           </h2>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              href="/#contacto"
+              href="/iniciar-proyecto"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-warm px-8 py-3.5 text-sm font-semibold text-dark-900 hover:bg-warm-light transition-colors"
             >
               Iniciar un proyecto
