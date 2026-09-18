@@ -172,7 +172,7 @@ async function createDeal(lead: WebsiteLead): Promise<string | null> {
     method: "POST",
     body: JSON.stringify({
       properties: {
-        dealname: `Web · ${safe.projectType} · ${lead.name}`,
+        dealname: `Web · ${lead.projectType} · ${lead.name}`,
         pipeline,
         dealstage: stage,
       },
