@@ -142,6 +142,28 @@ export default async function ProjectPage({ params }: { params: Params }) {
                 <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Año</p>
                 <p className="text-base text-white">{project.year}</p>
               </div>
+              {project.typology && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Tipología</p>
+                  <p className="text-base text-white">{project.typology}</p>
+                </div>
+              )}
+              {project.area && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Área</p>
+                  <p className="text-base text-white">{project.area}</p>
+                </div>
+              )}
+              {project.services && project.services.length > 0 && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Servicios</p>
+                  <div className="space-y-1">
+                    {project.services.map((service) => (
+                      <p key={service} className="text-base text-white">{service}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -153,6 +175,40 @@ export default async function ProjectPage({ params }: { params: Params }) {
           </div>
         </div>
       </section>
+
+      {(project.challenge || project.concept || (project.materials && project.materials.length > 0)) && (
+        <section className="pb-16 sm:pb-20 lg:pb-28">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16">
+            {project.challenge && (
+              <div className="border-t border-white/10 pt-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">El reto</p>
+                <p className="text-xl sm:text-2xl text-white/80 leading-relaxed">{project.challenge}</p>
+              </div>
+            )}
+            {project.concept && (
+              <div className="border-t border-white/10 pt-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">Concepto</p>
+                <p className="text-xl sm:text-2xl text-white/80 leading-relaxed">{project.concept}</p>
+              </div>
+            )}
+            {project.materials && project.materials.length > 0 && (
+              <div className="lg:col-span-2 border-t border-white/10 pt-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">Materialidad</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.materials.map((material) => (
+                    <span
+                      key={material}
+                      className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/65"
+                    >
+                      {material}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {project.views.length > 1 && (
         <section className="pb-12 sm:pb-16">
