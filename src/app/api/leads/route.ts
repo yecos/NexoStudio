@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { syncLeadToHubSpot, type WebsiteLead } from "@/lib/hubspot";
 
 export const runtime = "nodejs";
 
@@ -83,10 +84,20 @@ export async function POST(request: Request) {
     );
   }
 
+  let hubspotSynced = false;
+  try {
+    const hubspot = await syncLeadToHubSpot(lead as WebsiteLead);
+    hubspotSynced = hubspot.synced;
+  } catch {
+    // HubSpot nunca bloquea el canal principal de contacto.
+  }
+
   const webhook = process.env.LEAD_WEBHOOK_URL;
   if (!webhook) {
-    // El formulario sigue funcionando por WhatsApp aunque aún no exista CRM.
-    return NextResponse.json({ accepted: true, forwarded: false }, { status: 202 });
+    return NextResponse.json(
+      { accepted: true, forwarded: hubspotSynced, hubspot: hubspotSynced },
+      { status: hubspotSynced ? 201 : 202 },
+    );
   }
 
   try {
@@ -112,12 +123,20 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      return NextResponse.json({ accepted: true, forwarded: false }, { status: 202 });
+      return NextResponse.json(
+        { accepted: true, forwarded: hubspotSynced, hubspot: hubspotSynced },
+        { status: hubspotSynced ? 201 : 202 },
+      );
     }
 
-    return NextResponse.json({ accepted: true, forwarded: true }, { status: 201 });
+    return NextResponse.json(
+      { accepted: true, forwarded: true, hubspot: hubspotSynced },
+      { status: 201 },
+    );
   } catch {
-    // Nunca bloqueamos la experiencia principal de contacto por una caída del CRM.
-    return NextResponse.json({ accepted: true, forwarded: false }, { status: 202 });
+    return NextResponse.json(
+      { accepted: true, forwarded: hubspotSynced, hubspot: hubspotSynced },
+      { status: hubspotSynced ? 201 : 202 },
+    );
   }
 }
