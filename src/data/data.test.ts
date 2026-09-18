@@ -6,12 +6,12 @@ import {
   SERVICES,
   CASE_STUDIES,
   TEAM,
-  TOOLS,
   FAQ_ITEMS,
   TRUST_POINTS,
   PROCESS_STEPS,
 } from "./landing";
 import { siteConfig, whatsappLink, whatsappLinkSecondary } from "@/config/site";
+import { articles, getArticleBySlug } from "./articles";
 
 const VALID_STATUSES: ProjectStatus[] = [
   "Proyecto conceptual",
@@ -29,7 +29,6 @@ const VALID_CATEGORIES: ProjectCategory[] = [
   "Residencial / Comercial",
 ];
 
-/** Verifica que una imagen referenciada exista en /public. */
 function imageExists(src: string): boolean {
   return existsSync(join(process.cwd(), "public", src));
 }
@@ -59,11 +58,10 @@ describe("projects", () => {
     }
   });
 
-  test("las coordenadas son válidas para el mapa (Leaflet)", () => {
+  test("las coordenadas son válidas para el mapa", () => {
     for (const p of projects) {
       expect(Number.isFinite(p.lat)).toBe(true);
       expect(Number.isFinite(p.lng)).toBe(true);
-      // Rango Colombia (evita pines en el mar o en otro continente)
       expect(p.lat).toBeGreaterThan(0);
       expect(p.lat).toBeLessThan(13);
       expect(p.lng).toBeGreaterThan(-80);
@@ -71,7 +69,7 @@ describe("projects", () => {
     }
   });
 
-  test("updatedAt es una fecha ISO válida (alimenta sitemap.xml)", () => {
+  test("updatedAt es una fecha ISO válida", () => {
     const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
     for (const p of projects) {
       expect(p.updatedAt).toMatch(ISO_DATE);
@@ -101,17 +99,18 @@ describe("projects", () => {
   });
 });
 
-describe("landing", () => {
-  test("los 6 servicios tienen título, descripción e imagen existente", () => {
-    expect(SERVICES.length).toBe(6);
+describe("landing premium", () => {
+  test("las tres líneas de servicio premium están definidas", () => {
+    expect(SERVICES.length).toBe(3);
     for (const s of SERVICES) {
       expect(s.title.length).toBeGreaterThan(0);
       expect(s.description.length).toBeGreaterThan(30);
+      expect(s.cta.length).toBeGreaterThan(0);
       expect(imageExists(s.image)).toBe(true);
     }
   });
 
-  test("los casos de estudio tienen reto, respuesta y resultado", () => {
+  test("los casos de estudio conservan reto, respuesta y resultado", () => {
     expect(CASE_STUDIES.length).toBe(3);
     for (const c of CASE_STUDIES) {
       expect(c.challenge.length).toBeGreaterThan(20);
@@ -131,8 +130,7 @@ describe("landing", () => {
     }
   });
 
-  test("las herramientas y señales de confianza están definidas", () => {
-    expect(TOOLS.length).toBe(7);
+  test("las señales de confianza y proceso están definidas", () => {
     expect(TRUST_POINTS.length).toBe(3);
     expect(PROCESS_STEPS.length).toBe(3);
   });
@@ -142,6 +140,23 @@ describe("landing", () => {
     for (const f of FAQ_ITEMS) {
       expect(f.question.length).toBeGreaterThan(10);
       expect(f.answer.length).toBeGreaterThan(30);
+    }
+  });
+});
+
+describe("journal", () => {
+  test("tiene artículos con slugs únicos, imágenes y contenido suficiente", () => {
+    expect(articles.length).toBeGreaterThanOrEqual(3);
+    const slugs = articles.map((article) => article.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+
+    for (const article of articles) {
+      expect(article.title.length).toBeGreaterThan(20);
+      expect(article.excerpt.length).toBeGreaterThan(50);
+      expect(article.sections.length).toBeGreaterThanOrEqual(3);
+      expect(article.publishedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(imageExists(article.image)).toBe(true);
+      expect(getArticleBySlug(article.slug)?.title).toBe(article.title);
     }
   });
 });
@@ -165,10 +180,10 @@ describe("siteConfig", () => {
     expect(secondary).toContain(`wa.me/${siteConfig.contact.whatsappSecondary}`);
   });
 
-  test("la navegación apunta a secciones internas", () => {
-    expect(siteConfig.nav.length).toBe(7);
+  test("la navegación premium tiene rutas válidas", () => {
+    expect(siteConfig.nav.length).toBeGreaterThanOrEqual(4);
     for (const link of siteConfig.nav) {
-      expect(link.href.startsWith("#")).toBe(true);
+      expect(link.href.startsWith("/") || link.href.startsWith("#")).toBe(true);
     }
   });
 

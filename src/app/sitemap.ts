@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
+import { articles } from "@/data/articles";
 import { siteConfig } from "@/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -8,14 +9,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     projects[0].updatedAt,
   );
 
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: siteConfig.url,
-      lastModified: new Date(homeLastModified),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
+  const staticPaths = [
+    "/",
+    "/proyectos",
+    "/arquitectura-residencial",
+    "/interiorismo",
+    "/remodelaciones",
+    "/proceso",
+    "/nosotros",
+    "/arquitectos-medellin",
+    "/arquitectos-el-poblado",
+    "/arquitectos-oriente-antioqueno",
+    "/en",
+    "/journal",
+    "/iniciar-proyecto",
+    "/diseno-interiores-medellin",
+    "/remodelacion-apartamentos-el-poblado",
   ];
+
+  const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path, index) => ({
+    url: `${siteConfig.url}${path === "/" ? "" : path}`,
+    lastModified: new Date(homeLastModified),
+    changeFrequency: "monthly" as const,
+    priority: index === 0 ? 1 : path === "/proyectos" ? 0.9 : 0.85,
+  }));
 
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({
     url: `${siteConfig.url}/proyectos/${p.slug}`,
@@ -24,5 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...projectRoutes];
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${siteConfig.url}/journal/${article.slug}`,
+    lastModified: new Date(article.publishedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.72,
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...articleRoutes];
 }

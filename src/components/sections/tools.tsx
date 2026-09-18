@@ -1,27 +1,65 @@
-import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { SectionHeader } from "@/components/motion/section-header";
-import { TOOLS } from "@/data/landing";
+import Image from "next/image";
+import { Eye, Layers3, DraftingCompass } from "lucide-react";
 
-/** Grilla de herramientas de trabajo. */
 export function Tools() {
-  return (
-    <section className="py-14 sm:py-20 bg-dark-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="Tecnología" title="Herramientas que" highlight="utilizamos" />
+  const points = [
+    {
+      icon: DraftingCompass,
+      title: "Diseño con criterio",
+      text: "Definimos distribución, proporciones, materialidad e iluminación antes de tomar decisiones de obra.",
+    },
+    {
+      icon: Eye,
+      title: "Visualización previa",
+      text: "Renders y modelos permiten evaluar atmósfera, mobiliario y acabados antes de construir.",
+    },
+    {
+      icon: Layers3,
+      title: "Información ejecutable",
+      text: "El diseño se traduce en documentación y criterios claros para coordinar proveedores y ejecución.",
+    },
+  ];
 
-        <Stagger className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
-          {TOOLS.map((tool) => (
-            <StaggerItem key={tool.name}>
-              <div className="group h-full flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-dark-800/55 border border-white/6 hover:border-warm/22 transition-all duration-300 cursor-default">
-                <div className="w-11 h-11 rounded-lg flex items-center justify-center text-white font-bold text-base sm:text-lg group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: `${tool.color}20` }}>
-                  <span style={{ color: tool.color }}>{tool.initial}</span>
+  return (
+    <section className="relative overflow-hidden bg-dark-900 py-20 sm:py-24 lg:py-32">
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[56%] opacity-30 lg:opacity-55">
+        <Image
+          src="/images/projects/p03-santa-elena/view-4.jpg"
+          alt="Visualización arquitectónica desarrollada por Nexo Studio"
+          fill
+          className="object-cover"
+          sizes="(min-width: 1024px) 56vw, 100vw"
+        />
+        <div className="absolute inset-0 bg-dark-900/45 lg:bg-transparent lg:bg-gradient-to-r lg:from-dark-900 lg:via-dark-900/75 lg:to-dark-900/15" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.24em] text-warm mb-5">
+            Antes de construir
+          </p>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.04]">
+            Diseñamos para que puedas
+            <span className="block text-warm">ver antes de decidir.</span>
+          </h2>
+          <p className="mt-6 text-lg text-white/65 leading-relaxed max-w-xl">
+            La tecnología está al servicio del proyecto: nos permite estudiar alternativas, anticipar decisiones y reducir improvisación cuando llega el momento de ejecutar.
+          </p>
+
+          <div className="mt-10 grid gap-5">
+            {points.map((point) => (
+              <div key={point.title} className="flex gap-4 border-t border-white/10 pt-5">
+                <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-warm/30 bg-warm/10">
+                  <point.icon className="h-4.5 w-4.5 text-warm" />
                 </div>
-                <span className="text-xs sm:text-sm text-white/68 group-hover:text-white/92 font-medium text-center transition-colors duration-300">{tool.name}</span>
-                <span className="text-[10px] sm:text-xs text-white/38 text-center leading-tight">{tool.desc}</span>
+                <div>
+                  <h3 className="text-base font-semibold text-white">{point.title}</h3>
+                  <p className="mt-1 text-sm sm:text-base text-white/58 leading-relaxed">{point.text}</p>
+                </div>
               </div>
-            </StaggerItem>
-          ))}
-        </Stagger>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

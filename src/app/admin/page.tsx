@@ -9,10 +9,6 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-/**
- * Panel de administración: gestiona proyectos (crear/editar/eliminar).
- * Los cambios se commitean al repo vía GitHub API y Vercel redespliega.
- */
 export default async function AdminPage() {
   const authed = await isAdminRequest();
 
@@ -24,20 +20,11 @@ export default async function AdminPage() {
             <Lock className="w-5 h-5 text-warm" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">
-              Nexo Studio · Admin
-            </h1>
-            <p className="text-sm text-white/55">
-              Gestión del portafolio de proyectos
-            </p>
+            <h1 className="text-2xl font-bold text-white tracking-tight">Nexo Studio · Admin</h1>
+            <p className="text-sm text-white/55">Gestión del portafolio y acceso al CRM</p>
           </div>
         </header>
-
-        {authed ? (
-          <AdminDashboard initialProjects={projects} />
-        ) : (
-          <LoginForm configured={isAdminConfigured()} />
-        )}
+        {authed ? <AdminDashboard initialProjects={projects} /> : <LoginForm configured={isAdminConfigured()} />}
       </div>
     </main>
   );

@@ -4,69 +4,49 @@
  */
 import {
   Building2,
-  ClipboardList,
-  TrendingUp,
   Paintbrush,
-  Ruler,
   Hammer,
   type LucideIcon,
 } from "lucide-react";
-
-/* ── Servicios ── */
 
 export interface Service {
   icon: LucideIcon;
   title: string;
   description: string;
   image: string;
+  cta: string;
+  href: string;
 }
 
 export const SERVICES: Service[] = [
   {
     icon: Building2,
-    title: "Diseño arquitectónico",
+    title: "NEXO Architecture",
     description:
-      "Convertimos tu idea en una propuesta clara: concepto, distribución, planos, renders y criterios listos para ejecutar.",
+      "Arquitectura residencial para viviendas, casas campestres y proyectos de nueva construcción. Del concepto y la distribución a la visualización y documentación del proyecto.",
     image: "/images/projects/p04-penol/view-3.jpg",
-  },
-  {
-    icon: Hammer,
-    title: "Remodelaciones",
-    description:
-      "Transformamos espacios existentes con una mirada funcional, estética y realista frente a presupuesto, obra y tiempos.",
-    image: "/images/projects/p03-santa-elena/view-2.jpg",
+    cta: "Explorar arquitectura",
+    href: "/arquitectura-residencial",
   },
   {
     icon: Paintbrush,
-    title: "Diseño de interiores",
+    title: "NEXO Interiors",
     description:
-      "Diseñamos atmósferas cálidas, funcionales y coherentes con tu estilo: materialidad, mobiliario, iluminación y detalle.",
-    image: "/images/services/restaurant-design.jpg",
+      "Interiorismo y remodelación integral para apartamentos y viviendas. Diseñamos distribución, materialidad, iluminación, mobiliario y atmósfera como un solo sistema.",
+    image: "/images/projects/p03-santa-elena/view-2.jpg",
+    cta: "Explorar interiorismo",
+    href: "/interiorismo",
   },
   {
-    icon: ClipboardList,
-    title: "Gerencia de proyectos",
+    icon: Hammer,
+    title: "NEXO Complete",
     description:
-      "Coordinamos etapas, proveedores, costos y calidad para que la obra avance con orden y menos improvisación.",
-    image: "/images/projects/p04-penol/view-5.jpg",
-  },
-  {
-    icon: TrendingUp,
-    title: "Factibilidad inmobiliaria",
-    description:
-      "Evaluamos potencial, alcance y estrategia para proyectos con visión comercial, normativa y de valorización.",
+      "Una experiencia integral para llevar el proyecto del concepto a la obra con un solo equipo: diseño, visualización, coordinación técnica, proveedores y acompañamiento de ejecución.",
     image: "/images/services/villa-luxury.jpg",
-  },
-  {
-    icon: Ruler,
-    title: "Visualización 3D",
-    description:
-      "Creamos renders, modelos y recorridos que ayudan a tomar decisiones antes de construir o invertir.",
-    image: "/images/services/interior-design.jpg",
+    cta: "Conocer el proceso",
+    href: "/proceso",
   },
 ];
-
-/* ── Casos de estudio ── */
 
 export interface CaseStudy {
   title: string;
@@ -117,8 +97,6 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
 ];
 
-/* ── Equipo ── */
-
 export interface TeamMember {
   name: string;
   role: string;
@@ -149,31 +127,10 @@ export const TEAM: TeamMember[] = [
   },
 ];
 
-/* ── Herramientas ── */
-
-export interface Tool {
-  name: string;
-  desc: string;
-  color: string;
-  initial: string;
-}
-
-export const TOOLS: Tool[] = [
-  { name: "SketchUp", desc: "Modelado 3D", color: "#005F9E", initial: "S" },
-  { name: "Revit", desc: "BIM / Documentación", color: "#186BDB", initial: "R" },
-  { name: "Twinmotion", desc: "Tiempo real", color: "#FF6B35", initial: "T" },
-  { name: "Unreal Engine", desc: "Visualización inmersiva", color: "#0E84B5", initial: "U" },
-  { name: "D5 Render", desc: "Render fotorrealista", color: "#4CAF50", initial: "D" },
-  { name: "Photoshop", desc: "Postproducción", color: "#31A8FF", initial: "P" },
-  { name: "IA", desc: "Diseño generativo", color: "#C8956C", initial: "IA" },
-];
-
-/* ── Proceso y señales de confianza ── */
-
 export const PROCESS_STEPS: string[] = [
-  "Entendemos tu idea, alcance y presupuesto.",
-  "Diseñamos una propuesta visual y técnica clara.",
-  "Coordinamos decisiones, proveedores y ejecución.",
+  "Entendemos cómo quieres vivir y qué necesita el proyecto.",
+  "Diseñamos y visualizamos cada decisión antes de ejecutar.",
+  "Coordinamos documentación, proveedores y acompañamiento de obra.",
 ];
 
 export interface TrustPoint {
@@ -186,22 +143,19 @@ export const TRUST_POINTS: TrustPoint[] = [
   {
     value: "8+",
     label: "años de experiencia",
-    description: "en desarrollo de proyectos arquitectónicos e inmobiliarios",
+    description: "en desarrollo y coordinación de proyectos arquitectónicos e inmobiliarios",
   },
   {
     value: "360°",
     label: "visión integral",
-    description: "diseño, visualización, gestión técnica y acompañamiento de obra",
+    description: "arquitectura, interiorismo, visualización y acompañamiento de ejecución",
   },
   {
-    value: "3D",
-    label: "decisiones visibles",
-    description:
-      "renders y modelos para evaluar materiales, atmósfera y alcance antes de ejecutar",
+    value: "1",
+    label: "equipo, de principio a fin",
+    description: "menos fragmentación y más coherencia entre diseño, decisiones y obra",
   },
 ];
-
-/* ── FAQ (fuente única: también alimenta el JSON-LD del layout) ── */
 
 export interface FaqItem {
   question: string;
@@ -210,44 +164,43 @@ export interface FaqItem {
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "¿Cuánto cuesta iniciar un proyecto de arquitectura o remodelación?",
+    question: "¿Qué tipo de proyectos desarrolla Nexo Studio?",
     answer:
-      "Depende del alcance, el área, el estado actual del espacio y el nivel de detalle requerido. Por eso empezamos entendiendo ubicación, metros aproximados, presupuesto objetivo y etapa del proyecto.",
+      "Nos enfocamos en arquitectura residencial, interiorismo y remodelaciones integrales para viviendas, apartamentos y casas campestres, además de proyectos seleccionados de carácter comercial.",
   },
   {
     question: "¿Trabajan proyectos fuera de Medellín?",
     answer:
-      "Sí. Atendemos Medellín, Área Metropolitana, Oriente antioqueño y otros lugares de Colombia cuando el alcance permite coordinar diseño, visualización o acompañamiento técnico.",
+      "Sí. Atendemos Medellín, Área Metropolitana, Oriente antioqueño y otros lugares de Colombia cuando el alcance permite coordinar correctamente diseño y acompañamiento técnico.",
   },
   {
-    question: "¿Puedo contratar sólo renders o visualización 3D?",
+    question: "¿Puedo contratar únicamente la etapa de diseño?",
     answer:
-      "Sí. La visualización 3D puede contratarse como servicio independiente para validar diseños, vender una idea, presentar una propuesta o tomar decisiones antes de construir.",
+      "Sí. El alcance puede incluir solo arquitectura o interiorismo, o ampliarse a visualización, documentación, coordinación técnica y acompañamiento de ejecución.",
   },
   {
-    question: "¿También acompañan la ejecución de obra?",
+    question: "¿Cómo inicia un proyecto con Nexo Studio?",
     answer:
-      "Sí. Según el proyecto, podemos apoyar coordinación técnica, proveedores, presupuesto, control de decisiones y seguimiento para que el diseño llegue mejor a obra.",
+      "Comenzamos con una conversación para entender ubicación, área, objetivos, presupuesto y momento del proyecto. Con esa información definimos el alcance y la ruta de trabajo más adecuada.",
   },
 ];
 
-/* ── Opciones del formulario de contacto ── */
-
 export const PROJECT_TYPES: string[] = [
-  "Diseño arquitectónico",
-  "Remodelación",
-  "Diseño de interiores",
-  "Visualización 3D / renders",
-  "Gerencia de proyecto",
-  "Factibilidad inmobiliaria",
+  "Arquitectura residencial",
+  "Interiorismo",
+  "Remodelación integral",
+  "Arquitectura + interiorismo",
+  "Acompañamiento de obra",
+  "Otro",
 ];
 
 export const BUDGET_RANGES: string[] = [
-  "Aún no tengo presupuesto",
-  "Menos de $20M COP",
-  "$20M - $60M COP",
-  "$60M - $150M COP",
-  "Más de $150M COP",
+  "Aún estoy definiendo la inversión",
+  "$50M - $100M COP",
+  "$100M - $250M COP",
+  "$250M - $500M COP",
+  "$500M - $1.000M COP",
+  "Más de $1.000M COP",
 ];
 
 export const TIMELINES: string[] = [
@@ -255,5 +208,6 @@ export const TIMELINES: string[] = [
   "Quiero iniciar este mes",
   "1 a 3 meses",
   "3 a 6 meses",
+  "6 a 12 meses",
   "Ya está en obra",
 ];

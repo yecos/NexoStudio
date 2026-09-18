@@ -13,6 +13,16 @@ async function guard(): Promise<NextResponse | null> {
   return null;
 }
 
+function previewWriteGuard(): NextResponse | null {
+  if (process.env.VERCEL_ENV === "preview") {
+    return NextResponse.json(
+      { error: "El panel está en modo solo lectura durante los previews." },
+      { status: 409 },
+    );
+  }
+  return null;
+}
+
 /** GET /api/admin/projects — proyectos actuales del remoto (frescos). */
 export async function GET() {
   const denied = await guard();
@@ -30,6 +40,8 @@ export async function GET() {
 export async function POST(request: Request) {
   const denied = await guard();
   if (denied) return denied;
+  const previewDenied = previewWriteGuard();
+  if (previewDenied) return previewDenied;
 
   let body: { project?: ProjectInput; newImages?: NewImage[] };
   try {
