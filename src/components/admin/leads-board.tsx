@@ -72,9 +72,12 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
   const [now, setNow] = useState(0);
 
   useEffect(() => {
-    setNow(Date.now());
+    const initial = window.setTimeout(() => setNow(Date.now()), 0);
     const timer = window.setInterval(() => setNow(Date.now()), 60_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(initial);
+      window.clearInterval(timer);
+    };
   }, []);
 
   const filtered = useMemo(() => {
