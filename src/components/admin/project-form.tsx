@@ -70,6 +70,13 @@ export function ProjectForm({
   const [scope, setScope] = useState(project?.scope ?? "Diseño arquitectónico");
   const [year, setYear] = useState<number>(project?.year ?? new Date().getFullYear());
   const [description, setDescription] = useState(project?.description ?? "");
+  const [area, setArea] = useState(project?.area ?? "");
+  const [typology, setTypology] = useState(project?.typology ?? "");
+  const [servicesText, setServicesText] = useState(project?.services?.join("\n") ?? "");
+  const [challenge, setChallenge] = useState(project?.challenge ?? "");
+  const [concept, setConcept] = useState(project?.concept ?? "");
+  const [materialsText, setMaterialsText] = useState(project?.materials?.join("\n") ?? "");
+  const [featured, setFeatured] = useState(Boolean(project?.featured));
   const [views, setViews] = useState<FormView[]>(
     project?.views.map((v) => ({ ...v })) ?? [],
   );
@@ -175,6 +182,19 @@ export function ProjectForm({
         status,
         year,
         description: description.trim(),
+        area: area.trim() || undefined,
+        typology: typology.trim() || undefined,
+        services: servicesText
+          .split(/\n|,/)
+          .map((item) => item.trim())
+          .filter(Boolean),
+        challenge: challenge.trim() || undefined,
+        concept: concept.trim() || undefined,
+        materials: materialsText
+          .split(/\n|,/)
+          .map((item) => item.trim())
+          .filter(Boolean),
+        featured,
         views: views.map((v) => ({ src: v.src, alt: v.alt.trim() })),
       },
       newImages: views
@@ -344,6 +364,113 @@ export function ProjectForm({
             <p className="mt-1 text-xs text-white/40">
               {description.trim().length} caracteres
             </p>
+          </div>
+        </div>
+      </fieldset>
+
+      {/* Case study premium */}
+      <fieldset className="rounded-2xl bg-dark-800/55 border border-white/8 p-5 sm:p-6">
+        <legend className="px-2 text-sm font-semibold text-warm uppercase tracking-wider">
+          Case study
+        </legend>
+        <p className="text-xs text-white/50 mb-5">
+          Campos opcionales. Si los completas, la ficha pública del proyecto tendrá más contenido editorial.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="pf-typology" className="block text-sm font-medium text-white/80 mb-1.5">
+              Tipología
+            </label>
+            <Input
+              id="pf-typology"
+              value={typology}
+              onChange={(e) => setTypology(e.target.value)}
+              placeholder="Ej: Vivienda unifamiliar"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="pf-area" className="block text-sm font-medium text-white/80 mb-1.5">
+              Área
+            </label>
+            <Input
+              id="pf-area"
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+              placeholder="Ej: 320 m²"
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="pf-services" className="block text-sm font-medium text-white/80 mb-1.5">
+              Servicios
+            </label>
+            <Textarea
+              id="pf-services"
+              value={servicesText}
+              onChange={(e) => setServicesText(e.target.value)}
+              rows={3}
+              placeholder={"Arquitectura\nInteriorismo\nAcompañamiento de obra"}
+            />
+            <p className="mt-1 text-xs text-white/40">Uno por línea o separados por coma.</p>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="pf-challenge" className="block text-sm font-medium text-white/80 mb-1.5">
+              Reto del proyecto
+            </label>
+            <Textarea
+              id="pf-challenge"
+              value={challenge}
+              onChange={(e) => setChallenge(e.target.value)}
+              rows={4}
+              placeholder="¿Qué debía resolver el proyecto?"
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="pf-concept" className="block text-sm font-medium text-white/80 mb-1.5">
+              Concepto / respuesta de diseño
+            </label>
+            <Textarea
+              id="pf-concept"
+              value={concept}
+              onChange={(e) => setConcept(e.target.value)}
+              rows={5}
+              placeholder="Explica la idea espacial y las decisiones principales."
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="pf-materials" className="block text-sm font-medium text-white/80 mb-1.5">
+              Materialidad
+            </label>
+            <Textarea
+              id="pf-materials"
+              value={materialsText}
+              onChange={(e) => setMaterialsText(e.target.value)}
+              rows={3}
+              placeholder={"Madera natural\nConcreto aparente\nVidrio"}
+            />
+            <p className="mt-1 text-xs text-white/40">Uno por línea o separados por coma.</p>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label className="flex items-center gap-3 rounded-xl border border-white/10 bg-dark-900/50 px-4 py-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={featured}
+                onChange={(e) => setFeatured(e.target.checked)}
+                className="h-4 w-4 accent-[#C8956C]"
+              />
+              <span>
+                <span className="block text-sm font-medium text-white">Proyecto destacado</span>
+                <span className="block text-xs text-white/45 mt-0.5">
+                  Permite priorizarlo en futuras selecciones del Home.
+                </span>
+              </span>
+            </label>
           </div>
         </div>
       </fieldset>
