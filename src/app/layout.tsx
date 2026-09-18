@@ -103,6 +103,7 @@ export default function RootLayout({
         />
         {children}
         <Toaster />
+        <MarketingTags />
         <Analytics />
       </body>
     </html>
