@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/interiorismo",
     "/remodelaciones",
     "/proceso",
+    "/nosotros",
   ];
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path, index) => ({
