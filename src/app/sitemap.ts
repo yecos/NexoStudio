@@ -23,6 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/en",
     "/journal",
     "/iniciar-proyecto",
+    "/diseno-interiores-medellin",
+    "/remodelacion-apartamentos-el-poblado",
   ];
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path, index) => ({
