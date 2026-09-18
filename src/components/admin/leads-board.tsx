@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CalendarClock,
   ChevronRight,
@@ -69,6 +69,13 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
   const [followUp, setFollowUp] = useState("");
   const [saving, setSaving] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [now, setNow] = useState(0);
+
+  useEffect(() => {
+    setNow(Date.now());
+    const timer = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -82,7 +89,6 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
   }, [leads, query]);
 
   const stats = useMemo(() => {
-    const now = Date.now();
     return {
       total: leads.length,
       active: leads.filter((lead) => !["won", "project", "lost"].includes(lead.status)).length,
@@ -94,7 +100,7 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
         !["won", "project", "lost"].includes(lead.status),
       ).length,
     };
-  }, [leads]);
+  }, [leads, now]);
 
   async function patchLead(id: string, patch: Record<string, unknown>) {
     const response = await fetch(`/api/admin/leads/${id}`, {
@@ -191,11 +197,13 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
           <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar nombre, zona, presupuesto, fuente…" className="pl-9" />
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" asChild className="border-white/15 text-white/80 hover:bg-white/5">
-            <a href="/api/admin/leads/export">
-              <Download className="w-4 h-4" />
-              Exportar CSV
-            </a>
+          <Button
+            variant="outline"
+            onClick={() => window.location.assign("/api/admin/leads/export")}
+            className="border-white/15 text-white/80 hover:bg-white/5"
+          >
+            <Download className="w-4 h-4" />
+            Exportar CSV
           </Button>
           <Button variant="outline" onClick={() => void refresh()} disabled={refreshing} className="border-white/15 text-white/80 hover:bg-white/5">
             <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
@@ -237,11 +245,11 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
                         <p className="flex items-center gap-2"><CalendarClock className="w-3.5 h-3.5 text-warm" />{localDate(lead.createdAt)}</p>
                         {lead.nextFollowUpAt && (
                           <p className={`flex items-center gap-2 ${
-                            new Date(lead.nextFollowUpAt).getTime() < Date.now()
+                            now > 0 && new Date(lead.nextFollowUpAt).getTime() < now
                               ? "text-amber-300"
                               : "text-white/55"
                           }`}>
-                            {new Date(lead.nextFollowUpAt).getTime() < Date.now() ? (
+                            {now > 0 && new Date(lead.nextFollowUpAt).getTime() < now ? (
                               <AlertTriangle className="w-3.5 h-3.5" />
                             ) : (
                               <CalendarClock className="w-3.5 h-3.5 text-warm" />
