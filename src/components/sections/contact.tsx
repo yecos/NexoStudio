@@ -50,7 +50,7 @@ function buildWhatsAppMessage(form: ContactFormState): string {
     `Inversión estimada: ${form.budget}`,
     `Momento para iniciar: ${form.timeline}`,
     `Contexto: ${form.message}`,
-  ].join("\\n");
+  ].join("\n");
 }
 
 export function Contact() {
