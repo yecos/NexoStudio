@@ -68,10 +68,22 @@ export function Contact() {
       budget: formState.budget,
     });
 
+    const params = new URLSearchParams(window.location.search);
+    const attribution = {
+      page: window.location.href,
+      referrer: document.referrer,
+      utmSource: params.get("utm_source") ?? "",
+      utmMedium: params.get("utm_medium") ?? "",
+      utmCampaign: params.get("utm_campaign") ?? "",
+      utmContent: params.get("utm_content") ?? "",
+      utmTerm: params.get("utm_term") ?? "",
+      gclid: params.get("gclid") ?? "",
+    };
+
     void fetch("/api/leads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formState),
+      body: JSON.stringify({ ...formState, attribution }),
       keepalive: true,
     }).catch(() => {
       // WhatsApp sigue siendo el canal principal aunque falle el CRM.
