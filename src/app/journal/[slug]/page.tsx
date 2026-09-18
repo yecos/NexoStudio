@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { articles, getArticleBySlug } from "@/data/articles";
+import { siteConfig } from "@/config/site";
 
 export function generateStaticParams() {
   return articles.map((article) => ({ slug: article.slug }));
@@ -36,8 +37,37 @@ export default async function JournalArticlePage({ params }: { params: Params })
   const article = getArticleBySlug(slug);
   if (!article) notFound();
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    image: `${siteConfig.url}${article.image}`,
+    author: {
+      "@type": "Organization",
+      name: "Nexo Studio",
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Nexo Studio",
+      url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/images/brand/logo-nexo-symbol.png`,
+      },
+    },
+    mainEntityOfPage: `${siteConfig.url}/journal/${article.slug}`,
+  };
+
   return (
     <main className="min-h-screen bg-dark-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Navbar />
 
       <article>
