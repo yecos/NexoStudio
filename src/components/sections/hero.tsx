@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { track } from "@vercel/analytics";
 
 export function Hero() {
   return (
@@ -74,13 +75,13 @@ export function Hero() {
           transition={{ duration: 0.65, delay: 0.95 }}
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link href="/proyectos">
+          <Link href="/proyectos" onClick={() => track("CTA Projects", { location: "hero" })}>
             <Button size="lg" className="bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-8 h-12 text-base transition-all duration-300 shadow-lg shadow-warm/25 hover:shadow-warm/40">
               Explorar proyectos
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
-          <Link href="/#contacto">
+          <Link href="/#contacto" onClick={() => track("CTA Start Project", { location: "hero" })}>
             <Button variant="outline" size="lg" className="border-white/25 text-white hover:bg-white/12 hover:border-white/45 rounded-full px-8 h-12 text-base transition-all duration-300">
               Iniciar un proyecto
             </Button>
