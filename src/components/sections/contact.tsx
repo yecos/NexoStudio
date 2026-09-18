@@ -120,8 +120,8 @@ export function Contact() {
         />
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-          <FadeIn direction="left" className="relative min-h-[460px]">
-            <div className="relative h-full min-h-[460px] rounded-3xl overflow-hidden">
+          <FadeIn direction="left" className="relative min-h-[380px] sm:min-h-[420px] lg:min-h-[460px]">
+            <div className="relative h-full min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] rounded-3xl overflow-hidden">
               <Image
                 src="/images/services/villa-luxury.jpg"
                 alt="Proyecto residencial Nexo Studio"
@@ -275,7 +275,7 @@ export function Contact() {
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <label htmlFor="area" className="block text-sm font-medium text-white/65 mb-1.5">Área aprox.</label>
                       <Input
