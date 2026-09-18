@@ -47,7 +47,7 @@ export function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {siteConfig.nav.map((link) => (
               <Link
                 key={link.href}
@@ -69,7 +69,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-white hover:bg-white/10" aria-label="Abrir menú">
