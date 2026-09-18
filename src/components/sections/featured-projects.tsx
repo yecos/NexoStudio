@@ -3,16 +3,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { projects } from "@/data/projects";
 
-const FEATURED_SLUGS = [
-  "penol-vivienda-recreacion",
-  "santa-elena-vivienda-unifamiliar",
-  "casa-bonsai-guarne",
-];
-
 export function FeaturedProjects() {
-  const featured = FEATURED_SLUGS
-    .map((slug) => projects.find((project) => project.slug === slug))
-    .filter((project): project is NonNullable<typeof project> => Boolean(project));
+  const featured = projects
+    .filter((project) => project.featured)
+    .sort((a, b) => b.year - a.year)
+    .slice(0, 3);
 
   return (
     <section id="portafolio" className="bg-dark-900 py-20 sm:py-24 lg:py-32">
@@ -67,7 +62,7 @@ export function FeaturedProjects() {
                       {project.name}
                     </h3>
                     <p className="mt-3 max-w-2xl text-sm sm:text-base text-white/68 leading-relaxed">
-                      {project.scope}
+                      {project.typology ?? project.scope}
                     </p>
                   </div>
                   <div className="inline-flex items-center gap-2 text-warm font-medium">
