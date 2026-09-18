@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { SectionHeader } from "@/components/motion/section-header";
@@ -18,8 +19,8 @@ export function Services() {
         <Stagger className="grid lg:grid-cols-3 gap-4 sm:gap-5">
           {SERVICES.map((service) => (
             <StaggerItem key={service.title}>
-              <a
-                href="/#contacto"
+              <Link
+                href={service.href}
                 className="group relative block h-full min-h-[330px] overflow-hidden bg-dark-900/65 border border-white/6 rounded-2xl hover:border-warm/30 transition-all duration-500 hover:shadow-lg hover:shadow-warm/6"
               >
                 <Image
@@ -46,7 +47,7 @@ export function Services() {
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </a>
+              </Link>
             </StaggerItem>
           ))}
         </Stagger>
