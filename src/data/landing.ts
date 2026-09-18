@@ -15,6 +15,7 @@ export interface Service {
   description: string;
   image: string;
   cta: string;
+  href: string;
 }
 
 export const SERVICES: Service[] = [
@@ -25,6 +26,7 @@ export const SERVICES: Service[] = [
       "Arquitectura residencial para viviendas, casas campestres y proyectos de nueva construcción. Del concepto y la distribución a la visualización y documentación del proyecto.",
     image: "/images/projects/p04-penol/view-3.jpg",
     cta: "Explorar arquitectura",
+    href: "/arquitectura-residencial",
   },
   {
     icon: Paintbrush,
@@ -33,6 +35,7 @@ export const SERVICES: Service[] = [
       "Interiorismo y remodelación integral para apartamentos y viviendas. Diseñamos distribución, materialidad, iluminación, mobiliario y atmósfera como un solo sistema.",
     image: "/images/projects/p03-santa-elena/view-2.jpg",
     cta: "Explorar interiorismo",
+    href: "/interiorismo",
   },
   {
     icon: Hammer,
@@ -41,6 +44,7 @@ export const SERVICES: Service[] = [
       "Una experiencia integral para llevar el proyecto del concepto a la obra con un solo equipo: diseño, visualización, coordinación técnica, proveedores y acompañamiento de ejecución.",
     image: "/images/services/villa-luxury.jpg",
     cta: "Conocer el proceso",
+    href: "/proceso",
   },
 ];
 
