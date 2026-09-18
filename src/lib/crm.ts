@@ -182,3 +182,15 @@ export async function updateLead(
   `;
   return rows[0] ? mapRow(rows[0] as Record<string, unknown>) : null;
 }
+
+
+export async function checkCrmHealth(): Promise<boolean> {
+  if (!isCrmConfigured()) return false;
+  try {
+    await ensureSchema();
+    const rows = await getSql()`SELECT 1 AS ok`;
+    return Number((rows[0] as { ok?: number } | undefined)?.ok) === 1;
+  } catch {
+    return false;
+  }
+}
