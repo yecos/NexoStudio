@@ -19,6 +19,16 @@ function text(value: unknown, max: number): string {
 }
 
 export async function POST(request: Request) {
+  const contentLength = Number(request.headers.get("content-length") ?? "0");
+  if (Number.isFinite(contentLength) && contentLength > 20_000) {
+    return NextResponse.json({ error: "Petición demasiado grande." }, { status: 413 });
+  }
+
+  const origin = request.headers.get("origin");
+  if (origin && origin !== new URL(request.url).origin) {
+    return NextResponse.json({ error: "Origen no permitido." }, { status: 403 });
+  }
+
   let raw: LeadPayload;
   try {
     raw = (await request.json()) as LeadPayload;
