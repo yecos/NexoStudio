@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 
 export default function RenovationsPage() {
   return (
-    <ServicePage
+    <>
+      <ServicePage
       eyebrow="NEXO Renovation"
       title="Remodelar es"
       highlight="volver a pensar el espacio."
@@ -35,6 +36,17 @@ export default function RenovationsPage() {
         { title: "Preparación", text: "Documentamos y visualizamos para presupuestar y coordinar la intervención." },
         { title: "Obra", text: "Acompañamos decisiones y proveedores para mantener coherencia con el diseño." },
       ]}
-    />
+      />
+      <div className="bg-dark-900 pb-16 sm:pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <a
+            href="/remodelacion-apartamentos-el-poblado"
+            className="inline-flex items-center text-sm text-warm hover:text-warm-light transition-colors"
+          >
+            Remodelación de apartamentos en El Poblado →
+          </a>
+        </div>
+      </div>
+    </>
   );
 }
