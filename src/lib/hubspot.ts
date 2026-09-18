@@ -163,10 +163,9 @@ async function upsertContact(lead: WebsiteLead): Promise<string> {
 }
 
 async function createDeal(lead: WebsiteLead): Promise<string | null> {
-  const pipeline = process.env.HUBSPOT_DEAL_PIPELINE_ID?.trim();
-  const stage = process.env.HUBSPOT_DEAL_STAGE_ID?.trim();
-
-  if (!pipeline || !stage) return null;
+  const pipeline = process.env.HUBSPOT_DEAL_PIPELINE_ID?.trim() || "default";
+  const stage =
+    process.env.HUBSPOT_DEAL_STAGE_ID?.trim() || "appointmentscheduled";
 
   const response = await hsFetch(`/crm/objects/${CRM_VERSION}/deals`, {
     method: "POST",
