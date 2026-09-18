@@ -30,7 +30,7 @@ export default function EnglishPage() {
           <nav className="flex items-center gap-5 sm:gap-7 text-sm text-white/70">
             <Link href="/proyectos" className="hover:text-warm transition-colors">Projects</Link>
             <Link href="/en#services" className="hidden sm:inline hover:text-warm transition-colors">Services</Link>
-            <Link href="/#contacto" className="rounded-full border border-warm/40 px-4 py-2 text-warm hover:bg-warm hover:text-dark-900 transition-colors">
+            <Link href="/iniciar-proyecto" className="rounded-full border border-warm/40 px-4 py-2 text-warm hover:bg-warm hover:text-dark-900 transition-colors">
               Start a project
             </Link>
           </nav>
@@ -69,7 +69,7 @@ export default function EnglishPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/#contacto"
+              href="/iniciar-proyecto"
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white hover:border-warm/50 hover:text-warm transition-colors"
             >
               Start a conversation
@@ -152,7 +152,7 @@ export default function EnglishPage() {
             <span className="block text-warm">what you want to create.</span>
           </h2>
           <Link
-            href="/#contacto"
+            href="/iniciar-proyecto"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-warm px-8 py-3.5 text-sm font-semibold text-dark-900 hover:bg-warm-light transition-colors"
           >
             Start a project
@@ -167,7 +167,7 @@ export default function EnglishPage() {
           <div className="flex items-center gap-5 text-xs">
             <Link href="/" className="text-white/55 hover:text-warm">Español</Link>
             <Link href="/proyectos" className="text-white/55 hover:text-warm">Projects</Link>
-            <Link href="/#contacto" className="text-warm/80 hover:text-warm">Contact</Link>
+            <Link href="/iniciar-proyecto" className="text-warm/80 hover:text-warm">Contact</Link>
           </div>
         </div>
       </footer>
