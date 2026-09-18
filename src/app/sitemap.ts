@@ -16,6 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/remodelaciones",
     "/proceso",
     "/nosotros",
+    "/arquitectos-medellin",
+    "/arquitectos-el-poblado",
+    "/arquitectos-oriente-antioqueno",
   ];
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path, index) => ({
