@@ -84,6 +84,25 @@ Copia `.env.example` a `.env.local` y ajusta según el entorno:
 | `GITHUB_TOKEN` | Token con `Contents: Read and write` para guardar desde el panel | — (obligatoria) |
 | `GITHUB_REPO` | Repo destino | `yecos/NexoStudio` |
 | `GITHUB_BRANCH` | Rama destino | `main` |
+| `LEAD_WEBHOOK_URL` | Webhook opcional para copiar leads a CRM/automatización | — |
+| `LEAD_WEBHOOK_SECRET` | Secreto opcional enviado como `X-Nexo-Webhook-Secret` | — |
+
+
+## Captura de leads
+
+El formulario público mantiene **WhatsApp como canal principal** y, en paralelo,
+envía los datos a `POST /api/leads`.
+
+- Sin `LEAD_WEBHOOK_URL`: el endpoint acepta el lead pero no lo reenvía.
+- Con `LEAD_WEBHOOK_URL`: reenvía nombre, teléfono, email, tipo de proyecto,
+  ubicación, área, inversión estimada, momento de inicio y contexto.
+- Si el webhook falla, el usuario puede continuar por WhatsApp; la integración
+  de CRM nunca bloquea el contacto.
+- `LEAD_WEBHOOK_SECRET` es opcional y se envía en el header
+  `X-Nexo-Webhook-Secret`.
+
+Esto permite conectar posteriormente HubSpot, Make, Zapier, n8n o un backend propio
+sin cambiar el formulario.
 
 ## Panel de administración (/admin)
 
