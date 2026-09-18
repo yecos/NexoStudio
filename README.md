@@ -104,6 +104,32 @@ envía los datos a `POST /api/leads`.
 Esto permite conectar posteriormente HubSpot, Make, Zapier, n8n o un backend propio
 sin cambiar el formulario.
 
+
+### HubSpot CRM
+
+La captura de leads puede sincronizarse directamente con HubSpot desde el servidor.
+
+Variables:
+
+| Variable | Uso |
+|---|---|
+| `HUBSPOT_ACCESS_TOKEN` | Service Key / token con acceso al CRM |
+| `HUBSPOT_DEAL_PIPELINE_ID` | ID del pipeline donde crear oportunidades (opcional) |
+| `HUBSPOT_DEAL_STAGE_ID` | ID de la etapa inicial del deal (opcional) |
+
+Comportamiento:
+
+1. Busca el contacto por email; si no hay email, por teléfono.
+2. Actualiza el contacto existente o crea uno nuevo.
+3. Si pipeline + etapa están configurados, crea un deal y lo asocia al contacto.
+4. Crea una nota con tipo de proyecto, ubicación, área, inversión, momento de inicio,
+   contexto y atribución UTM.
+5. Una caída de HubSpot nunca bloquea WhatsApp ni el formulario.
+
+Para una integración nueva, usa una **Service Key** con los permisos mínimos
+necesarios para contactos, deals/notas y asociaciones. Guarda la clave solo como
+variable de entorno de Vercel; nunca en GitHub.
+
 ## Panel de administración (/admin)
 
 Gestiona los proyectos sin tocar código: **crear, editar y eliminar**, con
