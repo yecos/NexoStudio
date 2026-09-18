@@ -58,7 +58,7 @@ export function Navbar() {
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-warm group-hover:w-6 transition-all duration-300" />
               </Link>
             ))}
-            <Link href="/#contacto" className="ml-4">
+            <Link href="/iniciar-proyecto" className="ml-4">
               <Button
                 variant="outline"
                 size="sm"
@@ -94,7 +94,7 @@ export function Navbar() {
                     </motion.a>
                   ))}
                   <div className="mt-6 px-4">
-                    <Link href="/#contacto" onClick={handleLinkClick}>
+                    <Link href="/iniciar-proyecto" onClick={handleLinkClick}>
                       <Button className="w-full bg-warm text-dark-900 hover:bg-warm-light rounded-full font-semibold">
                         Iniciar un proyecto
                       </Button>
