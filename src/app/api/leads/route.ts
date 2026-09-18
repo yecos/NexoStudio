@@ -25,6 +25,8 @@ interface LeadPayload {
   budget?: unknown;
   timeline?: unknown;
   message?: unknown;
+  website?: unknown;
+  formElapsedMs?: unknown;
   attribution?: AttributionPayload;
 }
 
@@ -48,6 +50,17 @@ export async function POST(request: Request) {
     raw = (await request.json()) as LeadPayload;
   } catch {
     return NextResponse.json({ error: "Petición inválida." }, { status: 400 });
+  }
+
+  const honeypot = text(raw.website, 200);
+  const formElapsedMs =
+    typeof raw.formElapsedMs === "number" && Number.isFinite(raw.formElapsedMs)
+      ? raw.formElapsedMs
+      : 0;
+
+  // Respuesta deliberadamente indistinguible para bots.
+  if (honeypot || formElapsedMs < 1500 || formElapsedMs > 7_200_000) {
+    return NextResponse.json({ accepted: true, persisted: false }, { status: 202 });
   }
 
   const lead: NewLeadInput = {

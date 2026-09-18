@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { MessageCircle, Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
@@ -57,6 +57,12 @@ export function Contact() {
   const [formState, setFormState] = useState<ContactFormState>(INITIAL_FORM_STATE);
   const [submitted, setSubmitted] = useState(false);
   const [popupBlocked, setPopupBlocked] = useState(false);
+  const [website, setWebsite] = useState("");
+  const formStartedAt = useRef(0);
+
+  useEffect(() => {
+    formStartedAt.current = Date.now();
+  }, []);
 
   const { contact } = siteConfig;
 
@@ -85,7 +91,15 @@ export function Contact() {
     void fetch("/api/leads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formState, attribution }),
+      body: JSON.stringify({
+        ...formState,
+        attribution,
+        website,
+        formElapsedMs:
+          formStartedAt.current > 0
+            ? Date.now() - formStartedAt.current
+            : 0,
+      }),
       keepalive: true,
     }).catch(() => {
       // WhatsApp sigue siendo el canal principal aunque falle el CRM.
@@ -100,6 +114,8 @@ export function Contact() {
     if (popup) {
       setTimeout(() => setSubmitted(false), 3000);
       setFormState(INITIAL_FORM_STATE);
+      setWebsite("");
+      formStartedAt.current = Date.now();
       setPopupBlocked(false);
     } else {
       setSubmitted(false);
@@ -212,6 +228,22 @@ export function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                  <div
+                    aria-hidden="true"
+                    className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+                  >
+                    <label htmlFor="company-website">Sitio web</label>
+                    <input
+                      id="company-website"
+                      name="company-website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                    />
+                  </div>
+
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-white/65 mb-1.5">Nombre</label>
