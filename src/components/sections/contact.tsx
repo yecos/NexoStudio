@@ -125,8 +125,8 @@ export function Contact() {
           <FadeIn direction="left" className="relative min-h-[380px] sm:min-h-[420px] lg:min-h-[460px]">
             <div className="relative h-full min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] rounded-3xl overflow-hidden">
               <Image
-                src="/images/services/villa-luxury.jpg"
-                alt="Proyecto residencial Nexo Studio"
+                src="/images/services/contact-nexo-premium.webp"
+                alt="Interior residencial contemporáneo con iluminación cálida y vista urbana"
                 fill
                 className="object-cover"
                 quality={90}

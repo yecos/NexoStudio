@@ -12,8 +12,8 @@ export function Hero() {
     <section id="inicio" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/images/hero/hero-arch.jpg"
-          alt="Proyecto de arquitectura residencial de Nexo Studio"
+          src="/images/hero/hero-nexo-premium.webp"
+          alt="Arquitectura residencial contemporánea en Medellín al atardecer"
           fill
           className="object-cover object-center"
           priority
