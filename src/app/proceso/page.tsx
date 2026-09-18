@@ -97,7 +97,7 @@ export default function ProcessPage() {
             <span className="block text-warm">entender tu proyecto.</span>
           </h2>
           <Link
-            href="/#contacto"
+            href="/iniciar-proyecto"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-warm px-8 py-3.5 text-sm font-semibold text-dark-900 hover:bg-warm-light transition-colors"
           >
             Iniciar un proyecto
