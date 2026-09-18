@@ -11,6 +11,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { SectionHeader } from "@/components/motion/section-header";
 import { PROJECT_TYPES, BUDGET_RANGES, TIMELINES } from "@/data/landing";
 import { whatsappLink, siteConfig } from "@/config/site";
+import { track } from "@vercel/analytics";
 
 interface ContactFormState {
   name: string;
@@ -61,6 +62,11 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+
+    track("Lead Form Submit", {
+      projectType: formState.projectType,
+      budget: formState.budget,
+    });
 
     const popup = window.open(
       whatsappLink(buildWhatsAppMessage(formState)),
@@ -115,6 +121,7 @@ export function Contact() {
                   href={whatsappLink()}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => track("WhatsApp Click", { location: "contact_card" })}
                   className="flex items-center gap-3 text-white/82 hover:text-warm transition-colors duration-200 group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-green-500/12 flex items-center justify-center group-hover:bg-green-500/22 transition-colors duration-200">
