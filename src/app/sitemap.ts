@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/arquitectos-oriente-antioqueno",
     "/en",
     "/journal",
+    "/iniciar-proyecto",
   ];
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path, index) => ({
