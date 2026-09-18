@@ -22,7 +22,7 @@ export function Tools() {
 
   return (
     <section className="relative overflow-hidden bg-dark-900 py-20 sm:py-24 lg:py-32">
-      <div className="absolute inset-y-0 right-0 w-full lg:w-[56%] opacity-35 lg:opacity-55">
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[56%] opacity-30 lg:opacity-55">
         <Image
           src="/images/projects/p03-santa-elena/view-4.jpg"
           alt="Visualización arquitectónica desarrollada por Nexo Studio"
@@ -30,7 +30,7 @@ export function Tools() {
           className="object-cover"
           sizes="(min-width: 1024px) 56vw, 100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-900 via-dark-900/75 to-dark-900/15" />
+        <div className="absolute inset-0 bg-dark-900/45 lg:bg-transparent lg:bg-gradient-to-r lg:from-dark-900 lg:via-dark-900/75 lg:to-dark-900/15" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
