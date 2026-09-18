@@ -150,9 +150,10 @@ export function LeadsBoard({ initialLeads, configured }: LeadsBoardProps) {
         <Users className="w-8 h-8 text-warm mb-4" />
         <h2 className="text-2xl font-semibold text-white">CRM listo para conectar</h2>
         <p className="mt-3 max-w-2xl text-white/60 leading-relaxed">
-          Falta vincular Neon al proyecto de Vercel para que exista
-          <code className="mx-1 text-warm">DATABASE_URL</code>.
-          WhatsApp seguirá funcionando mientras tanto.
+          Falta vincular Neon al proyecto de Vercel o exponer una URL de conexión.
+          El CRM acepta <code className="mx-1 text-warm">DATABASE_URL</code> o
+          <code className="mx-1 text-warm">STORAGE_URL</code>. WhatsApp seguirá
+          funcionando mientras tanto.
         </p>
       </div>
     );

@@ -11,7 +11,11 @@ import {
 let schemaPromise: Promise<void> | null = null;
 
 function databaseUrl(): string | null {
-  return process.env.DATABASE_URL?.trim() || null;
+  return (
+    process.env.DATABASE_URL?.trim() ||
+    process.env.STORAGE_URL?.trim() ||
+    null
+  );
 }
 
 export function isCrmConfigured(): boolean {
@@ -20,7 +24,9 @@ export function isCrmConfigured(): boolean {
 
 function getSql() {
   const url = databaseUrl();
-  if (!url) throw new Error("DATABASE_URL no está configurada.");
+  if (!url) {
+    throw new Error("No hay una URL de conexión de Neon configurada.");
+  }
   return neon(url);
 }
 
