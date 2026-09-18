@@ -68,6 +68,15 @@ export function Contact() {
       budget: formState.budget,
     });
 
+    void fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formState),
+      keepalive: true,
+    }).catch(() => {
+      // WhatsApp sigue siendo el canal principal aunque falle el CRM.
+    });
+
     const popup = window.open(
       whatsappLink(buildWhatsAppMessage(formState)),
       "_blank",
