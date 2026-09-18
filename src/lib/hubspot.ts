@@ -172,7 +172,7 @@ async function createDeal(lead: WebsiteLead): Promise<string | null> {
     method: "POST",
     body: JSON.stringify({
       properties: {
-        dealname: `Web · ${lead.projectType} · ${lead.name}`,
+        dealname: `Web · ${safe.projectType} · ${lead.name}`,
         pipeline,
         dealstage: stage,
       },
@@ -195,23 +195,44 @@ async function associate(
   );
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function noteBody(lead: WebsiteLead): string {
+  const safe = {
+    projectType: escapeHtml(lead.projectType),
+    location: escapeHtml(lead.location),
+    area: escapeHtml(lead.area),
+    budget: escapeHtml(lead.budget),
+    timeline: escapeHtml(lead.timeline),
+    message: escapeHtml(lead.message),
+    utmSource: escapeHtml(lead.attribution.utmSource),
+    utmCampaign: escapeHtml(lead.attribution.utmCampaign),
+    page: escapeHtml(lead.attribution.page),
+  };
+
   const rows = [
     "<strong>Lead desde nexostudioarq.com</strong>",
-    `<br><strong>Tipo de proyecto:</strong> ${lead.projectType}`,
-    `<br><strong>Ubicación:</strong> ${lead.location}`,
-    lead.area ? `<br><strong>Área:</strong> ${lead.area}` : "",
-    `<br><strong>Inversión:</strong> ${lead.budget}`,
-    `<br><strong>Inicio:</strong> ${lead.timeline}`,
-    `<br><strong>Contexto:</strong> ${lead.message}`,
+    `<br><strong>Tipo de proyecto:</strong> ${safe.projectType}`,
+    `<br><strong>Ubicación:</strong> ${safe.location}`,
+    lead.area ? `<br><strong>Área:</strong> ${safe.area}` : "",
+    `<br><strong>Inversión:</strong> ${safe.budget}`,
+    `<br><strong>Inicio:</strong> ${safe.timeline}`,
+    `<br><strong>Contexto:</strong> ${safe.message}`,
     lead.attribution.utmSource
-      ? `<br><strong>UTM source:</strong> ${lead.attribution.utmSource}`
+      ? `<br><strong>UTM source:</strong> ${safe.utmSource}`
       : "",
     lead.attribution.utmCampaign
-      ? `<br><strong>UTM campaign:</strong> ${lead.attribution.utmCampaign}`
+      ? `<br><strong>UTM campaign:</strong> ${safe.utmCampaign}`
       : "",
     lead.attribution.page
-      ? `<br><strong>Página:</strong> ${lead.attribution.page}`
+      ? `<br><strong>Página:</strong> ${safe.page}`
       : "",
   ];
 
