@@ -11,7 +11,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { SectionHeader } from "@/components/motion/section-header";
 import { PROJECT_TYPES, BUDGET_RANGES, TIMELINES } from "@/data/landing";
 import { whatsappLink, siteConfig } from "@/config/site";
-import { track } from "@vercel/analytics";
+import { track } from "@vercel/analytics";\nimport { trackMarketingContact, trackMarketingLead } from "@/lib/marketing";
 
 interface ContactFormState {
   name: string;
@@ -67,6 +67,7 @@ export function Contact() {
       projectType: formState.projectType,
       budget: formState.budget,
     });
+    trackMarketingLead(formState.projectType, formState.budget);
 
     const params = new URLSearchParams(window.location.search);
     const attribution = {
@@ -142,7 +143,10 @@ export function Contact() {
                   href={whatsappLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => track("WhatsApp Click", { location: "contact_card" })}
+                  onClick={() => {
+                    track("WhatsApp Click", { location: "contact_card" });
+                    trackMarketingContact("contact_card");
+                  }}
                   className="flex items-center gap-3 text-white/82 hover:text-warm transition-colors duration-200 group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-green-500/12 flex items-center justify-center group-hover:bg-green-500/22 transition-colors duration-200">
@@ -347,7 +351,7 @@ export function Contact() {
                         href={whatsappLink(buildWhatsAppMessage(formState))}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-5 py-2.5 text-sm transition-colors"
+                        onClick={() => trackMarketingContact("popup_fallback")}\n                        className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-5 py-2.5 text-sm transition-colors"
                       >
                         <MessageCircle className="w-4 h-4" />
                         Abrir WhatsApp

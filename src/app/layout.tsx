@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/next";\nimport { MarketingTags } from "@/components/analytics/marketing-tags";
 import { siteConfig } from "@/config/site";
 import { structuredData } from "@/data/schema";
 
