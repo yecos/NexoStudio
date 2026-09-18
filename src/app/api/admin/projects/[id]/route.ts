@@ -60,6 +60,8 @@ export async function DELETE(
 ) {
   const denied = await guard();
   if (denied) return denied;
+  const previewDenied = previewWriteGuard();
+  if (previewDenied) return previewDenied;
 
   const { id } = await params;
   try {
