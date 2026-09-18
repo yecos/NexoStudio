@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { projects } from "@/data/projects";
 
 export const metadata: Metadata = {
@@ -23,8 +21,21 @@ const featured = projects.filter((project) => project.featured).slice(0, 3);
 
 export default function EnglishPage() {
   return (
-    <main className="min-h-screen bg-dark-900">
-      <Navbar />
+    <main lang="en" className="min-h-screen bg-dark-900">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-dark-900/88 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+          <Link href="/en" className="relative w-32 sm:w-40 h-10">
+            <Image src="/images/brand/logo-nexo.png" alt="Nexo Studio" fill className="object-contain" sizes="160px" priority />
+          </Link>
+          <nav className="flex items-center gap-5 sm:gap-7 text-sm text-white/70">
+            <Link href="/proyectos" className="hover:text-warm transition-colors">Projects</Link>
+            <Link href="/en#services" className="hidden sm:inline hover:text-warm transition-colors">Services</Link>
+            <Link href="/#contacto" className="rounded-full border border-warm/40 px-4 py-2 text-warm hover:bg-warm hover:text-dark-900 transition-colors">
+              Start a project
+            </Link>
+          </nav>
+        </div>
+      </header>
 
       <section className="relative min-h-screen flex items-end overflow-hidden">
         <Image
@@ -67,7 +78,7 @@ export default function EnglishPage() {
         </div>
       </section>
 
-      <section className="py-20 sm:py-24 lg:py-32">
+      <section id="services" className="py-20 sm:py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-warm mb-5">For international homeowners</p>
@@ -150,7 +161,16 @@ export default function EnglishPage() {
         </div>
       </section>
 
-      <Footer />
+      <footer className="border-t border-white/8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <p className="text-xs text-white/45">© Nexo Studio · Medellín, Colombia</p>
+          <div className="flex items-center gap-5 text-xs">
+            <Link href="/" className="text-white/55 hover:text-warm">Español</Link>
+            <Link href="/proyectos" className="text-white/55 hover:text-warm">Projects</Link>
+            <Link href="/#contacto" className="text-warm/80 hover:text-warm">Contact</Link>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
