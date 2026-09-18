@@ -11,12 +11,30 @@ import {
 let schemaPromise: Promise<void> | null = null;
 
 function databaseUrl(): string | null {
-  return (
-    process.env.DATABASE_URL?.trim() ||
-    process.env.STORAGE_DATABASE_URL?.trim() ||
-    process.env.STORAGE_URL?.trim() ||
-    null
+  const explicit = [
+    process.env.DATABASE_URL,
+    process.env.STORAGE_DATABASE_URL,
+    process.env.STORAGE_URL,
+    process.env.POSTGRES_URL,
+    process.env.NEON_DATABASE_URL,
+  ]
+    .map((value) => value?.trim())
+    .find(
+      (value): value is string =>
+        Boolean(value) &&
+        (value.startsWith("postgres://") || value.startsWith("postgresql://")),
+    );
+
+  if (explicit) return explicit;
+
+  const discovered = Object.entries(process.env).find(
+    ([key, value]) =>
+      /(DATABASE|POSTGRES|NEON|PG).*URL/i.test(key) &&
+      typeof value === "string" &&
+      (value.startsWith("postgres://") || value.startsWith("postgresql://")),
   );
+
+  return discovered?.[1]?.trim() || null;
 }
 
 export function isCrmConfigured(): boolean {
