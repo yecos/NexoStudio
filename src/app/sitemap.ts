@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
+import { articles } from "@/data/articles";
 import { siteConfig } from "@/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -20,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/arquitectos-el-poblado",
     "/arquitectos-oriente-antioqueno",
     "/en",
+    "/journal",
   ];
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path, index) => ({
@@ -36,5 +38,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...projectRoutes];
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${siteConfig.url}/journal/${article.slug}`,
+    lastModified: new Date(article.publishedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.72,
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...articleRoutes];
 }
