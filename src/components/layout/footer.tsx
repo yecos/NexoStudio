@@ -64,7 +64,7 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">Contacto</h4>
             <ul className="space-y-3">
               <li>
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/58 hover:text-warm transition-colors duration-200">
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 text-sm text-white/58 hover:text-warm transition-colors duration-200 break-all">
                   <Phone className="w-3.5 h-3.5 shrink-0" />
                   {contact.phonePrimaryDisplay}
                 </a>
