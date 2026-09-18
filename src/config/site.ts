@@ -37,12 +37,10 @@ export const siteConfig = {
     ],
   },
   nav: [
-    { label: "Inicio", href: "/" },
     { label: "Proyectos", href: "/proyectos" },
     { label: "Servicios", href: "/#servicios" },
     { label: "Nosotros", href: "/nosotros" },
     { label: "Journal", href: "/journal" },
-    { label: "Contacto", href: "/iniciar-proyecto" },
   ],
 } as const;
 
