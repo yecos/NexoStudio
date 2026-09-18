@@ -16,6 +16,7 @@ import { projects, getProjectBySlug } from "@/data/projects";
 import { breadcrumbJsonLd } from "@/data/schema";
 import { whatsappLink } from "@/config/site";
 import { ProjectLocationMap } from "@/components/map/project-location-map";
+import { ProjectViewEvent } from "@/components/analytics/project-view-event";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -61,6 +62,7 @@ export default async function ProjectPage({ params }: { params: Params }) {
 
   return (
     <main className="min-h-screen bg-dark-900">
+      <ProjectViewEvent project={project.slug} status={project.status} />
       <Navbar />
 
       <script
