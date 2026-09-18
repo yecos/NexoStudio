@@ -2,6 +2,17 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
+interface AttributionPayload {
+  page?: unknown;
+  referrer?: unknown;
+  utmSource?: unknown;
+  utmMedium?: unknown;
+  utmCampaign?: unknown;
+  utmContent?: unknown;
+  utmTerm?: unknown;
+  gclid?: unknown;
+}
+
 interface LeadPayload {
   name?: unknown;
   phone?: unknown;
@@ -12,6 +23,7 @@ interface LeadPayload {
   budget?: unknown;
   timeline?: unknown;
   message?: unknown;
+  attribution?: AttributionPayload;
 }
 
 function text(value: unknown, max: number): string {
@@ -46,6 +58,16 @@ export async function POST(request: Request) {
     budget: text(raw.budget, 100),
     timeline: text(raw.timeline, 100),
     message: text(raw.message, 1800),
+    attribution: {
+      page: text(raw.attribution?.page, 500),
+      referrer: text(raw.attribution?.referrer, 500),
+      utmSource: text(raw.attribution?.utmSource, 120),
+      utmMedium: text(raw.attribution?.utmMedium, 120),
+      utmCampaign: text(raw.attribution?.utmCampaign, 160),
+      utmContent: text(raw.attribution?.utmContent, 160),
+      utmTerm: text(raw.attribution?.utmTerm, 160),
+      gclid: text(raw.attribution?.gclid, 220),
+    },
   };
 
   if (
