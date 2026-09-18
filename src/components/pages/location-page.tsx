@@ -109,7 +109,7 @@ export function LocationPage({
             Empecemos por
             <span className="block text-warm">una buena conversación.</span>
           </h2>
-          <Link href="/#contacto" className="mt-8 inline-flex items-center gap-2 rounded-full bg-warm px-8 py-3.5 text-sm font-semibold text-dark-900 hover:bg-warm-light transition-colors">
+          <Link href="/iniciar-proyecto" className="mt-8 inline-flex items-center gap-2 rounded-full bg-warm px-8 py-3.5 text-sm font-semibold text-dark-900 hover:bg-warm-light transition-colors">
             Iniciar un proyecto
             <ArrowRight className="w-4 h-4" />
           </Link>
