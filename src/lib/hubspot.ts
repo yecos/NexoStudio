@@ -12,6 +12,7 @@
 const HUBSPOT_API = "https://api.hubapi.com";
 const CRM_VERSION = "2026-09";
 const NOTES_VERSION = "2026-03";
+const DEFAULT_OWNER_ID = "99325347";
 
 export interface WebsiteLeadAttribution {
   page: string;
@@ -126,24 +127,38 @@ async function findContact(lead: WebsiteLead): Promise<string | null> {
   return data.results[0]?.id ?? null;
 }
 
-function contactProperties(lead: WebsiteLead): Record<string, string> {
+function ownerId(): string {
+  return process.env.HUBSPOT_OWNER_ID?.trim() || DEFAULT_OWNER_ID;
+}
+
+function contactProperties(
+  lead: WebsiteLead,
+  isNewContact: boolean,
+): Record<string, string> {
   const name = splitName(lead.name);
   const properties: Record<string, string> = {
     firstname: name.firstname,
     phone: lead.phone,
+    city: lead.location,
+    hubspot_owner_id: ownerId(),
   };
 
   if (name.lastname) properties.lastname = name.lastname;
   if (lead.email) properties.email = lead.email;
+
+  if (isNewContact) {
+    properties.lifecyclestage = "lead";
+    properties.hs_lead_status = "NEW";
+  }
 
   return properties;
 }
 
 async function upsertContact(lead: WebsiteLead): Promise<string> {
   const existingId = await findContact(lead);
-  const properties = contactProperties(lead);
 
   if (existingId) {
+    const properties = contactProperties(lead, false);
     await hsFetch(
       `/crm/objects/${CRM_VERSION}/contacts/${encodeURIComponent(existingId)}`,
       {
@@ -154,12 +169,51 @@ async function upsertContact(lead: WebsiteLead): Promise<string> {
     return existingId;
   }
 
+  const properties = contactProperties(lead, true);
   const response = await hsFetch(`/crm/objects/${CRM_VERSION}/contacts`, {
     method: "POST",
     body: JSON.stringify({ properties }),
   });
   const created = (await response.json()) as HubSpotObject;
   return created.id;
+}
+
+function dealPriority(budget: string): "low" | "medium" | "high" {
+  if (
+    budget.includes("$500M - $1.000M") ||
+    budget.includes("Más de $1.000M")
+  ) {
+    return "high";
+  }
+
+  if (
+    budget.includes("$100M - $250M") ||
+    budget.includes("$250M - $500M")
+  ) {
+    return "medium";
+  }
+
+  return "low";
+}
+
+function dealDescription(lead: WebsiteLead): string {
+  return [
+    `Tipo de proyecto: ${lead.projectType}`,
+    `Ubicación: ${lead.location}`,
+    lead.area ? `Área: ${lead.area}` : "",
+    `Inversión estimada: ${lead.budget}`,
+    `Inicio: ${lead.timeline}`,
+    `Contexto: ${lead.message}`,
+    lead.attribution.utmSource
+      ? `UTM source: ${lead.attribution.utmSource}`
+      : "",
+    lead.attribution.utmCampaign
+      ? `UTM campaign: ${lead.attribution.utmCampaign}`
+      : "",
+    lead.attribution.page ? `Página: ${lead.attribution.page}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 async function createDeal(lead: WebsiteLead): Promise<string | null> {
@@ -174,6 +228,10 @@ async function createDeal(lead: WebsiteLead): Promise<string | null> {
         dealname: `Web · ${lead.projectType} · ${lead.name}`,
         pipeline,
         dealstage: stage,
+        dealtype: "newbusiness",
+        hs_priority: dealPriority(lead.budget),
+        hubspot_owner_id: ownerId(),
+        description: dealDescription(lead),
       },
     }),
   });
