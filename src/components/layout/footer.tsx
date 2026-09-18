@@ -91,7 +91,7 @@ export function Footer() {
 
         <div className="mt-10 pt-7 border-t border-white/6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/42">© {year} Nexo Studio. Todos los derechos reservados.</p>
-          <Link href="/#contacto" className="text-xs text-warm/80 hover:text-warm transition-colors">
+          <Link href="/iniciar-proyecto" className="text-xs text-warm/80 hover:text-warm transition-colors">
             Iniciar un proyecto
           </Link>
         </div>
