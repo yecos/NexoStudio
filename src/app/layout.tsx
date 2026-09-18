@@ -41,6 +41,10 @@ export const metadata: Metadata = {
   authors: [{ name: "Nexo Studio" }],
   alternates: {
     canonical: "/",
+    languages: {
+      "es-CO": "/",
+      en: "/en",
+    },
   },
   icons: {
     icon: [
