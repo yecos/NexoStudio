@@ -1,4 +1,3 @@
-
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -29,14 +28,14 @@ export const metadata: Metadata = {
   title: siteConfig.title,
   description: siteConfig.description,
   keywords: [
-    "arquitectura Medellín",
-    "remodelaciones Medellín",
-    "diseño de interiores",
-    "diseño arquitectónico",
-    "visualización 3D",
-    "renders arquitectónicos",
-    "gerencia de proyectos",
-    "factibilidad inmobiliaria",
+    "arquitectura residencial Medellín",
+    "arquitectos Medellín",
+    "diseño de interiores Medellín",
+    "remodelación apartamentos Medellín",
+    "arquitectos El Poblado",
+    "arquitectos Llanogrande",
+    "arquitectura Oriente Antioqueño",
+    "interiorismo Medellín",
     "Nexo Studio",
   ],
   authors: [{ name: "Nexo Studio" }],
@@ -61,21 +60,19 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Nexo Studio — Arquitectura, Remodelaciones e Interiores",
+    title: "Nexo Studio — Arquitectura Residencial e Interiorismo",
     description:
-      "Diseño arquitectónico, remodelaciones, interiores, visualización 3D y gerencia de proyectos en Medellín.",
+      "Arquitectura residencial, interiorismo y remodelaciones integrales en Medellín y Oriente Antioqueño.",
     url: siteConfig.url,
     siteName: "Nexo Studio",
     type: "website",
     locale: "es_CO",
-    // og:image la genera src/app/opengraph-image.tsx (1200x630 exacto)
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexo Studio — Arquitectura, Remodelaciones e Interiores",
+    title: "Nexo Studio — Arquitectura Residencial e Interiorismo",
     description:
-      "Arquitectura, remodelaciones, interiores, visualización 3D y gerencia de proyectos en Medellín.",
-    // twitter:image la genera src/app/opengraph-image.tsx
+      "Arquitectura residencial, interiorismo y remodelaciones integrales en Medellín y Oriente Antioqueño.",
   },
 };
 
