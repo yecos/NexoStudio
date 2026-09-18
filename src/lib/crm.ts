@@ -13,6 +13,7 @@ let schemaPromise: Promise<void> | null = null;
 function databaseUrl(): string | null {
   return (
     process.env.DATABASE_URL?.trim() ||
+    process.env.STORAGE_DATABASE_URL?.trim() ||
     process.env.STORAGE_URL?.trim() ||
     null
   );
