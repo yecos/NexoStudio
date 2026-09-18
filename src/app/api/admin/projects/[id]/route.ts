@@ -13,6 +13,16 @@ async function guard(): Promise<NextResponse | null> {
   return null;
 }
 
+function previewWriteGuard(): NextResponse | null {
+  if (process.env.VERCEL_ENV === "preview") {
+    return NextResponse.json(
+      { error: "El panel está en modo solo lectura durante los previews." },
+      { status: 409 },
+    );
+  }
+  return null;
+}
+
 /** PUT /api/admin/projects/[id] — actualiza un proyecto. */
 export async function PUT(
   request: Request,
@@ -20,6 +30,8 @@ export async function PUT(
 ) {
   const denied = await guard();
   if (denied) return denied;
+  const previewDenied = previewWriteGuard();
+  if (previewDenied) return previewDenied;
 
   const { id } = await params;
 
