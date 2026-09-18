@@ -25,7 +25,8 @@
         "src": "/images/projects/p01-rionegro/view-3.jpg",
         "alt": "Vista en contrapicado del edificio multifamiliar"
       }
-    ]
+    ],
+    "featured": false
   },
   {
     "id": "p02",
@@ -57,7 +58,8 @@
         "src": "/images/projects/p02-waves-living/view-4.jpg",
         "alt": "Fachada con panel vertical color óxido y vegetación tropical"
       }
-    ]
+    ],
+    "featured": false
   },
   {
     "id": "p03",
@@ -89,6 +91,21 @@
         "src": "/images/projects/p03-santa-elena/view-4.jpg",
         "alt": "Vista posterior con deck de madera y muro decorativo"
       }
+    ],
+    "featured": true,
+    "typology": "Vivienda unifamiliar",
+    "services": [
+      "Diseño arquitectónico",
+      "Diseño de interiores",
+      "Interventoría en obra"
+    ],
+    "challenge": "Mantener una lectura coherente entre arquitectura, interiores y decisiones de obra mientras se desarrolla una vivienda de dos plantas con un lenguaje mediterráneo contemporáneo.",
+    "concept": "La propuesta utiliza vanos arqueados, estuco texturizado, madera y una relación cercana con el paisajismo para construir una vivienda cálida, luminosa y consistente entre exterior e interior.",
+    "materials": [
+      "Estuco texturizado",
+      "Madera",
+      "Vidrio",
+      "Paisajismo"
     ]
   },
   {
@@ -125,6 +142,19 @@
         "src": "/images/projects/p04-penol/view-5.jpg",
         "alt": "Vista general con corte circular, cascada y fogata exterior"
       }
+    ],
+    "featured": true,
+    "typology": "Vivienda de recreación",
+    "services": [
+      "Diseño arquitectónico"
+    ],
+    "challenge": "Aprovechar la relación con el embalse y desarrollar espacios sociales abiertos sin perder una identidad arquitectónica reconocible.",
+    "concept": "La vivienda combina concreto, vidrio, terrazas y elementos escultóricos vinculados al agua para dirigir las visuales hacia el paisaje y conectar los espacios interiores con el exterior.",
+    "materials": [
+      "Concreto",
+      "Vidrio",
+      "Madera",
+      "Agua y paisaje"
     ]
   },
   {
@@ -161,6 +191,19 @@
         "src": "/images/projects/p05-casa-bonsai/view-5.jpg",
         "alt": "Dormitorio minimalista con paneles de madera y obra abstracta"
       }
+    ],
+    "featured": true,
+    "typology": "Vivienda unifamiliar",
+    "services": [
+      "Diseño arquitectónico"
+    ],
+    "challenge": "Construir una vivienda contemporánea con una atmósfera serena y una relación protagonista con el jardín de inspiración japonesa.",
+    "concept": "Volúmenes de concreto y vidrio, cubiertas oscuras, madera cálida y un jardín zen articulan una experiencia donde arquitectura y paisaje funcionan como una sola composición.",
+    "materials": [
+      "Concreto",
+      "Vidrio",
+      "Madera",
+      "Piedra y vegetación"
     ]
   },
   {
@@ -209,6 +252,7 @@
         "src": "/images/projects/p06-santa-fe/view-8.jpg",
         "alt": "Dormitorio con muro de concreto y ventanal al jardín"
       }
-    ]
+    ],
+    "featured": false
   }
 ]
