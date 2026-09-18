@@ -21,7 +21,7 @@ function databaseUrl(): string | null {
     .map((value) => value?.trim())
     .find(
       (value): value is string =>
-        Boolean(value) &&
+        typeof value === "string" &&
         (value.startsWith("postgres://") || value.startsWith("postgresql://")),
     );
 
