@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ServicePage } from "@/components/pages/service-page";
 
 export const metadata: Metadata = {
@@ -39,12 +40,12 @@ export default function InteriorsPage() {
       />
       <div className="bg-dark-900 pb-16 sm:pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <a
+          <Link
             href="/diseno-interiores-medellin"
             className="inline-flex items-center text-sm text-warm hover:text-warm-light transition-colors"
           >
             Diseño de interiores en Medellín →
-          </a>
+          </Link>
         </div>
       </div>
     </>
