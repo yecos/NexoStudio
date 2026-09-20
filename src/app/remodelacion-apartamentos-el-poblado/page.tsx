@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   description:
     "Remodelación integral de apartamentos en El Poblado, Medellín. Diseño, interiorismo, visualización, documentación y coordinación antes de ejecutar.",
   alternates: { canonical: "/remodelacion-apartamentos-el-poblado" },
+  openGraph: {
+    title: "Remodelación de Apartamentos en El Poblado | Nexo Studio",
+    description:
+      "Remodelación integral de apartamentos en El Poblado, Medellín. Diseño, interiorismo, visualización, documentación y coordinación antes de ejecutar.",
+    url: "/remodelacion-apartamentos-el-poblado",
+    images: [{ url: "/images/projects/p02-waves-living/view-2.jpg", alt: "Arquitectura residencial de Nexo Studio en El Poblado, Medellín" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Remodelación de Apartamentos en El Poblado | Nexo Studio",
+    description:
+      "Remodelación integral de apartamentos en El Poblado, Medellín. Diseño, interiorismo, visualización, documentación y coordinación antes de ejecutar.",
+    images: ["/images/projects/p02-waves-living/view-2.jpg"],
+  },
 };
 
 export default function RenovationPobladoPage() {

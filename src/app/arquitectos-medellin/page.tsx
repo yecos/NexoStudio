@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   description:
     "Estudio de arquitectura residencial e interiorismo en Medellín. Diseño de viviendas, apartamentos y remodelaciones integrales con visualización y acompañamiento técnico.",
   alternates: { canonical: "/arquitectos-medellin" },
+  openGraph: {
+    title: "Arquitectos en Medellín | Nexo Studio",
+    description:
+      "Estudio de arquitectura residencial e interiorismo en Medellín. Diseño de viviendas, apartamentos y remodelaciones integrales con visualización y acompañamiento técnico.",
+    url: "/arquitectos-medellin",
+    images: [{ url: "/images/projects/p02-waves-living/view-3.jpg", alt: "Proyecto residencial de Nexo Studio en Medellín" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arquitectos en Medellín | Nexo Studio",
+    description:
+      "Estudio de arquitectura residencial e interiorismo en Medellín. Diseño de viviendas, apartamentos y remodelaciones integrales con visualización y acompañamiento técnico.",
+    images: ["/images/projects/p02-waves-living/view-3.jpg"],
+  },
 };
 
 export default function MedellinPage() {

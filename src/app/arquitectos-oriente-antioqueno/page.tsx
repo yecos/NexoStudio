@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   description:
     "Arquitectura residencial y casas campestres en Rionegro, Guarne, El Peñol y Oriente Antioqueño. Diseño, interiorismo y acompañamiento técnico.",
   alternates: { canonical: "/arquitectos-oriente-antioqueno" },
+  openGraph: {
+    title: "Arquitectos en Oriente Antioqueño | Nexo Studio",
+    description:
+      "Arquitectura residencial y casas campestres en Rionegro, Guarne, El Peñol y Oriente Antioqueño. Diseño, interiorismo y acompañamiento técnico.",
+    url: "/arquitectos-oriente-antioqueno",
+    images: [{ url: "/images/projects/p04-penol/view-5.jpg", alt: "Casa de recreación diseñada por Nexo Studio en Oriente Antioqueño" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arquitectos en Oriente Antioqueño | Nexo Studio",
+    description:
+      "Arquitectura residencial y casas campestres en Rionegro, Guarne, El Peñol y Oriente Antioqueño. Diseño, interiorismo y acompañamiento técnico.",
+    images: ["/images/projects/p04-penol/view-5.jpg"],
+  },
 };
 
 export default function OrientePage() {

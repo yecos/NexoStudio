@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   description:
     "Arquitectura residencial, interiorismo y remodelaciones para apartamentos y viviendas en El Poblado y sectores cercanos de Medellín.",
   alternates: { canonical: "/arquitectos-el-poblado" },
+  openGraph: {
+    title: "Arquitectos en El Poblado, Medellín | Nexo Studio",
+    description:
+      "Arquitectura residencial, interiorismo y remodelaciones para apartamentos y viviendas en El Poblado y sectores cercanos de Medellín.",
+    url: "/arquitectos-el-poblado",
+    images: [{ url: "/images/projects/p02-waves-living/view-2.jpg", alt: "Proyecto Waves Living de Nexo Studio en El Poblado, Medellín" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arquitectos en El Poblado, Medellín | Nexo Studio",
+    description:
+      "Arquitectura residencial, interiorismo y remodelaciones para apartamentos y viviendas en El Poblado y sectores cercanos de Medellín.",
+    images: ["/images/projects/p02-waves-living/view-2.jpg"],
+  },
 };
 
 export default function PobladoPage() {
