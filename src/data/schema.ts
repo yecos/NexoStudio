@@ -24,7 +24,7 @@ export const structuredData = [
     name: siteConfig.name,
     url: SITE_URL,
     logo: `${SITE_URL}/images/brand/logo-nexo-symbol.png`,
-    image: `${SITE_URL}/images/hero/hero-arch.jpg`,
+    image: `${SITE_URL}/images/hero/hero-nexo-premium.webp`,
     description: siteConfig.description,
     email: contact.email,
     telephone: contact.phonePrimaryE164,
