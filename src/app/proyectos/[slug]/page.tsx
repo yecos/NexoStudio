@@ -1,11 +1,22 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, MapPin, Ruler, Calendar, ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  ExternalLink,
+  MapPin,
+  MessageCircle,
+} from "lucide-react";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import { projects, getProjectBySlug } from "@/data/projects";
 import { breadcrumbJsonLd } from "@/data/schema";
 import { whatsappLink } from "@/config/site";
 import { ProjectLocationMap } from "@/components/map/project-location-map";
+import { ProjectViewEvent } from "@/components/analytics/project-view-event";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -13,12 +24,18 @@ export function generateStaticParams() {
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({ params }: { params: Params }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
+
   if (!project) {
     return { title: "Proyecto no encontrado — Nexo Studio" };
   }
+
   return {
     title: `${project.name} — Nexo Studio | ${project.category}`,
     description: project.description,
@@ -29,7 +46,6 @@ export async function generateMetadata({ params }: { params: Params }) {
       title: `${project.name} — Nexo Studio`,
       description: project.description,
       url: `/proyectos/${project.slug}`,
-      // og:image la genera ./opengraph-image.tsx con la foto del proyecto
     },
   };
 }
@@ -39,10 +55,16 @@ export default async function ProjectPage({ params }: { params: Params }) {
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
-  const otherProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+  const otherProjects = projects
+    .filter((p) => p.slug !== project.slug)
+    .sort((a, b) => b.year - a.year)
+    .slice(0, 3);
 
   return (
     <main className="min-h-screen bg-dark-900">
+      <ProjectViewEvent project={project.slug} status={project.status} />
+      <Navbar />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -50,171 +72,273 @@ export default async function ProjectPage({ params }: { params: Params }) {
         }}
       />
 
-      {/* Volver */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link
-          href="/#portafolio"
-          className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-warm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Volver al portafolio
-        </Link>
-      </div>
-
-      {/* Encabezado del proyecto */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="flex flex-wrap gap-2 mb-4">
-          <span className="px-3 py-1 rounded-full bg-warm text-dark-900 text-xs font-semibold">
-            {project.category}
-          </span>
-          <span className="px-3 py-1 rounded-full bg-white/12 text-white text-xs font-medium border border-white/12">
-            {project.status}
-          </span>
-          <span className="px-3 py-1 rounded-full bg-white/8 text-white/80 text-xs font-medium border border-white/10 flex items-center gap-1">
-            <Calendar className="w-3 h-3" />
-            {project.year}
-          </span>
-        </div>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
-          {project.name}
-        </h1>
-        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base text-white/70">
-          <span className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-warm" />
-            {project.location}
-          </span>
-          <span className="flex items-center gap-2">
-            <Ruler className="w-4 h-4 text-warm" />
-            {project.scope}
-          </span>
-        </div>
-        <p className="mt-6 text-lg text-white/70 leading-relaxed max-w-3xl">
-          {project.description}
-        </p>
-      </section>
-
-      {/* Imagen principal */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
-          <Image
-            src={project.views[0].src}
-            alt={project.views[0].alt}
-            fill
-            className="object-cover"
-            quality={90}
-            sizes="(min-width: 1024px) 1024px, 100vw"
-            priority
-          />
-        </div>
-      </section>
-
-      {/* Ubicación en mapa */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-white">Ubicación</h2>
-          <a
-            href={`https://www.openstreetmap.org/?mlat=${project.lat}&mlon=${project.lng}#map=15/${project.lat}/${project.lng}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm text-warm hover:text-warm-light transition-colors"
-          >
-            Abrir en OpenStreetMap <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </div>
-        <ProjectLocationMap
-          lat={project.lat}
-          lng={project.lng}
-          name={project.name}
-          location={project.location}
+      <section className="relative min-h-[78vh] sm:min-h-[84vh] overflow-hidden">
+        <Image
+          src={project.views[0].src}
+          alt={project.views[0].alt}
+          fill
+          priority
+          quality={92}
+          className="object-cover"
+          sizes="100vw"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-black/28 to-black/34" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
+
+        <div className="absolute inset-x-0 bottom-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 lg:pb-16">
+            <Link
+              href="/proyectos"
+              className="inline-flex items-center gap-2 text-sm text-white/62 hover:text-warm transition-colors mb-7"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Todos los proyectos
+            </Link>
+
+            <div className="max-w-5xl">
+              <div className="flex flex-wrap gap-3 text-[11px] sm:text-xs uppercase tracking-[0.18em] text-white/68 mb-5">
+                <span className="text-warm">{project.status}</span>
+                <span>·</span>
+                <span>{project.category}</span>
+                <span>·</span>
+                <span>{project.year}</span>
+              </div>
+
+              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-semibold text-white tracking-tight leading-[0.96]">
+                {project.name}
+              </h1>
+
+              <div className="mt-6 flex flex-wrap gap-x-7 gap-y-3 text-sm sm:text-base text-white/68">
+                <span className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-warm" />
+                  {project.location}
+                </span>
+                <span className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-warm" />
+                  {project.year}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Galería */}
-      {project.views.length > 1 && (
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-          <h2 className="text-2xl font-bold text-white mb-6">
-            Galería del proyecto
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {project.views.slice(1).map((view, i) => (
-              <div
-                key={i}
-                className={`relative overflow-hidden rounded-xl ${
-                  i === 0 && project.views.length === 4 ? "sm:col-span-2" : ""
-                }`}
-              >
-                <div className="relative aspect-[4/3]">
-                  <Image
-                    src={view.src}
-                    alt={view.alt}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-700"
-                    quality={85}
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                  />
+      <section className="py-16 sm:py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-20">
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-warm mb-5">Proyecto</p>
+            <div className="space-y-6 border-t border-white/10 pt-6">
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Ubicación</p>
+                <p className="text-base text-white">{project.location}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Alcance</p>
+                <p className="text-base text-white">{project.scope}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Estado</p>
+                <p className="text-base text-white">{project.status}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Año</p>
+                <p className="text-base text-white">{project.year}</p>
+              </div>
+              {project.typology && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Tipología</p>
+                  <p className="text-base text-white">{project.typology}</p>
+                </div>
+              )}
+              {project.area && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Área</p>
+                  <p className="text-base text-white">{project.area}</p>
+                </div>
+              )}
+              {project.services && project.services.length > 0 && (
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/38 mb-2">Servicios</p>
+                  <div className="space-y-1">
+                    {project.services.map((service) => (
+                      <p key={service} className="text-base text-white">{service}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-warm mb-5">Sobre el proyecto</p>
+            <p className="text-2xl sm:text-3xl lg:text-4xl text-white/88 leading-[1.35] tracking-tight">
+              {project.description}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {(project.challenge || project.concept || (project.materials && project.materials.length > 0)) && (
+        <section className="pb-16 sm:pb-20 lg:pb-28">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16">
+            {project.challenge && (
+              <div className="border-t border-white/10 pt-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">El reto</p>
+                <p className="text-xl sm:text-2xl text-white/80 leading-relaxed">{project.challenge}</p>
+              </div>
+            )}
+            {project.concept && (
+              <div className="border-t border-white/10 pt-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">Concepto</p>
+                <p className="text-xl sm:text-2xl text-white/80 leading-relaxed">{project.concept}</p>
+              </div>
+            )}
+            {project.materials && project.materials.length > 0 && (
+              <div className="lg:col-span-2 border-t border-white/10 pt-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">Materialidad</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.materials.map((material) => (
+                    <span
+                      key={material}
+                      className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/65"
+                    >
+                      {material}
+                    </span>
+                  ))}
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </section>
       )}
 
-      {/* CTA */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="rounded-2xl bg-gradient-to-r from-warm/12 to-transparent border border-warm/30 p-8 sm:p-10 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-            ¿Quieres un proyecto como este?
+      {project.views.length > 1 && (
+        <section className="pb-12 sm:pb-16">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
+            <div className="grid gap-4 sm:gap-6">
+              {project.views.slice(1).map((view, index) => (
+                <div
+                  key={view.src}
+                  className={`relative overflow-hidden rounded-2xl sm:rounded-3xl ${
+                    index % 3 === 0
+                      ? "aspect-[16/9]"
+                      : "aspect-[4/3] sm:aspect-[16/10]"
+                  }`}
+                >
+                  <Image
+                    src={view.src}
+                    alt={view.alt}
+                    fill
+                    quality={90}
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="py-16 sm:py-20 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-warm mb-4">Contexto</p>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
+              El proyecto en su lugar.
+            </h2>
+            <p className="mt-4 text-base text-white/60 leading-relaxed">
+              Cada proyecto responde a unas condiciones específicas de paisaje, acceso, orientación y forma de habitar. La ubicación hace parte del diseño, no es solo un dato.
+            </p>
+            <a
+              href={`https://www.openstreetmap.org/?mlat=${project.lat}&mlon=${project.lng}#map=15/${project.lat}/${project.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 text-sm text-warm hover:text-warm-light transition-colors"
+            >
+              Abrir ubicación
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <ProjectLocationMap
+            lat={project.lat}
+            lng={project.lng}
+            name={project.name}
+            location={project.location}
+          />
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20 lg:py-24 border-y border-white/8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs uppercase tracking-[0.22em] text-warm mb-5">
+            ¿Tienes un proyecto en mente?
+          </p>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.05]">
+            Conversemos antes
+            <span className="block text-warm">de empezar a diseñar.</span>
           </h2>
-          <p className="text-white/70 mb-6 max-w-xl mx-auto">
-            Cuéntanos tu idea. Te respondemos por WhatsApp para avanzar rápido.
+          <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-white/60 leading-relaxed">
+            Cuéntanos dónde está el proyecto, qué quieres transformar y cuál es el momento en el que te encuentras.
           </p>
           <a
-            href={whatsappLink(`Hola Nexo Studio, vi "${project.name}" en el portafolio y quiero algo similar.`)}
+            href={whatsappLink(
+              `Hola Nexo Studio, vi "${project.name}" y quiero conversar sobre un proyecto.`,
+            )}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-8 py-3.5 text-sm transition-colors"
+            className="mt-8 inline-flex items-center gap-2 bg-warm hover:bg-warm-light text-dark-900 font-semibold rounded-full px-8 py-3.5 text-sm transition-colors"
           >
             <MessageCircle className="w-5 h-5" />
-            Cotizar por WhatsApp
+            Iniciar conversación
           </a>
         </div>
       </section>
 
-      {/* Otros proyectos */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white">Otros proyectos</h2>
-          <Link
-            href="/#portafolio"
-            className="text-sm text-warm hover:underline flex items-center gap-1"
-          >
-            Ver todos <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {otherProjects.map((p) => (
+      <section className="py-16 sm:py-20 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.2em] text-warm mb-3">Más proyectos</p>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white">Seguir explorando</h2>
+            </div>
             <Link
-              key={p.id}
-              href={`/proyectos/${p.slug}`}
-              className="group relative overflow-hidden rounded-xl aspect-[4/3]"
+              href="/proyectos"
+              className="hidden sm:inline-flex items-center gap-1.5 text-sm text-warm hover:text-warm-light"
             >
-              <Image
-                src={p.views[0].src}
-                alt={p.name}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                quality={75}
-                sizes="(min-width: 640px) 33vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-3 left-3 right-3">
-                <p className="text-white text-sm font-semibold leading-tight">{p.name}</p>
-                <p className="text-white/60 text-xs mt-1">{p.location}</p>
-              </div>
+              Ver todos
+              <ArrowRight className="w-4 h-4" />
             </Link>
-          ))}
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-4">
+            {otherProjects.map((p) => (
+              <Link
+                key={p.id}
+                href={`/proyectos/${p.slug}`}
+                className="group relative overflow-hidden rounded-2xl aspect-[4/3]"
+              >
+                <Image
+                  src={p.views[0].src}
+                  alt={p.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  quality={82}
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/10 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-white text-base font-semibold leading-tight">{p.name}</p>
+                  <p className="text-white/58 text-xs mt-1">{p.location}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

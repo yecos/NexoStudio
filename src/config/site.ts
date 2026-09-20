@@ -7,9 +7,9 @@
 export const siteConfig = {
   name: "Nexo Studio",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.nexostudioarq.com",
-  title: "Nexo Studio — Arquitectura, Remodelaciones e Interiores | Medellín",
+  title: "Nexo Studio — Arquitectura Residencial e Interiorismo | Medellín",
   description:
-    "Nexo Studio diseña, remodela y gestiona espacios residenciales y comerciales en Medellín: arquitectura, interiores, visualización 3D y gerencia de proyectos.",
+    "Estudio de arquitectura residencial e interiorismo en Medellín. Diseñamos viviendas, apartamentos y remodelaciones integrales desde el concepto hasta la obra.",
   contact: {
     /** WhatsApp principal (formato internacional sin +) */
     whatsappMain: "573146811444",
@@ -25,28 +25,32 @@ export const siteConfig = {
       region: "Antioquia",
       country: "CO",
     },
-    areaServed: ["Medellín", "Área Metropolitana", "Antioquia", "Colombia"],
+    areaServed: [
+      "Medellín",
+      "El Poblado",
+      "Envigado",
+      "Oriente Antioqueño",
+      "Rionegro",
+      "Llanogrande",
+      "Antioquia",
+      "Colombia",
+    ],
   },
   nav: [
-    { label: "Inicio", href: "#inicio" },
-    { label: "Servicios", href: "#servicios" },
-    { label: "Portafolio", href: "#portafolio" },
-    { label: "Ubicaciones", href: "#ubicaciones" },
-    { label: "Casos", href: "#casos" },
-    { label: "Nosotros", href: "#nosotros" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Proyectos", href: "/proyectos" },
+    { label: "Servicios", href: "/#servicios" },
+    { label: "Nosotros", href: "/nosotros" },
+    { label: "Journal", href: "/journal" },
   ],
 } as const;
 
 export const DEFAULT_WHATSAPP_MESSAGE =
-  "Hola Nexo Studio, quiero cotizar un proyecto de arquitectura/diseño.";
+  "Hola Nexo Studio, quiero conversar sobre un proyecto de arquitectura o interiorismo.";
 
-/** Construye un enlace de WhatsApp (número principal) con mensaje pre-cargado. */
 export function whatsappLink(message: string = DEFAULT_WHATSAPP_MESSAGE): string {
   return `https://wa.me/${siteConfig.contact.whatsappMain}?text=${encodeURIComponent(message)}`;
 }
 
-/** Construye un enlace de WhatsApp (número secundario) con mensaje pre-cargado. */
 export function whatsappLinkSecondary(
   message: string = DEFAULT_WHATSAPP_MESSAGE,
 ): string {

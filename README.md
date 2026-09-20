@@ -84,6 +84,80 @@ Copia `.env.example` a `.env.local` y ajusta según el entorno:
 | `GITHUB_TOKEN` | Token con `Contents: Read and write` para guardar desde el panel | — (obligatoria) |
 | `GITHUB_REPO` | Repo destino | `yecos/NexoStudio` |
 | `GITHUB_BRANCH` | Rama destino | `main` |
+| `LEAD_WEBHOOK_URL` | Webhook opcional para copiar leads a CRM/automatización | — |
+| `LEAD_WEBHOOK_SECRET` | Secreto opcional enviado como `X-Nexo-Webhook-Secret` | — |
+
+
+
+## NEXO CRM propio
+
+El CRM vive en `/admin/leads` y usa Neon Postgres.
+
+Pipeline comercial:
+
+`Nuevo → Calificado → Reunión → Propuesta → Negociación → Ganado → Proyecto`
+
+También existe el estado `Perdido`.
+
+Cada lead guarda contacto, ubicación, tipo de proyecto, área, presupuesto,
+momento de inicio, mensaje, página de origen, UTM, GCLID, prioridad, notas y
+próximo seguimiento.
+
+### Base de datos
+
+Configura una única variable privada en Vercel:
+
+```text
+DATABASE_URL=postgresql://...
+```
+
+La tabla se crea automáticamente en el primer uso. El esquema de referencia
+también está en `sql/001_nexo_crm.sql`.
+
+Sin `DATABASE_URL`, el sitio no falla: WhatsApp sigue funcionando y el panel
+CRM muestra que falta conectar la base.
+
+## Captura de leads
+
+El formulario público mantiene **WhatsApp como canal principal** y, en paralelo,
+envía los datos a `POST /api/leads`.
+
+- Sin `LEAD_WEBHOOK_URL`: el endpoint acepta el lead pero no lo reenvía.
+- Con `LEAD_WEBHOOK_URL`: reenvía nombre, teléfono, email, tipo de proyecto,
+  ubicación, área, inversión estimada, momento de inicio y contexto.
+- Si el webhook falla, el usuario puede continuar por WhatsApp; la integración
+  de CRM nunca bloquea el contacto.
+- `LEAD_WEBHOOK_SECRET` es opcional y se envía en el header
+  `X-Nexo-Webhook-Secret`.
+
+Esto permite conectar posteriormente HubSpot, Make, Zapier, n8n o un backend propio
+sin cambiar el formulario.
+
+
+### HubSpot CRM
+
+La captura de leads puede sincronizarse directamente con HubSpot desde el servidor.
+
+Variables:
+
+| Variable | Uso |
+|---|---|
+| `HUBSPOT_ACCESS_TOKEN` | Service Key / token con acceso al CRM |
+| `HUBSPOT_DEAL_PIPELINE_ID` | ID del pipeline donde crear oportunidades (opcional) |
+| `HUBSPOT_DEAL_STAGE_ID` | ID de la etapa inicial del deal (opcional) |
+
+Comportamiento:
+
+1. Busca el contacto por email; si no hay email, por teléfono.
+2. Actualiza el contacto existente o crea uno nuevo.
+3. Si pipeline + etapa están configurados, crea un deal y lo asocia al contacto.
+4. Crea una nota con tipo de proyecto, ubicación, área, inversión, momento de inicio,
+   contexto y atribución UTM.
+5. Una caída de HubSpot nunca bloquea WhatsApp ni el formulario.
+
+Para una integración nueva, usa una **Service Key** con los permisos mínimos
+necesarios para contactos, deals/notas y asociaciones. Guarda la clave solo como
+variable de entorno de Vercel; nunca en GitHub.
 
 ## Panel de administración (/admin)
 

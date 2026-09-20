@@ -36,18 +36,48 @@ export const structuredData = [
       addressCountry: contact.address.country,
     },
     knowsAbout: [
-      "Arquitectura",
-      "Remodelaciones",
+      "Arquitectura residencial",
       "Diseño de interiores",
-      "Visualización 3D",
-      "Gerencia de proyectos",
-      "Factibilidad inmobiliaria",
+      "Remodelaciones integrales",
+      "Casas campestres",
+      "Visualización arquitectónica",
+      "Coordinación y acompañamiento de obra",
     ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Servicios de Nexo Studio",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Arquitectura residencial",
+            url: `${SITE_URL}/arquitectura-residencial`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Diseño de interiores",
+            url: `${SITE_URL}/interiorismo`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Remodelaciones integrales",
+            url: `${SITE_URL}/remodelaciones`,
+          },
+        },
+      ],
+    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
       telephone: contact.phonePrimaryE164,
-      availableLanguage: ["es"],
+      availableLanguage: ["es", "en"],
     },
   },
   {
@@ -80,7 +110,7 @@ export function breadcrumbJsonLd(projectName: string, projectSlug: string) {
         "@type": "ListItem",
         position: 2,
         name: "Portafolio",
-        item: `${SITE_URL}/#portafolio`,
+        item: `${SITE_URL}/proyectos`,
       },
       {
         "@type": "ListItem",

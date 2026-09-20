@@ -42,6 +42,14 @@ export interface Project {
   status: ProjectStatus;
   year: number;
   description: string;
+  /** Datos editoriales opcionales para case studies premium. */
+  area?: string;
+  typology?: string;
+  services?: string[];
+  challenge?: string;
+  concept?: string;
+  materials?: string[];
+  featured?: boolean;
   /** Fecha ISO del último cambio de contenido (sitemap.xml). */
   updatedAt: string;
   views: ProjectView[];
