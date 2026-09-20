@@ -3,10 +3,12 @@ import { projects } from "@/data/projects";
 import { articles } from "@/data/articles";
 import { siteConfig } from "@/config/site";
 
+const SITE_LAST_MODIFIED = "2026-09-20";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const homeLastModified = projects.reduce(
     (latest, p) => (p.updatedAt > latest ? p.updatedAt : latest),
-    projects[0].updatedAt,
+    SITE_LAST_MODIFIED,
   );
 
   const staticPaths = [

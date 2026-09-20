@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   description:
     "Diseño de interiores para apartamentos y viviendas en Medellín: distribución, iluminación, materialidad, mobiliario a medida y visualización antes de ejecutar.",
   alternates: { canonical: "/diseno-interiores-medellin" },
+  openGraph: {
+    title: "Diseño de Interiores en Medellín | Nexo Studio",
+    description:
+      "Diseño de interiores para apartamentos y viviendas en Medellín: distribución, iluminación, materialidad, mobiliario a medida y visualización antes de ejecutar.",
+    url: "/diseno-interiores-medellin",
+    images: [{ url: "/images/projects/p03-santa-elena/view-4.jpg", alt: "Proyecto de diseño de interiores de Nexo Studio en Medellín" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Diseño de Interiores en Medellín | Nexo Studio",
+    description:
+      "Diseño de interiores para apartamentos y viviendas en Medellín: distribución, iluminación, materialidad, mobiliario a medida y visualización antes de ejecutar.",
+    images: ["/images/projects/p03-santa-elena/view-4.jpg"],
+  },
 };
 
 export default function InteriorDesignMedellinPage() {
