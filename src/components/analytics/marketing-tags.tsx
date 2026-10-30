@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 
-const googleTagId = process.env.NEXT_PUBLIC_GOOGLE_TAG_ID;
+const googleTagId = "G-N2VY47C72L";
 const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 declare global {
